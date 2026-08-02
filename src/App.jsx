@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 // Add page imports here
 import Home from '@/pages/Home';
+import Buy2Flip from '@/pages/Buy2Flip';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -56,6 +57,7 @@ const AuthenticatedApp = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/buy2flip" element={<Buy2Flip />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
