@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -18,6 +18,10 @@ import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
 import RequirePermission from '@/lib/rbac/RequirePermission';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import DashboardHome from '@/pages/dashboard/DashboardHome';
+import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -52,21 +56,27 @@ const AuthenticatedApp = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/access-denied" element={<AccessDenied />} />
-        <Route path="/admin/rbac" element={
-          <RequirePermission permission="security.view">
-            <RBACDashboard />
-          </RequirePermission>
-        } />
-        <Route path="/admin/audit-logs" element={
-          <RequirePermission permission="security.audit_logs">
-            <AuditLogs />
-          </RequirePermission>
-        } />
-        <Route path="/admin/feature-flags" element={
-          <RequirePermission permission="security.feature_flags">
-            <FeatureFlags />
-          </RequirePermission>
-        } />
+      </Route>
+      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardHome />} />
+          <Route path="/dashboard/*" element={<ModulePlaceholder />} />
+          <Route path="/admin/rbac" element={
+            <RequirePermission permission="security.view">
+              <RBACDashboard />
+            </RequirePermission>
+          } />
+          <Route path="/admin/audit-logs" element={
+            <RequirePermission permission="security.audit_logs">
+              <AuditLogs />
+            </RequirePermission>
+          } />
+          <Route path="/admin/feature-flags" element={
+            <RequirePermission permission="security.feature_flags">
+              <FeatureFlags />
+            </RequirePermission>
+          } />
+        </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

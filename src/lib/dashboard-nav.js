@@ -1,0 +1,22 @@
+import {
+  LayoutDashboard, Building2, TrendingUp, Users, HardHat,
+  Briefcase, UserCog, Headphones, Scale, Wallet,
+  Megaphone, BarChart3, Shield, Settings,
+} from 'lucide-react';
+
+export const dashboardNav = [
+  { label: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  { label: 'Properties', href: '/dashboard/properties', icon: Building2, permission: 'properties.view' },
+  { label: 'Buy2Flip', href: '/dashboard/buy2flip', icon: TrendingUp, permission: 'buy2flip.view' },
+  { label: 'Leads', href: '/dashboard/leads', icon: Users, permission: 'leads.view' },
+  { label: 'Construction', href: '/dashboard/construction', icon: HardHat, permission: 'construction.view' },
+  { label: 'Management', href: '/dashboard/management', icon: Briefcase, permission: 'property_management.view' },
+  { label: 'Customers', href: '/dashboard/customers', icon: UserCog, permission: 'customers.view' },
+  { label: 'Support', href: '/dashboard/support', icon: Headphones, permission: 'support.view' },
+  { label: 'Legal', href: '/dashboard/legal', icon: Scale, permission: 'legal.view' },
+  { label: 'Finance', href: '/dashboard/finance', icon: Wallet, permission: 'finance.view' },
+  { label: 'Marketing', href: '/dashboard/marketing', icon: Megaphone, permission: 'marketing.view' },
+  { label: 'Reports', href: '/dashboard/reports', icon: BarChart3, permission: 'reports.view' },
+  { label: 'Administration', href: '/admin/rbac', icon: Shield, permission: 'security.view' },
+  { label: 'Settings', href: '/dashboard/settings', icon: Settings },
+];
