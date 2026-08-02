@@ -5,7 +5,7 @@ import Reveal from '@/components/ui/Reveal';
 function Counter({ to, suffix = '', duration = 2 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(to);
 
   useEffect(() => {
     if (!inView) return;
