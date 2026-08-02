@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, Building2, TrendingUp, Users, HardHat,
   Briefcase, UserCog, Headphones, Scale, Wallet,
-  Megaphone, BarChart3, Shield, Settings,
+  Megaphone, BarChart3, Shield, ShieldAlert, Settings,
 } from 'lucide-react';
 
 export const dashboardNav = [
@@ -18,5 +18,6 @@ export const dashboardNav = [
   { label: 'Marketing', href: '/dashboard/marketing', icon: Megaphone, permission: 'marketing.view' },
   { label: 'Reports', href: '/dashboard/reports', icon: BarChart3, permission: 'reports.view' },
   { label: 'Administration', href: '/admin/rbac', icon: Shield, permission: 'security.view' },
+  { label: 'SOC Dashboard', href: '/admin/soc', icon: ShieldAlert, permission: 'security.view' },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

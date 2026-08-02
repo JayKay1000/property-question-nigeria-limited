@@ -1,0 +1,65 @@
+{
+  "name": "DataPrivacyRequest",
+  "type": "object",
+  "properties": {
+    "request_type": {
+      "type": "string",
+      "description": "Type of privacy request under data protection regulations",
+      "enum": [
+        "access",
+        "correction",
+        "deletion",
+        "portability",
+        "objection"
+      ]
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID of the requesting user"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the requesting user"
+    },
+    "description": {
+      "type": "string",
+      "description": "User's description of the request"
+    },
+    "requested_details": {
+      "type": "string",
+      "description": "Specific data or action requested"
+    },
+    "status": {
+      "type": "string",
+      "description": "Processing status of the request",
+      "enum": [
+        "pending",
+        "in_review",
+        "completed",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "ID of the admin handling the request"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Name of the assigned admin"
+    },
+    "response_notes": {
+      "type": "string",
+      "description": "Notes on the resolution"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the request was completed"
+    }
+  },
+  "required": [
+    "request_type",
+    "status"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "UserSession",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "ID of the authenticated user"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user"
+    },
+    "device_name": {
+      "type": "string",
+      "description": "Friendly device name (e.g. iPhone 15, Chrome on Windows)"
+    },
+    "device_info": {
+      "type": "string",
+      "description": "Full user agent string"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address of the session"
+    },
+    "location": {
+      "type": "string",
+      "description": "Approximate geographic location"
+    },
+    "login_method": {
+      "type": "string",
+      "description": "How the user authenticated",
+      "enum": [
+        "email",
+        "google",
+        "microsoft",
+        "apple",
+        "facebook",
+        "sso"
+      ]
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Whether the session is currently active",
+      "default": true
+    },
+    "last_activity": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last activity"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session expires"
+    }
+  },
+  "required": [
+    "user_id",
+    "is_active"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "ConsentRecord",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "ID of the user who gave consent"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user"
+    },
+    "consent_type": {
+      "type": "string",
+      "description": "Category of consent",
+      "enum": [
+        "marketing",
+        "data_processing",
+        "cookies",
+        "third_party_share",
+        "terms_acceptance",
+        "privacy_policy"
+      ]
+    },
+    "granted": {
+      "type": "boolean",
+      "description": "Whether consent was granted",
+      "default": false
+    },
+    "consent_text": {
+      "type": "string",
+      "description": "The text the user agreed to"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the terms/privacy policy"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address at time of consent"
+    },
+    "withdrawn": {
+      "type": "boolean",
+      "description": "Whether consent was later withdrawn",
+      "default": false
+    }
+  },
+  "required": [
+    "consent_type",
+    "granted"
+  ]
+}

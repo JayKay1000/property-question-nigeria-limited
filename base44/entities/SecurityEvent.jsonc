@@ -1,0 +1,86 @@
+{
+  "name": "SecurityEvent",
+  "type": "object",
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "description": "Type of security event",
+      "enum": [
+        "failed_login",
+        "successful_login",
+        "password_reset",
+        "mfa_challenge",
+        "role_change",
+        "permission_change",
+        "bulk_export",
+        "suspicious_activity",
+        "locked_account",
+        "new_device",
+        "admin_action",
+        "large_download",
+        "failed_verification",
+        "session_revoked"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "description": "Risk severity level",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "low"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "ID of the user associated with the event"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user at time of event"
+    },
+    "user_role": {
+      "type": "string",
+      "description": "Role of the user at time of event"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable summary of the event"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address of the request"
+    },
+    "device_info": {
+      "type": "string",
+      "description": "User agent / device information"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Structured metadata about the event"
+    },
+    "resolved": {
+      "type": "boolean",
+      "description": "Whether the event has been resolved",
+      "default": false
+    },
+    "resolved_by": {
+      "type": "string",
+      "description": "ID of the admin who resolved the event"
+    },
+    "resolution_notes": {
+      "type": "string",
+      "description": "Notes on how the event was resolved"
+    }
+  },
+  "required": [
+    "event_type",
+    "severity"
+  ]
+}
