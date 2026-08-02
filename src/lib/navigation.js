@@ -1,6 +1,6 @@
 export const navItems = [
   {
-    label: 'Properties',
+    label: 'Listings',
     key: 'properties',
     href: '/properties',
     mega: {
