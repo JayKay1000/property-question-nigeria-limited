@@ -1,0 +1,133 @@
+{
+  "name": "Organization",
+  "type": "object",
+  "properties": {
+    "organization_name": {
+      "type": "string"
+    },
+    "registration_number": {
+      "type": "string"
+    },
+    "tax_id": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "organization_type": {
+      "type": "string",
+      "enum": [
+        "private_limited",
+        "public_limited",
+        "government",
+        "ngo",
+        "partnership",
+        "sole_proprietor",
+        "other"
+      ]
+    },
+    "contact_person_name": {
+      "type": "string"
+    },
+    "contact_person_email": {
+      "type": "string"
+    },
+    "contact_person_phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "account_manager_id": {
+      "type": "string",
+      "description": "Assigned account manager user ID"
+    },
+    "account_manager_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suspended",
+        "blacklisted"
+      ],
+      "default": "active"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "organization_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.account_manager_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.account_manager_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.account_manager_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

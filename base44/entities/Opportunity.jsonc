@@ -1,0 +1,164 @@
+{
+  "name": "Opportunity",
+  "type": "object",
+  "properties": {
+    "opportunity_number": {
+      "type": "string",
+      "description": "Unique opportunity number (e.g. PQ-OPP-2024-0001)"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "opportunity_type": {
+      "type": "string",
+      "enum": [
+        "property_sale",
+        "property_rental",
+        "project_plot",
+        "buy2flip_plan",
+        "property_management",
+        "construction",
+        "other"
+      ]
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "buy2flip_plan_id": {
+      "type": "string"
+    },
+    "expected_value_ngn": {
+      "type": "number"
+    },
+    "actual_value_ngn": {
+      "type": "number"
+    },
+    "probability": {
+      "type": "number",
+      "default": 0,
+      "description": "Win probability percentage 0-100"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "prospecting",
+        "qualification",
+        "needs_analysis",
+        "inspection",
+        "proposal",
+        "negotiation",
+        "reservation",
+        "payment",
+        "allocation",
+        "won",
+        "lost"
+      ],
+      "default": "prospecting"
+    },
+    "stage_key": {
+      "type": "string",
+      "description": "Reference to OpportunityStage entity"
+    },
+    "expected_close_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_close_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "assigned_staff_id": {
+      "type": "string"
+    },
+    "assigned_staff_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "is_won": {
+      "type": "boolean",
+      "default": false
+    },
+    "won_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "lost_reason": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "customer_id",
+    "opportunity_type",
+    "stage"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.assigned_staff_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.assigned_staff_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.assigned_staff_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

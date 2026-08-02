@@ -2,6 +2,14 @@
   "name": "Lead",
   "type": "object",
   "properties": {
+    "lead_reference": {
+      "type": "string",
+      "description": "Unique lead reference (e.g. PQ-LEAD-2024-0001)"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Reference to Customer entity if converted"
+    },
     "full_name": {
       "type": "string"
     },
@@ -9,6 +17,12 @@
       "type": "string"
     },
     "phone": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "organization_name": {
       "type": "string"
     },
     "source": {
@@ -21,9 +35,30 @@
         "call",
         "email",
         "buy2flip",
+        "google_ads",
+        "facebook",
+        "instagram",
+        "linkedin",
+        "whatsapp",
+        "sms_campaign",
+        "email_campaign",
+        "event",
+        "partner",
+        "agent",
         "other"
       ],
       "default": "website"
+    },
+    "source_key": {
+      "type": "string",
+      "description": "Reference to LeadSource entity"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Reference to Campaign entity"
+    },
+    "campaign_name": {
+      "type": "string"
     },
     "status": {
       "type": "string",
@@ -31,13 +66,21 @@
         "new",
         "contacted",
         "qualified",
-        "proposal_sent",
-        "negotiation",
-        "won",
+        "unqualified",
+        "interested",
+        "inspection_scheduled",
+        "negotiating",
+        "reserved",
+        "converted",
         "lost",
+        "dormant",
         "nurturing"
       ],
       "default": "new"
+    },
+    "status_key": {
+      "type": "string",
+      "description": "Reference to LeadStatus entity"
     },
     "priority": {
       "type": "string",
@@ -49,13 +92,32 @@
       ],
       "default": "medium"
     },
-    "interest_type": {
+    "lead_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Dynamic lead score"
+    },
+    "score_level": {
       "type": "string",
-      "description": "What they are interested in"
+      "enum": [
+        "cold",
+        "warm",
+        "hot"
+      ],
+      "default": "cold"
+    },
+    "interest_type": {
+      "type": "string"
     },
     "interest_ref": {
       "type": "string",
-      "description": "Reference to the specific property or project"
+      "description": "Reference to specific property or project"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
     },
     "budget_range_min": {
       "type": "number"
@@ -69,6 +131,10 @@
         "type": "string"
       }
     },
+    "expected_close_date": {
+      "type": "string",
+      "format": "date"
+    },
     "notes": {
       "type": "string"
     },
@@ -77,10 +143,12 @@
       "format": "date"
     },
     "assigned_to_id": {
-      "type": "string",
-      "description": "Assigned agent or staff user ID"
+      "type": "string"
     },
     "assigned_to_name": {
+      "type": "string"
+    },
+    "assigned_by": {
       "type": "string"
     },
     "converted_to_customer_id": {
@@ -89,6 +157,9 @@
     "converted_at": {
       "type": "string",
       "format": "date-time"
+    },
+    "conversion_value_ngn": {
+      "type": "number"
     },
     "lost_reason": {
       "type": "string"

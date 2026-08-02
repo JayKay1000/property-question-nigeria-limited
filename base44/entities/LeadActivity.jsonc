@@ -1,0 +1,101 @@
+{
+  "name": "LeadActivity",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string"
+    },
+    "lead_name": {
+      "type": "string"
+    },
+    "activity_type": {
+      "type": "string",
+      "enum": [
+        "call",
+        "email",
+        "sms",
+        "whatsapp",
+        "meeting",
+        "site_visit",
+        "note",
+        "status_change",
+        "assignment",
+        "follow_up"
+      ],
+      "default": "note"
+    },
+    "description": {
+      "type": "string"
+    },
+    "performed_by": {
+      "type": "string"
+    },
+    "performed_by_name": {
+      "type": "string"
+    },
+    "activity_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "outcome": {
+      "type": "string",
+      "description": "Outcome of the activity"
+    },
+    "next_action": {
+      "type": "string"
+    },
+    "next_action_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lead_id",
+    "activity_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.performed_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.performed_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

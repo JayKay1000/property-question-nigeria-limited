@@ -1,0 +1,144 @@
+{
+  "name": "Reminder",
+  "type": "object",
+  "properties": {
+    "reminder_type": {
+      "type": "string",
+      "enum": [
+        "follow_up_call",
+        "meeting",
+        "inspection",
+        "documentation",
+        "payment",
+        "contract_renewal",
+        "birthday",
+        "anniversary",
+        "custom"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "lead_id": {
+      "type": "string"
+    },
+    "opportunity_id": {
+      "type": "string"
+    },
+    "reminder_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_recurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "recurrence_pattern": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "custom"
+      ],
+      "description": "Recurrence pattern"
+    },
+    "recurrence_interval": {
+      "type": "number",
+      "default": 1
+    },
+    "next_reminder_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "snoozed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "assigned_to_id": {
+      "type": "string"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "reminder_type",
+    "title",
+    "reminder_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

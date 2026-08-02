@@ -1,0 +1,92 @@
+{
+  "name": "OpportunityProduct",
+  "type": "object",
+  "properties": {
+    "opportunity_id": {
+      "type": "string"
+    },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "project_plot",
+        "buy2flip_plan",
+        "service",
+        "construction",
+        "property_management"
+      ]
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Reference to Property, Project, or Buy2Flip plan"
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "unit_price_ngn": {
+      "type": "number"
+    },
+    "discount_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "total_price_ngn": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "opportunity_id",
+    "product_type",
+    "product_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

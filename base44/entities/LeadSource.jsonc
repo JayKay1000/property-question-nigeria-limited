@@ -1,0 +1,63 @@
+{
+  "name": "LeadSource",
+  "type": "object",
+  "properties": {
+    "source_key": {
+      "type": "string",
+      "description": "Unique source identifier (e.g. website, buy2flip, walk_in)"
+    },
+    "source_name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "digital",
+        "offline",
+        "referral",
+        "partner",
+        "social_media",
+        "paid_ads"
+      ],
+      "description": "Broad channel category"
+    },
+    "is_digital": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "source_key",
+    "source_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

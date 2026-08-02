@@ -1,0 +1,139 @@
+{
+  "name": "CustomerSiteInspection",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspection_time": {
+      "type": "string"
+    },
+    "sales_executive_id": {
+      "type": "string"
+    },
+    "sales_executive_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "no_show",
+        "rescheduled"
+      ],
+      "default": "scheduled"
+    },
+    "feedback": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Customer rating 1-5"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gps_check_in_lat": {
+      "type": "number",
+      "description": "Future-ready GPS check-in"
+    },
+    "gps_check_in_lng": {
+      "type": "number"
+    },
+    "check_in_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "check_out_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_id",
+    "inspection_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.sales_executive_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.sales_executive_id": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.sales_executive_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

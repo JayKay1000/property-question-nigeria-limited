@@ -1,0 +1,101 @@
+{
+  "name": "LeadAssignment",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string"
+    },
+    "lead_name": {
+      "type": "string"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Assigned agent/sales executive user ID"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "assigned_by": {
+      "type": "string"
+    },
+    "assigned_by_name": {
+      "type": "string"
+    },
+    "assignment_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assignment_reason": {
+      "type": "string"
+    },
+    "previous_assignee_id": {
+      "type": "string"
+    },
+    "previous_assignee_name": {
+      "type": "string"
+    },
+    "is_current": {
+      "type": "boolean",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "reassigned",
+        "completed",
+        "cancelled"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "lead_id",
+    "assigned_to_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
