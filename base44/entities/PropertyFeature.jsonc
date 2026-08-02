@@ -1,0 +1,104 @@
+{
+  "name": "PropertyFeature",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "feature_key": {
+      "type": "string",
+      "description": "Feature identifier (e.g. swimming_pool, security, electricity, cctv)"
+    },
+    "feature_name": {
+      "type": "string",
+      "description": "Display name for the feature"
+    },
+    "feature_value": {
+      "type": "string",
+      "description": "Value of the feature (e.g. true, yes, 4, 24/7)"
+    },
+    "feature_category": {
+      "type": "string",
+      "enum": [
+        "amenity",
+        "utility",
+        "construction_spec",
+        "structural",
+        "outdoor",
+        "security",
+        "smart_home"
+      ],
+      "default": "amenity",
+      "description": "Category of the feature"
+    },
+    "feature_type": {
+      "type": "string",
+      "enum": [
+        "boolean",
+        "number",
+        "string",
+        "enum"
+      ],
+      "default": "boolean",
+      "description": "Data type of the feature value"
+    },
+    "is_highlight": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display this as a key highlight"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "description": {
+      "type": "string",
+      "description": "Additional notes about this feature"
+    }
+  },
+  "required": [
+    "property_id",
+    "feature_key",
+    "feature_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

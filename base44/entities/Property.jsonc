@@ -10,13 +10,47 @@
       "type": "string",
       "description": "Unique property reference (e.g. PQ-PROP-2024-0001)"
     },
+    "property_code": {
+      "type": "string",
+      "description": "Internal property code"
+    },
+    "slug": {
+      "type": "string",
+      "description": "SEO-friendly URL slug"
+    },
     "description": {
       "type": "string",
-      "description": "Full property description"
+      "description": "Full detailed property description"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Brief description for cards and previews"
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key selling points and property highlights"
     },
     "property_type": {
       "type": "string",
       "description": "Type of property (house, apartment, land, commercial)"
+    },
+    "property_category": {
+      "type": "string",
+      "description": "Category key from PropertyCategory entity (sale, lease, rent, etc.)"
+    },
+    "property_classification": {
+      "type": "string",
+      "enum": [
+        "ultra_luxury",
+        "luxury",
+        "premium",
+        "standard",
+        "budget"
+      ],
+      "description": "Property quality classification"
     },
     "status": {
       "type": "string",
@@ -34,6 +68,43 @@
         "archived"
       ],
       "default": "draft"
+    },
+    "availability_status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "reserved",
+        "under_offer",
+        "sold",
+        "leased",
+        "off_market",
+        "withdrawn"
+      ],
+      "default": "available"
+    },
+    "property_condition": {
+      "type": "string",
+      "enum": [
+        "new",
+        "excellent",
+        "good",
+        "fair",
+        "needs_renovation",
+        "under_construction"
+      ],
+      "description": "Physical condition of the property"
+    },
+    "development_stage": {
+      "type": "string",
+      "enum": [
+        "land_only",
+        "foundation",
+        "structure",
+        "finishing",
+        "completed",
+        "off_plan"
+      ],
+      "description": "Construction/development stage"
     },
     "listing_purpose": {
       "type": "string",
@@ -156,6 +227,37 @@
     },
     "virtual_tour_url": {
       "type": "string"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured listing flag"
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false,
+      "description": "Premium listing flag"
+    },
+    "is_exclusive": {
+      "type": "boolean",
+      "default": false,
+      "description": "Exclusive listing flag"
+    },
+    "is_new_listing": {
+      "type": "boolean",
+      "default": false,
+      "description": "New listing flag"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private",
+        "internal",
+        "agents_only"
+      ],
+      "default": "public",
+      "description": "Listing visibility scope"
     },
     "verified": {
       "type": "boolean",
