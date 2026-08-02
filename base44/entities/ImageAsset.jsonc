@@ -1,0 +1,171 @@
+{
+  "name": "ImageAsset",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "image_category": {
+      "type": "string",
+      "enum": [
+        "property_image",
+        "estate_image",
+        "staff_image",
+        "agent_photo",
+        "construction_photo",
+        "marketing_image",
+        "event_photo",
+        "drone_image",
+        "corporate_image",
+        "other"
+      ]
+    },
+    "resolution_width": {
+      "type": "number",
+      "description": "Image width in pixels"
+    },
+    "resolution_height": {
+      "type": "number",
+      "description": "Image height in pixels"
+    },
+    "resolution_label": {
+      "type": "string",
+      "description": "Resolution label (e.g. 4K, Full HD, HD)"
+    },
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "landscape",
+        "portrait",
+        "square",
+        "panorama"
+      ],
+      "description": "Image orientation"
+    },
+    "color_profile": {
+      "type": "string",
+      "description": "Color profile (sRGB, Adobe RGB, ProPhoto)"
+    },
+    "color_depth": {
+      "type": "number",
+      "description": "Color depth in bits"
+    },
+    "exif_metadata": {
+      "type": "object",
+      "description": "Full EXIF metadata (camera, lens, settings)"
+    },
+    "photographer": {
+      "type": "string",
+      "description": "Photographer name"
+    },
+    "photographer_id": {
+      "type": "string"
+    },
+    "capture_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "copyright": {
+      "type": "string",
+      "description": "Copyright holder"
+    },
+    "copyright_url": {
+      "type": "string"
+    },
+    "alt_text": {
+      "type": "string",
+      "description": "Accessibility alt text"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_primary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Primary image for related entity"
+    },
+    "is_hero": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hero/featured image"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "gps_latitude": {
+      "type": "number"
+    },
+    "gps_longitude": {
+      "type": "number"
+    },
+    "focal_point_x": {
+      "type": "number",
+      "description": "Focal point X (0-1) for smart cropping"
+    },
+    "focal_point_y": {
+      "type": "number",
+      "description": "Focal point Y (0-1) for smart cropping"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "jpeg",
+        "png",
+        "webp",
+        "gif",
+        "tiff",
+        "bmp",
+        "svg",
+        "heic",
+        "avif"
+      ]
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "image_category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "name": "DroneMedia",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "drone_media_type": {
+      "type": "string",
+      "enum": [
+        "drone_image",
+        "drone_video",
+        "aerial_survey",
+        "topographic",
+        "orthophoto",
+        "progress_photo",
+        "site_overview"
+      ]
+    },
+    "drone_model": {
+      "type": "string",
+      "description": "Drone model used (e.g. DJI Mavic 3)"
+    },
+    "camera_model": {
+      "type": "string"
+    },
+    "pilot_name": {
+      "type": "string"
+    },
+    "pilot_license_number": {
+      "type": "string",
+      "description": "Drone pilot license/registration number"
+    },
+    "flight_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "flight_altitude_meters": {
+      "type": "number"
+    },
+    "gps_latitude": {
+      "type": "number"
+    },
+    "gps_longitude": {
+      "type": "number"
+    },
+    "altitude_above_ground": {
+      "type": "number",
+      "description": "Altitude above ground level in meters"
+    },
+    "resolution_width": {
+      "type": "number"
+    },
+    "resolution_height": {
+      "type": "number"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Duration for drone videos"
+    },
+    "coverage_area_sqm": {
+      "type": "number",
+      "description": "Area covered in square meters"
+    },
+    "ground_resolution_cm_per_pixel": {
+      "type": "number",
+      "description": "Ground sampling distance"
+    },
+    "is_orthomosaic": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is an orthomosaic map"
+    },
+    "is_3d_model_source": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether used for 3D model generation"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "drone_media_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

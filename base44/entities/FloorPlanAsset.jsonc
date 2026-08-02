@@ -1,0 +1,174 @@
+{
+  "name": "FloorPlanAsset",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "floor_plan",
+        "site_plan",
+        "estate_layout",
+        "building_plan",
+        "survey_plan",
+        "sectional",
+        "elevation",
+        "landscape_plan",
+        "electrical_plan",
+        "plumbing_plan",
+        "hvac_plan"
+      ]
+    },
+    "file_format": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "svg",
+        "cad",
+        "dwg",
+        "dxf",
+        "image",
+        "rvt",
+        "skp",
+        "3ds",
+        "other"
+      ],
+      "description": "Floor plan file format"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "version_label": {
+      "type": "string",
+      "default": "v1",
+      "description": "Version label (e.g. v1, v2, Revision A)"
+    },
+    "layout_version": {
+      "type": "number",
+      "default": 1,
+      "description": "Layout version number"
+    },
+    "scale": {
+      "type": "string",
+      "description": "Drawing scale (e.g. 1:100, 1:200)"
+    },
+    "dimensions_width": {
+      "type": "number",
+      "description": "Plan width in mm"
+    },
+    "dimensions_height": {
+      "type": "number",
+      "description": "Plan height in mm"
+    },
+    "area_sqm": {
+      "type": "number",
+      "description": "Total area in square meters"
+    },
+    "number_of_floors": {
+      "type": "number"
+    },
+    "number_of_rooms": {
+      "type": "number"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "designed_by": {
+      "type": "string",
+      "description": "Architect/designer name"
+    },
+    "designer_license": {
+      "type": "string"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "in_review",
+        "approved",
+        "rejected",
+        "revision_required",
+        "superseded"
+      ],
+      "default": "draft"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_current_version": {
+      "type": "boolean",
+      "default": true
+    },
+    "previous_version_id": {
+      "type": "string",
+      "description": "Reference to previous FloorPlanAsset version"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "preview_url": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "plan_type",
+    "file_format"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

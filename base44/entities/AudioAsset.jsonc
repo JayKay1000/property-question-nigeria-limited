@@ -1,0 +1,114 @@
+{
+  "name": "AudioAsset",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "audio_category": {
+      "type": "string",
+      "enum": [
+        "voice_note",
+        "podcast",
+        "training_audio",
+        "interview",
+        "promotional_audio",
+        "announcement",
+        "testimonial",
+        "other"
+      ]
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Audio duration in seconds"
+    },
+    "duration_label": {
+      "type": "string",
+      "description": "Formatted duration"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "mp3",
+        "wav",
+        "ogg",
+        "aac",
+        "flac",
+        "m4a",
+        "webm"
+      ]
+    },
+    "bitrate": {
+      "type": "number",
+      "description": "Audio bitrate in kbps"
+    },
+    "sample_rate": {
+      "type": "number",
+      "description": "Sample rate in Hz"
+    },
+    "channels": {
+      "type": "number",
+      "description": "Number of audio channels (1=mono, 2=stereo)"
+    },
+    "language": {
+      "type": "string",
+      "description": "Primary spoken language"
+    },
+    "transcription": {
+      "type": "string",
+      "description": "Audio transcription (future-ready)"
+    },
+    "streaming_url": {
+      "type": "string"
+    },
+    "download_url": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "audio_category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

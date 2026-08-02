@@ -1,0 +1,275 @@
+{
+  "name": "MediaAsset",
+  "type": "object",
+  "properties": {
+    "asset_reference": {
+      "type": "string",
+      "description": "Globally unique asset reference (e.g. PQ-MEDIA-2024-0001)"
+    },
+    "asset_name": {
+      "type": "string",
+      "description": "Internal asset name"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Display name for UI"
+    },
+    "original_filename": {
+      "type": "string"
+    },
+    "storage_filename": {
+      "type": "string",
+      "description": "Generated storage filename"
+    },
+    "slug": {
+      "type": "string",
+      "description": "SEO-friendly slug"
+    },
+    "description": {
+      "type": "string"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "image",
+        "video",
+        "audio",
+        "360_image",
+        "360_video",
+        "virtual_tour",
+        "drone_image",
+        "drone_video",
+        "floor_plan",
+        "document",
+        "brochure",
+        "other"
+      ],
+      "description": "Broad asset type classification"
+    },
+    "mime_type": {
+      "type": "string",
+      "description": "MIME type (e.g. image/jpeg, video/mp4)"
+    },
+    "file_extension": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "storage_provider": {
+      "type": "string",
+      "enum": [
+        "supabase",
+        "aws_s3",
+        "gcs",
+        "azure_blob",
+        "cloudflare_r2",
+        "minio",
+        "base44",
+        "local"
+      ],
+      "default": "base44",
+      "description": "Cloud storage abstraction \u2014 allows migration without schema redesign"
+    },
+    "storage_bucket": {
+      "type": "string",
+      "description": "Storage bucket/container name"
+    },
+    "file_path": {
+      "type": "string",
+      "description": "Full storage path"
+    },
+    "public_url": {
+      "type": "string",
+      "description": "Public CDN URL (if public)"
+    },
+    "secure_url": {
+      "type": "string",
+      "description": "Signed/secure URL for protected access"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "preview_url": {
+      "type": "string"
+    },
+    "folder_id": {
+      "type": "string",
+      "description": "Reference to Folder entity"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Reference to MediaCategory entity"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tag keys from MediaTag entity"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+        "agents_only",
+        "customers_only"
+      ],
+      "default": "internal"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "uploading",
+        "processing",
+        "ready",
+        "failed",
+        "archived",
+        "deleted"
+      ],
+      "default": "uploading"
+    },
+    "checksum": {
+      "type": "string",
+      "description": "File hash for integrity and duplicate detection"
+    },
+    "uploaded_by": {
+      "type": "string"
+    },
+    "uploaded_by_name": {
+      "type": "string"
+    },
+    "upload_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_by": {
+      "type": "string"
+    },
+    "archived_by": {
+      "type": "string"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleted_by": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "related_module": {
+      "type": "string",
+      "enum": [
+        "properties",
+        "projects",
+        "buy2flip",
+        "crm",
+        "agents",
+        "customers",
+        "construction",
+        "property_management",
+        "marketing",
+        "hr",
+        "legal",
+        "corporate",
+        "general"
+      ]
+    },
+    "related_entity_type": {
+      "type": "string"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "download_count": {
+      "type": "number",
+      "default": 0
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "share_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_watermarked": {
+      "type": "boolean",
+      "default": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional asset metadata (EXIF, codec, etc.)"
+    }
+  },
+  "required": [
+    "asset_reference",
+    "asset_name",
+    "asset_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.uploaded_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.uploaded_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.visibility": "public"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.uploaded_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

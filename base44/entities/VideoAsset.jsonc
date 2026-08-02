@@ -1,0 +1,165 @@
+{
+  "name": "VideoAsset",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "video_category": {
+      "type": "string",
+      "enum": [
+        "property_video",
+        "drone_video",
+        "walkthrough_video",
+        "construction_update",
+        "marketing_video",
+        "training_video",
+        "corporate_video",
+        "testimonial_video",
+        "event_video",
+        "other"
+      ]
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Video duration in seconds"
+    },
+    "duration_label": {
+      "type": "string",
+      "description": "Formatted duration (e.g. 3:45)"
+    },
+    "resolution_width": {
+      "type": "number"
+    },
+    "resolution_height": {
+      "type": "number"
+    },
+    "resolution_label": {
+      "type": "string",
+      "description": "Resolution label (4K, 1080p, 720p, etc.)"
+    },
+    "frame_rate": {
+      "type": "number",
+      "description": "Frames per second"
+    },
+    "codec": {
+      "type": "string",
+      "description": "Video codec (H.264, H.265, VP9, AV1)"
+    },
+    "audio_codec": {
+      "type": "string",
+      "description": "Audio codec (AAC, MP3, Opus)"
+    },
+    "bitrate": {
+      "type": "number",
+      "description": "Video bitrate in kbps"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Video thumbnail/poster image"
+    },
+    "poster_url": {
+      "type": "string",
+      "description": "Poster frame for player"
+    },
+    "streaming_url": {
+      "type": "string",
+      "description": "HLS/DASH streaming URL"
+    },
+    "streaming_url_hls": {
+      "type": "string"
+    },
+    "streaming_url_dash": {
+      "type": "string"
+    },
+    "download_url": {
+      "type": "string",
+      "description": "Direct download URL"
+    },
+    "captions_url": {
+      "type": "string",
+      "description": "Captions/subtitles file URL (SRT/VTT)"
+    },
+    "subtitles_languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Available subtitle languages"
+    },
+    "transcription": {
+      "type": "string",
+      "description": "Full video transcription (future-ready)"
+    },
+    "is_360": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_drone_footage": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_processed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether transcoding is complete"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "mp4",
+        "webm",
+        "mov",
+        "avi",
+        "mkv",
+        "m4v"
+      ]
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "video_category"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

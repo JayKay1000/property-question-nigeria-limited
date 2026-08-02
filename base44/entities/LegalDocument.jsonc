@@ -1,0 +1,174 @@
+{
+  "name": "LegalDocument",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Reference to Document entity"
+    },
+    "legal_document_type": {
+      "type": "string",
+      "enum": [
+        "survey_plan",
+        "certificate_of_occupancy",
+        "deed_of_assignment",
+        "governors_consent",
+        "registered_survey",
+        "allocation_letter",
+        "power_of_attorney",
+        "building_approval",
+        "land_certificate",
+        "title_document",
+        "encumbrance_certificate",
+        "search_report",
+        "affidavit",
+        "court_order",
+        "other"
+      ]
+    },
+    "property_reference": {
+      "type": "string",
+      "description": "Property reference number"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "issued_by": {
+      "type": "string",
+      "description": "Issuing authority (e.g. Lagos State Lands Bureau)"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected",
+        "expired",
+        "under_investigation"
+      ],
+      "default": "unverified"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_reference": {
+      "type": "string",
+      "description": "Verification reference from issuing authority"
+    },
+    "approval_notes": {
+      "type": "string"
+    },
+    "document_number": {
+      "type": "string",
+      "description": "Official document number from authority"
+    },
+    "registration_number": {
+      "type": "string",
+      "description": "Registration number"
+    },
+    "version_number": {
+      "type": "number",
+      "default": 1,
+      "description": "Version \u2014 approved versions are never overwritten"
+    },
+    "is_approved_version": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is an approved version (immutable)"
+    },
+    "superseded_by_version": {
+      "type": "number",
+      "description": "Version that superseded this one (if any)"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "file_url_secure": {
+      "type": "string",
+      "description": "Secure/signed URL for confidential access"
+    },
+    "checksum": {
+      "type": "string"
+    },
+    "is_legal_hold": {
+      "type": "boolean",
+      "default": false
+    },
+    "legal_hold_reason": {
+      "type": "string"
+    },
+    "blockchain_reference": {
+      "type": "string",
+      "description": "Future-ready: blockchain verification reference"
+    },
+    "digital_signature_id": {
+      "type": "string",
+      "description": "Future-ready: digital signature reference"
+    }
+  },
+  "required": [
+    "document_id",
+    "legal_document_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

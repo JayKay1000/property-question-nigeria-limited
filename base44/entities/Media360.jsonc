@@ -1,0 +1,131 @@
+{
+  "name": "Media360",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to parent MediaAsset entity"
+    },
+    "media_360_type": {
+      "type": "string",
+      "enum": [
+        "360_image",
+        "360_video",
+        "virtual_tour",
+        "matterport",
+        "street_view"
+      ]
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "matterport",
+        "google_street_view",
+        "kuula",
+        "ptgui",
+        "panoramic",
+        "other"
+      ],
+      "description": "360 media provider platform"
+    },
+    "provider_tour_id": {
+      "type": "string",
+      "description": "External tour ID from provider"
+    },
+    "viewer_url": {
+      "type": "string",
+      "description": "Embeddable viewer URL"
+    },
+    "embed_code": {
+      "type": "string",
+      "description": "HTML embed code"
+    },
+    "preview_url": {
+      "type": "string",
+      "description": "Preview/thumbnail image URL"
+    },
+    "source_image_url": {
+      "type": "string",
+      "description": "Source equirectangular image"
+    },
+    "resolution_width": {
+      "type": "number"
+    },
+    "resolution_height": {
+      "type": "number"
+    },
+    "field_of_view": {
+      "type": "number",
+      "description": "Field of view in degrees"
+    },
+    "hotspots": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Interactive hotspots within the 360 media"
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Multiple scenes for virtual tours"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "description": "Duration for 360 videos"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "is_processed": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "media_asset_id",
+    "media_360_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

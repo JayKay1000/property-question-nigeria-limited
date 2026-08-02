@@ -1,0 +1,81 @@
+{
+  "name": "MediaCategory",
+  "type": "object",
+  "properties": {
+    "category_key": {
+      "type": "string",
+      "description": "Unique category identifier (e.g. marketing, legal, property)"
+    },
+    "category_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "properties",
+        "projects",
+        "buy2flip",
+        "crm",
+        "agents",
+        "customers",
+        "construction",
+        "property_management",
+        "marketing",
+        "hr",
+        "legal",
+        "corporate",
+        "finance",
+        "media",
+        "general"
+      ]
+    },
+    "parent_category_id": {
+      "type": "string",
+      "description": "Parent category for hierarchical categories"
+    },
+    "color": {
+      "type": "string",
+      "description": "Hex color for UI display"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "item_count": {
+      "type": "number",
+      "default": 0
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "category_key",
+    "category_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
