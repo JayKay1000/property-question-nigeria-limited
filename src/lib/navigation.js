@@ -1,4 +1,5 @@
 export const navItems = [
+  { label: 'Home', key: 'home', href: '/' },
   {
     label: 'Listings',
     key: 'properties',
