@@ -1,0 +1,137 @@
+{
+  "name": "PropertyOffer",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "offeror_id": {
+      "type": "string",
+      "description": "User ID of the person making the offer"
+    },
+    "offeror_name": {
+      "type": "string"
+    },
+    "offeror_email": {
+      "type": "string"
+    },
+    "offeror_phone": {
+      "type": "string"
+    },
+    "offer_amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "offer_type": {
+      "type": "string",
+      "enum": [
+        "purchase",
+        "lease",
+        "rent",
+        "joint_venture"
+      ],
+      "default": "purchase"
+    },
+    "offer_valid_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "terms": {
+      "type": "string",
+      "description": "Offer terms and conditions"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "reviewing",
+        "countered",
+        "accepted",
+        "rejected",
+        "withdrawn",
+        "expired"
+      ],
+      "default": "pending"
+    },
+    "counter_offer_amount": {
+      "type": "number"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Assigned sales executive"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "response_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "offer_amount",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.offeror_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.offeror_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

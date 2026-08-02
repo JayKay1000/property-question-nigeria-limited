@@ -1,0 +1,137 @@
+{
+  "name": "InspectionRequest",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Platform User ID if registered"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "requested_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "requested_time": {
+      "type": "string",
+      "description": "Preferred time slot"
+    },
+    "confirmed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "confirmed_time": {
+      "type": "string"
+    },
+    "sales_representative_id": {
+      "type": "string"
+    },
+    "sales_representative_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "rescheduled",
+        "no_show"
+      ],
+      "default": "pending"
+    },
+    "inspection_notes": {
+      "type": "string"
+    },
+    "number_of_attendees": {
+      "type": "number",
+      "default": 1
+    },
+    "transportation_needed": {
+      "type": "boolean",
+      "default": false
+    },
+    "feedback_rating": {
+      "type": "number"
+    },
+    "feedback_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "customer_name",
+    "requested_date",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "data.sales_representative_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.sales_representative_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

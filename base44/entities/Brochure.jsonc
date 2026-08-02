@@ -1,0 +1,96 @@
+{
+  "name": "Brochure",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "Downloadable brochure file URL"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "language": {
+      "type": "string",
+      "default": "en"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "authenticated",
+        "agents_only",
+        "internal",
+        "admin_only"
+      ],
+      "default": "public"
+    },
+    "download_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "file_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

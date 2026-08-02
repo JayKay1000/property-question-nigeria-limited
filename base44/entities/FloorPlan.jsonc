@@ -1,0 +1,108 @@
+{
+  "name": "FloorPlan",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "plan_type": {
+      "type": "string",
+      "enum": [
+        "floor_plan",
+        "site_plan",
+        "estate_layout",
+        "building_plan",
+        "survey_plan",
+        "sectional"
+      ],
+      "default": "floor_plan"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to the plan file/image"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "upload_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "revision_needed"
+      ],
+      "default": "pending"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "property_id",
+    "plan_type",
+    "file_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

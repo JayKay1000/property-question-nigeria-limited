@@ -1,0 +1,98 @@
+{
+  "name": "PropertyDimension",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "land_size": {
+      "type": "number",
+      "description": "Land area"
+    },
+    "building_area": {
+      "type": "number",
+      "description": "Built-up area"
+    },
+    "plot_size": {
+      "type": "number",
+      "description": "Plot size"
+    },
+    "measurement_unit": {
+      "type": "string",
+      "enum": [
+        "sqm",
+        "sqft",
+        "acres",
+        "hectares",
+        "plots",
+        "sqm"
+      ],
+      "default": "sqm"
+    },
+    "survey_coordinates": {
+      "type": "string",
+      "description": "Survey coordinate data (JSON or raw)"
+    },
+    "boundary_description": {
+      "type": "string",
+      "description": "Description of property boundaries"
+    },
+    "frontage_meters": {
+      "type": "number",
+      "description": "Frontage length in meters"
+    },
+    "depth_meters": {
+      "type": "number",
+      "description": "Depth in meters"
+    },
+    "number_of_floors": {
+      "type": "number"
+    },
+    "number_of_rooms": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "property_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

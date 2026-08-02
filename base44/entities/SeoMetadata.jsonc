@@ -1,0 +1,103 @@
+{
+  "name": "SeoMetadata",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "seo_title": {
+      "type": "string",
+      "description": "SEO page title"
+    },
+    "meta_description": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "canonical_url": {
+      "type": "string"
+    },
+    "og_title": {
+      "type": "string",
+      "description": "Open Graph title"
+    },
+    "og_description": {
+      "type": "string"
+    },
+    "og_image_url": {
+      "type": "string"
+    },
+    "twitter_card_type": {
+      "type": "string",
+      "enum": [
+        "summary",
+        "summary_large_image",
+        "app",
+        "player"
+      ],
+      "default": "summary_large_image"
+    },
+    "twitter_title": {
+      "type": "string"
+    },
+    "twitter_description": {
+      "type": "string"
+    },
+    "twitter_image_url": {
+      "type": "string"
+    },
+    "robots_directive": {
+      "type": "string",
+      "default": "index, follow"
+    },
+    "structured_data_type": {
+      "type": "string",
+      "description": "Schema.org type (e.g. RealEstateListing)"
+    },
+    "seo_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Calculated SEO completeness score 0-100"
+    }
+  },
+  "required": [
+    "property_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

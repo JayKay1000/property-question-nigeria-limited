@@ -1,0 +1,112 @@
+{
+  "name": "PropertyImage",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Full image URL"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Optimized thumbnail URL"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "alt_text": {
+      "type": "string",
+      "description": "Accessibility alt text"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "image_type": {
+      "type": "string",
+      "enum": [
+        "exterior",
+        "interior",
+        "aerial",
+        "drone",
+        "floor_plan",
+        "site_plan",
+        "other"
+      ],
+      "default": "exterior"
+    },
+    "photographer": {
+      "type": "string"
+    },
+    "upload_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "copyright_info": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "is_optimized": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "property_id",
+    "image_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

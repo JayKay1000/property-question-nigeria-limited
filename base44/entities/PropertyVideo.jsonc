@@ -1,0 +1,101 @@
+{
+  "name": "PropertyVideo",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Full video URL"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "video_type": {
+      "type": "string",
+      "enum": [
+        "promotional",
+        "drone",
+        "walkthrough",
+        "construction_progress",
+        "interview",
+        "other"
+      ],
+      "default": "promotional"
+    },
+    "duration_seconds": {
+      "type": "number"
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "authenticated",
+        "internal",
+        "admin_only"
+      ],
+      "default": "public"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "uploaded_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "video_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

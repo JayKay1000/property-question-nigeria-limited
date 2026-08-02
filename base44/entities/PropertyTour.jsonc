@@ -1,0 +1,107 @@
+{
+  "name": "PropertyTour",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "tour_available": {
+      "type": "boolean",
+      "default": true
+    },
+    "guide_id": {
+      "type": "string",
+      "description": "Assigned tour guide user ID"
+    },
+    "guide_name": {
+      "type": "string"
+    },
+    "booking_price_ngn": {
+      "type": "number",
+      "description": "Tour booking price in NGN"
+    },
+    "tour_schedule": {
+      "type": "object",
+      "description": "Available tour time slots"
+    },
+    "estimated_duration_minutes": {
+      "type": "number",
+      "default": 60
+    },
+    "capacity": {
+      "type": "number",
+      "default": 1,
+      "description": "Max participants per tour"
+    },
+    "tour_media_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tour preview media"
+    },
+    "gps_route": {
+      "type": "string",
+      "description": "GPS route coordinates for the tour"
+    },
+    "meeting_point": {
+      "type": "string",
+      "description": "Tour meeting point description"
+    },
+    "meeting_point_lat": {
+      "type": "number"
+    },
+    "meeting_point_lng": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "property_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.guide_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "data.guide_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

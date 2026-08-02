@@ -1,0 +1,84 @@
+{
+  "name": "PriceHistory",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "previous_price": {
+      "type": "number"
+    },
+    "new_price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "change_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "changed_by": {
+      "type": "string"
+    },
+    "changed_by_name": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for price change"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "increase",
+        "decrease",
+        "correction",
+        "promotion",
+        "market_adjustment"
+      ],
+      "default": "correction"
+    },
+    "change_percentage": {
+      "type": "number"
+    },
+    "promotion_reference": {
+      "type": "string",
+      "description": "Reference to PropertyPromotion if promotion-driven"
+    }
+  },
+  "required": [
+    "property_id",
+    "new_price"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "name": "PropertyEnquiry",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Platform User ID if registered"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_phone": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "description": "Enquiry message from customer"
+    },
+    "preferred_contact_method": {
+      "type": "string",
+      "enum": [
+        "email",
+        "phone",
+        "whatsapp",
+        "sms"
+      ],
+      "default": "phone"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website",
+        "mobile_app",
+        "buy2flip",
+        "referral",
+        "social_media",
+        "call",
+        "other"
+      ],
+      "default": "website"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Assigned sales executive"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "site_visit_scheduled",
+        "negotiating",
+        "closed_won",
+        "closed_lost",
+        "nurturing"
+      ],
+      "default": "new"
+    },
+    "follow_up_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Follow-up interactions log"
+    },
+    "next_follow_up_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "converted_to_lead_id": {
+      "type": "string",
+      "description": "Reference to Lead entity if converted"
+    }
+  },
+  "required": [
+    "property_id",
+    "customer_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

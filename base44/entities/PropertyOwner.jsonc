@@ -1,0 +1,124 @@
+{
+  "name": "PropertyOwner",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Platform User ID if registered"
+    },
+    "owner_name": {
+      "type": "string",
+      "description": "Full name of the owner"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "owner_phone": {
+      "type": "string"
+    },
+    "owner_type": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "corporate",
+        "government",
+        "joint_venture"
+      ],
+      "default": "individual"
+    },
+    "ownership_percentage": {
+      "type": "number",
+      "default": 100,
+      "description": "Percentage of ownership"
+    },
+    "is_primary": {
+      "type": "boolean",
+      "default": true,
+      "description": "Primary owner flag"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected"
+      ],
+      "default": "unverified"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ownership_document_ref": {
+      "type": "string",
+      "description": "Reference to ownership document"
+    }
+  },
+  "required": [
+    "property_id",
+    "owner_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "name": "OwnershipHistory",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "previous_owner_name": {
+      "type": "string"
+    },
+    "previous_owner_id": {
+      "type": "string"
+    },
+    "new_owner_name": {
+      "type": "string"
+    },
+    "new_owner_id": {
+      "type": "string"
+    },
+    "transfer_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "transfer_method": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "inheritance",
+        "gift",
+        "court_order",
+        "auction",
+        "other"
+      ],
+      "default": "sale"
+    },
+    "transfer_amount": {
+      "type": "number",
+      "description": "Transaction amount if applicable"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "supporting_document_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "References to supporting documents"
+    },
+    "transfer_notes": {
+      "type": "string"
+    },
+    "recorded_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "new_owner_name",
+    "transfer_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.new_owner_id": "{{user.id}}"
+        },
+        {
+          "data.previous_owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

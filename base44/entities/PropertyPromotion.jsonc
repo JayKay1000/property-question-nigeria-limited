@@ -1,0 +1,98 @@
+{
+  "name": "PropertyPromotion",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "promotion_name": {
+      "type": "string"
+    },
+    "promotion_type": {
+      "type": "string",
+      "enum": [
+        "discount",
+        "featured_listing",
+        "spotlight",
+        "early_bird",
+        "bundle",
+        "seasonal",
+        "flash_sale"
+      ],
+      "default": "discount"
+    },
+    "description": {
+      "type": "string"
+    },
+    "discount_percentage": {
+      "type": "number"
+    },
+    "discount_amount": {
+      "type": "number"
+    },
+    "promotional_price": {
+      "type": "number",
+      "description": "Special promotional price"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "promotion_name",
+    "promotion_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

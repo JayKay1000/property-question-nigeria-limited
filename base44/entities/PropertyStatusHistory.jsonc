@@ -1,0 +1,91 @@
+{
+  "name": "PropertyStatusHistory",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "approved",
+        "published",
+        "featured",
+        "reserved",
+        "under_offer",
+        "sold",
+        "leased",
+        "withdrawn",
+        "archived"
+      ],
+      "description": "Lifecycle status"
+    },
+    "previous_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "approved",
+        "published",
+        "featured",
+        "reserved",
+        "under_offer",
+        "sold",
+        "leased",
+        "withdrawn",
+        "archived"
+      ]
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "changed_by": {
+      "type": "string"
+    },
+    "changed_by_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

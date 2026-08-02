@@ -1,0 +1,93 @@
+{
+  "name": "PropertyAmenity",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "amenity_name": {
+      "type": "string",
+      "description": "Name of the amenity/landmark"
+    },
+    "amenity_type": {
+      "type": "string",
+      "enum": [
+        "school",
+        "hospital",
+        "shopping_mall",
+        "market",
+        "police_station",
+        "church",
+        "mosque",
+        "park",
+        "beach",
+        "airport",
+        "bank",
+        "restaurant",
+        "hotel",
+        "fuel_station",
+        "other"
+      ]
+    },
+    "approximate_distance_km": {
+      "type": "number",
+      "description": "Approximate distance in km from the property"
+    },
+    "travel_time_minutes": {
+      "type": "number",
+      "description": "Estimated travel time by car"
+    },
+    "direction": {
+      "type": "string",
+      "description": "Compass direction from property (N, S, E, W, etc.)"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "amenity_name",
+    "amenity_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

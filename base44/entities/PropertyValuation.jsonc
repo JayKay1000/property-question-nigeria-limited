@@ -1,0 +1,126 @@
+{
+  "name": "PropertyValuation",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "valuation_amount": {
+      "type": "number",
+      "description": "Assessed value in NGN"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "valuation_type": {
+      "type": "string",
+      "enum": [
+        "market",
+        "replacement",
+        "forced_sale",
+        "insurance",
+        "tax"
+      ],
+      "default": "market"
+    },
+    "valuation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "valuer_name": {
+      "type": "string",
+      "description": "Name of the professional valuer"
+    },
+    "valuer_organization": {
+      "type": "string"
+    },
+    "valuer_license_number": {
+      "type": "string"
+    },
+    "methodology": {
+      "type": "string",
+      "description": "Valuation methodology used"
+    },
+    "comparable_properties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "References to comparable properties used"
+    },
+    "valuation_report_url": {
+      "type": "string",
+      "description": "Link to detailed valuation report"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "expired",
+        "disputed"
+      ],
+      "default": "completed"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "valuation_amount",
+    "valuation_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
