@@ -2,14 +2,43 @@
   "name": "Customer",
   "type": "object",
   "properties": {
+    "reference_number": {
+      "type": "string",
+      "description": "Unique customer reference (e.g. PQ-CUST-2024-0001)"
+    },
     "user_id": {
+      "type": "string",
+      "description": "Linked user account (optional)"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "corporate",
+        "investor",
+        "diaspora",
+        "government"
+      ],
+      "default": "individual"
+    },
+    "first_name": {
       "type": "string"
     },
-    "customer_code": {
-      "type": "string",
-      "description": "Unique customer code"
+    "middle_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
     },
     "full_name": {
+      "type": "string",
+      "description": "Computed full name"
+    },
+    "organization_id": {
+      "type": "string",
+      "description": "Reference to Organization if corporate customer"
+    },
+    "organization_name": {
       "type": "string"
     },
     "email": {
@@ -18,8 +47,40 @@
     "phone": {
       "type": "string"
     },
+    "secondary_phone": {
+      "type": "string"
+    },
     "photo_url": {
       "type": "string"
+    },
+    "occupation": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "annual_income_range": {
+      "type": "string",
+      "enum": [
+        "below_1m",
+        "1m_to_5m",
+        "5m_to_10m",
+        "10m_to_50m",
+        "50m_to_100m",
+        "above_100m",
+        "undisclosed"
+      ]
+    },
+    "preferred_contact_method": {
+      "type": "string",
+      "enum": [
+        "email",
+        "phone",
+        "sms",
+        "whatsapp",
+        "in_person"
+      ],
+      "default": "phone"
     },
     "address": {
       "type": "string"
@@ -39,7 +100,9 @@
         "active",
         "inactive",
         "suspended",
-        "blacklisted"
+        "blacklisted",
+        "dormant",
+        "vip"
       ],
       "default": "active"
     },
@@ -60,21 +123,11 @@
       "type": "string",
       "format": "date-time"
     },
-    "customer_type": {
-      "type": "string",
-      "enum": [
-        "individual",
-        "corporate",
-        "investor",
-        "diaspora"
-      ],
-      "default": "individual"
-    },
-    "budget_range_min": {
-      "type": "number"
-    },
-    "budget_range_max": {
-      "type": "number"
+    "preferred_property_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "preferred_locations": {
       "type": "array",
@@ -82,16 +135,36 @@
         "type": "string"
       }
     },
-    "preferred_property_types": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+    "budget_range_min": {
+      "type": "number"
+    },
+    "budget_range_max": {
+      "type": "number"
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "enum": [
+        "lead",
+        "prospect",
+        "active_buyer",
+        "owner",
+        "repeat_buyer",
+        "advocate",
+        "churned"
+      ],
+      "default": "lead"
     },
     "assigned_agent_id": {
       "type": "string"
     },
     "assigned_agent_name": {
+      "type": "string"
+    },
+    "relationship_manager_id": {
+      "type": "string",
+      "description": "Assigned relationship manager user ID"
+    },
+    "relationship_manager_name": {
       "type": "string"
     },
     "total_purchases": {
@@ -102,6 +175,10 @@
       "type": "number",
       "default": 0
     },
+    "lead_source": {
+      "type": "string",
+      "description": "Original lead source key"
+    },
     "consent_marketing": {
       "type": "boolean",
       "default": false
@@ -110,11 +187,15 @@
       "type": "boolean",
       "default": true
     },
-    "deleted_at": {
+    "consent_third_party": {
+      "type": "boolean",
+      "default": false
+    },
+    "last_activity_at": {
       "type": "string",
       "format": "date-time"
     },
-    "last_activity_at": {
+    "deleted_at": {
       "type": "string",
       "format": "date-time"
     },
@@ -151,6 +232,9 @@
           "data.assigned_agent_id": "{{user.id}}"
         },
         {
+          "data.relationship_manager_id": "{{user.id}}"
+        },
+        {
           "created_by_id": "{{user.id}}"
         },
         {
@@ -164,6 +248,9 @@
       "$or": [
         {
           "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_agent_id": "{{user.id}}"
         },
         {
           "created_by_id": "{{user.id}}"
