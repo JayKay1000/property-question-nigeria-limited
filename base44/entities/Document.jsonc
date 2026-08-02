@@ -2,28 +2,141 @@
   "name": "Document",
   "type": "object",
   "properties": {
+    "document_reference": {
+      "type": "string",
+      "description": "Unique document reference (e.g. PQ-DOC-2024-0001)"
+    },
     "title": {
+      "type": "string"
+    },
+    "description": {
       "type": "string"
     },
     "document_type": {
       "type": "string",
       "enum": [
         "survey_plan",
-        "deed",
-        "contract",
+        "certificate_of_occupancy",
+        "deed_of_assignment",
+        "governors_consent",
+        "registered_survey",
+        "allocation_letter",
         "power_of_attorney",
+        "building_approval",
+        "engineering_drawing",
+        "architectural_drawing",
+        "site_plan",
+        "floor_plan",
+        "brochure",
+        "quotation",
+        "contract",
+        "invoice",
+        "receipt",
+        "utility_bill",
+        "government_id",
+        "passport_photograph",
+        "company_registration",
+        "marketing_material",
+        "policy",
+        "manual",
+        "deed",
         "c_of_o",
         "govt_id",
-        "utility_bill",
-        "brochure",
-        "floor_plan",
         "legal_document",
         "construction_document",
         "other"
-      ]
+      ],
+      "description": "Document type \u2014 extensible via LookupDocumentType"
     },
-    "description": {
-      "type": "string"
+    "document_type_code": {
+      "type": "string",
+      "description": "Reference to LookupDocumentType code"
+    },
+    "category": {
+      "type": "string",
+      "description": "Document category"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "under_review",
+        "approved",
+        "rejected",
+        "published",
+        "archived",
+        "expired",
+        "withdrawn"
+      ],
+      "default": "draft"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "in_review",
+        "approved",
+        "rejected",
+        "revision_required",
+        "expired"
+      ],
+      "default": "not_submitted"
+    },
+    "confidentiality_level": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+        "legal_hold"
+      ],
+      "default": "internal"
+    },
+    "sensitivity": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "default": "internal"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "retention_period_days": {
+      "type": "number",
+      "description": "Retention period in days from creation"
+    },
+    "retention_expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Calculated retention expiry date"
+    },
+    "current_version": {
+      "type": "number",
+      "default": 1
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "is_current_version": {
+      "type": "boolean",
+      "default": true
     },
     "file_url": {
       "type": "string",
@@ -32,19 +145,21 @@
     "file_name": {
       "type": "string"
     },
+    "original_filename": {
+      "type": "string"
+    },
     "file_size_bytes": {
       "type": "number"
     },
     "content_type": {
       "type": "string"
     },
+    "file_extension": {
+      "type": "string"
+    },
     "checksum": {
       "type": "string",
       "description": "File hash for integrity verification"
-    },
-    "version": {
-      "type": "number",
-      "default": 1
     },
     "visibility": {
       "type": "string",
@@ -58,21 +173,38 @@
       ],
       "default": "authenticated"
     },
-    "sensitivity": {
-      "type": "string",
-      "enum": [
-        "public",
-        "internal",
-        "confidential",
-        "restricted"
-      ],
-      "default": "internal"
-    },
     "owner_id": {
       "type": "string"
     },
     "owner_name": {
       "type": "string"
+    },
+    "folder_id": {
+      "type": "string",
+      "description": "Reference to Folder entity"
+    },
+    "category_id": {
+      "type": "string",
+      "description": "Reference to MediaCategory entity"
+    },
+    "related_module": {
+      "type": "string",
+      "enum": [
+        "properties",
+        "projects",
+        "buy2flip",
+        "crm",
+        "agents",
+        "customers",
+        "construction",
+        "property_management",
+        "marketing",
+        "hr",
+        "legal",
+        "corporate",
+        "finance",
+        "general"
+      ]
     },
     "related_entity_type": {
       "type": "string",
@@ -99,14 +231,6 @@
       "type": "string",
       "format": "date-time"
     },
-    "issue_date": {
-      "type": "string",
-      "format": "date"
-    },
-    "expiry_date": {
-      "type": "string",
-      "format": "date"
-    },
     "reviewer_id": {
       "type": "string"
     },
@@ -117,13 +241,48 @@
       "type": "string",
       "format": "date-time"
     },
+    "rejected_by": {
+      "type": "string"
+    },
+    "rejected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "archived_by": {
+      "type": "string"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleted_by": {
+      "type": "string"
+    },
     "download_count": {
+      "type": "number",
+      "default": 0
+    },
+    "view_count": {
       "type": "number",
       "default": 0
     },
     "watermarked": {
       "type": "boolean",
       "default": false
+    },
+    "is_legal_hold": {
+      "type": "boolean",
+      "default": false
+    },
+    "legal_hold_reason": {
+      "type": "string"
+    },
+    "legal_hold_date": {
+      "type": "string",
+      "format": "date-time"
     },
     "deleted_at": {
       "type": "string",
@@ -164,6 +323,9 @@
         },
         {
           "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.confidentiality_level": "public"
         },
         {
           "user_condition": {
