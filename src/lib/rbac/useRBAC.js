@@ -68,10 +68,19 @@ export function useRBAC() {
 
     const hasWildcard = permissions.has(WILDCARD_PERMISSION);
 
+    // ── Role level & convenience flags ───────────────────────────────────
+    const maxLevel = Math.max(...allRoles.map((r) => getRoleLevel(r)));
+    const isAtLeastLevel = (level) => maxLevel >= level;
+    const isAdmin = maxLevel >= 4;   // administrator or super_admin
+    const isStaff = maxLevel >= 2;   // any staff role or above
+    const isAgent = allRoles.includes('verified_agent') || allRoles.includes('prospective_agent');
+
     // ── Check functions ──────────────────────────────────────────────────
+    // Admin (level ≥ 4) and super_admin (wildcard) bypass all permission checks.
     const hasPermission = (perm) => {
       if (!perm) return true;
       if (hasWildcard) return true;
+      if (isAdmin) return true;
       return permissions.has(perm);
     };
 
@@ -87,14 +96,6 @@ export function useRBAC() {
 
     const hasRole = (role) => allRoles.includes(resolveRole(role));
     const hasAnyRole = (roles) => roles.some((r) => allRoles.includes(resolveRole(r)));
-
-    const maxLevel = Math.max(...allRoles.map((r) => getRoleLevel(r)));
-    const isAtLeastLevel = (level) => maxLevel >= level;
-
-    // ── Convenience flags ────────────────────────────────────────────────
-    const isAdmin = isAtLeastLevel(4);   // administrator or super_admin
-    const isStaff = isAtLeastLevel(2);   // any staff role or above
-    const isAgent = allRoles.includes('verified_agent') || allRoles.includes('prospective_agent');
 
     return {
       user,
