@@ -1,0 +1,107 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "recipient_id": {
+      "type": "string",
+      "description": "User ID of the recipient"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "notification_type": {
+      "type": "string",
+      "enum": [
+        "in_app",
+        "email",
+        "sms",
+        "push",
+        "system_alert",
+        "marketing"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "security",
+        "property",
+        "project",
+        "buy2flip",
+        "construction",
+        "crm",
+        "system",
+        "marketing",
+        "support"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "title": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "action_url": {
+      "type": "string",
+      "description": "URL to navigate to when clicked"
+    },
+    "action_label": {
+      "type": "string"
+    },
+    "read_status": {
+      "type": "boolean",
+      "default": false
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "delivered",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sender_id": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "related_entity_type": {
+      "type": "string"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "recipient_id",
+    "notification_type",
+    "title"
+  ]
+}

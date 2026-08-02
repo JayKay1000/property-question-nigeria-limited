@@ -1,0 +1,141 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "survey_plan",
+        "deed",
+        "contract",
+        "power_of_attorney",
+        "c_of_o",
+        "govt_id",
+        "utility_bill",
+        "brochure",
+        "floor_plan",
+        "legal_document",
+        "construction_document",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "Storage URL of the file"
+    },
+    "file_name": {
+      "type": "string"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "checksum": {
+      "type": "string",
+      "description": "File hash for integrity verification"
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "authenticated",
+        "agents_only",
+        "customers_only",
+        "staff_only",
+        "admin_only"
+      ],
+      "default": "authenticated"
+    },
+    "sensitivity": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "default": "internal"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "Property, Project, Customer, Agent, etc."
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected",
+        "expired"
+      ],
+      "default": "unverified"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "reviewer_id": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "download_count": {
+      "type": "number",
+      "default": 0
+    },
+    "watermarked": {
+      "type": "boolean",
+      "default": false
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "title",
+    "document_type",
+    "file_url"
+  ]
+}

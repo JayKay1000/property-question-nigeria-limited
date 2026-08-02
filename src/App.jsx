@@ -19,6 +19,7 @@ import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
 import SOCDashboard from '@/pages/admin/SOCDashboard';
+import DatabaseGovernance from '@/pages/admin/DatabaseGovernance';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -82,6 +83,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/soc" element={
             <RequirePermission permission="security.view">
               <SOCDashboard />
+            </RequirePermission>
+          } />
+          <Route path="/admin/database" element={
+            <RequirePermission permission="security.view">
+              <DatabaseGovernance />
             </RequirePermission>
           } />
         </Route>

@@ -1,0 +1,129 @@
+{
+  "name": "Customer",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "customer_code": {
+      "type": "string",
+      "description": "Unique customer code"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "lga": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "suspended",
+        "blacklisted"
+      ],
+      "default": "active"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected"
+      ],
+      "default": "unverified"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "corporate",
+        "investor",
+        "diaspora"
+      ],
+      "default": "individual"
+    },
+    "budget_range_min": {
+      "type": "number"
+    },
+    "budget_range_max": {
+      "type": "number"
+    },
+    "preferred_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferred_property_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "assigned_agent_id": {
+      "type": "string"
+    },
+    "assigned_agent_name": {
+      "type": "string"
+    },
+    "total_purchases": {
+      "type": "number",
+      "default": 0
+    },
+    "total_invested_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "consent_marketing": {
+      "type": "boolean",
+      "default": false
+    },
+    "consent_data_processing": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_activity_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "full_name",
+    "status"
+  ]
+}

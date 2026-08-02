@@ -1,0 +1,130 @@
+{
+  "name": "Agent",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Associated platform user ID"
+    },
+    "agent_code": {
+      "type": "string",
+      "description": "Unique agent code (e.g. PQ-AGT-0001)"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string"
+    },
+    "specialization": {
+      "type": "string",
+      "description": "e.g. Residential, Commercial, Land"
+    },
+    "service_areas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "under_review",
+        "verified",
+        "active",
+        "inactive",
+        "suspended",
+        "terminated"
+      ],
+      "default": "pending"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected"
+      ],
+      "default": "unverified"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "license_number": {
+      "type": "string"
+    },
+    "license_expiry": {
+      "type": "string",
+      "format": "date"
+    },
+    "total_listings": {
+      "type": "number",
+      "default": 0
+    },
+    "total_sales": {
+      "type": "number",
+      "default": 0
+    },
+    "total_commission_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "review_count": {
+      "type": "number",
+      "default": 0
+    },
+    "commission_rate": {
+      "type": "number",
+      "description": "Commission percentage"
+    },
+    "supervisor_id": {
+      "type": "string"
+    },
+    "supervisor_name": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_activity_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "full_name",
+    "status"
+  ]
+}

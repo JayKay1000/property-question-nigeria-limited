@@ -1,0 +1,117 @@
+{
+  "name": "ConstructionProject",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "description": "Unique construction project code"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to parent Project entity"
+    },
+    "property_id": {
+      "type": "string",
+      "description": "Reference to associated Property"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planning",
+        "approved",
+        "groundbreaking",
+        "foundation",
+        "structure",
+        "finishing",
+        "inspection",
+        "completed",
+        "on_hold",
+        "cancelled"
+      ],
+      "default": "planning"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "estimated_end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "budget_ngn": {
+      "type": "number"
+    },
+    "actual_cost_ngn": {
+      "type": "number"
+    },
+    "supervisor_id": {
+      "type": "string"
+    },
+    "supervisor_name": {
+      "type": "string"
+    },
+    "contractor_name": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "string"
+    },
+    "location_state": {
+      "type": "string"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "milestones": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Construction milestones with dates and completion status"
+    },
+    "site_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ]
+}

@@ -86,7 +86,7 @@ export const PERMISSION_GROUPS = {
   'Security': [
     'security.view', 'security.edit', 'security.audit_logs',
     'security.feature_flags', 'security.maintenance_mode',
-    'security.soc', 'security.export',
+    'security.soc', 'security.export', 'security.governance',
   ],
   'Notifications': [
     'notifications.view', 'notifications.create', 'notifications.send',

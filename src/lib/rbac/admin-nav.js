@@ -8,6 +8,7 @@
 export const adminNavItems = [
   { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard', permission: null },
   { label: 'SOC Dashboard', href: '/admin/soc', icon: 'ShieldAlert', permission: 'security.view' },
+  { label: 'DB Governance', href: '/admin/database', icon: 'Database', permission: 'security.view' },
   { label: 'RBAC Overview', href: '/admin/rbac', icon: 'Shield', permission: 'security.view' },
   { label: 'Audit Logs', href: '/admin/audit-logs', icon: 'ScrollText', permission: 'security.audit_logs' },
   { label: 'Feature Flags', href: '/admin/feature-flags', icon: 'Flag', permission: 'security.feature_flags' },

@@ -1,0 +1,213 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Property listing title"
+    },
+    "reference_number": {
+      "type": "string",
+      "description": "Unique property reference (e.g. PQ-PROP-2024-0001)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full property description"
+    },
+    "property_type": {
+      "type": "string",
+      "description": "Type of property (house, apartment, land, commercial)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "under_review",
+        "verified",
+        "approved",
+        "published",
+        "active",
+        "inactive",
+        "reserved",
+        "sold",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "listing_purpose": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "rent",
+        "lease"
+      ],
+      "default": "sale"
+    },
+    "price": {
+      "type": "number",
+      "description": "Listing price in NGN"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "parking_spaces": {
+      "type": "number"
+    },
+    "land_size_sqm": {
+      "type": "number",
+      "description": "Land area in square meters"
+    },
+    "built_up_area_sqm": {
+      "type": "number",
+      "description": "Built-up area in square meters"
+    },
+    "year_built": {
+      "type": "number"
+    },
+    "furnishing_status": {
+      "type": "string",
+      "enum": [
+        "unfurnished",
+        "semi_furnished",
+        "furnished"
+      ]
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of amenity identifiers"
+    },
+    "address_line": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "description": "Nigerian state"
+    },
+    "lga": {
+      "type": "string",
+      "description": "Local Government Area"
+    },
+    "city": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "estate": {
+      "type": "string"
+    },
+    "street": {
+      "type": "string"
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "google_maps_link": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Property owner user ID"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "listing_agent_id": {
+      "type": "string",
+      "description": "Assigned agent user ID"
+    },
+    "listing_agent_name": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "featured_image_url": {
+      "type": "string"
+    },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "video_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "virtual_tour_url": {
+      "type": "string"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "favorite_count": {
+      "type": "number",
+      "default": 0
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "title",
+    "property_type",
+    "status"
+  ]
+}

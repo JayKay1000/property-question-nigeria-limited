@@ -1,0 +1,139 @@
+{
+  "name": "Project",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "code": {
+      "type": "string",
+      "description": "Unique project code (e.g. PQ-PROJ-2024-001)"
+    },
+    "description": {
+      "type": "string"
+    },
+    "project_type": {
+      "type": "string",
+      "enum": [
+        "estate_development",
+        "construction",
+        "renovation",
+        "mixed_use"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "planning",
+        "approved",
+        "active",
+        "on_hold",
+        "completed",
+        "cancelled",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "estimated_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "location_state": {
+      "type": "string"
+    },
+    "location_lga": {
+      "type": "string"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "location_address": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "total_units": {
+      "type": "number"
+    },
+    "units_sold": {
+      "type": "number",
+      "default": 0
+    },
+    "units_available": {
+      "type": "number",
+      "default": 0
+    },
+    "budget_ngn": {
+      "type": "number"
+    },
+    "actual_cost_ngn": {
+      "type": "number"
+    },
+    "project_manager_id": {
+      "type": "string"
+    },
+    "project_manager_name": {
+      "type": "string"
+    },
+    "developer_id": {
+      "type": "string"
+    },
+    "developer_name": {
+      "type": "string"
+    },
+    "featured_image_url": {
+      "type": "string"
+    },
+    "gallery_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "archived_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "name",
+    "project_type",
+    "status"
+  ]
+}

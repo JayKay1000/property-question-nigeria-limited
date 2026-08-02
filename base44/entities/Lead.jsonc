@@ -1,0 +1,109 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website",
+        "referral",
+        "social_media",
+        "walk_in",
+        "call",
+        "email",
+        "buy2flip",
+        "other"
+      ],
+      "default": "website"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "proposal_sent",
+        "negotiation",
+        "won",
+        "lost",
+        "nurturing"
+      ],
+      "default": "new"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    },
+    "interest_type": {
+      "type": "string",
+      "description": "What they are interested in"
+    },
+    "interest_ref": {
+      "type": "string",
+      "description": "Reference to the specific property or project"
+    },
+    "budget_range_min": {
+      "type": "number"
+    },
+    "budget_range_max": {
+      "type": "number"
+    },
+    "preferred_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "next_follow_up_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Assigned agent or staff user ID"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "converted_to_customer_id": {
+      "type": "string"
+    },
+    "converted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lost_reason": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "full_name",
+    "status",
+    "source"
+  ]
+}
