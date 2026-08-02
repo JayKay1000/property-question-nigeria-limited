@@ -1,0 +1,60 @@
+{
+  "name": "GeoPoliticalZone",
+  "type": "object",
+  "properties": {
+    "zone_code": {
+      "type": "string",
+      "description": "Zone identifier (e.g. north_central, south_west)"
+    },
+    "zone_name": {
+      "type": "string",
+      "description": "Display name (e.g. North Central, South West)"
+    },
+    "description": {
+      "type": "string"
+    },
+    "states_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of states in this zone"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Zone centroid latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Zone centroid longitude"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "zone_code",
+    "zone_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

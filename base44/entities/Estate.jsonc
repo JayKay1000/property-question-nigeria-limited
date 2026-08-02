@@ -1,0 +1,129 @@
+{
+  "name": "Estate",
+  "type": "object",
+  "properties": {
+    "estate_name": {
+      "type": "string"
+    },
+    "estate_code": {
+      "type": "string",
+      "description": "Unique estate code"
+    },
+    "estate_type": {
+      "type": "string",
+      "enum": [
+        "government",
+        "private",
+        "gated_community",
+        "residential",
+        "commercial",
+        "mixed_use"
+      ],
+      "default": "residential"
+    },
+    "developer": {
+      "type": "string",
+      "description": "Estate developer name"
+    },
+    "address": {
+      "type": "string"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "city_name": {
+      "type": "string"
+    },
+    "district_name": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "google_maps_link": {
+      "type": "string"
+    },
+    "security_status": {
+      "type": "string",
+      "enum": [
+        "none",
+        "partial",
+        "full_gated",
+        "patrolled",
+        "smart_security"
+      ],
+      "default": "none"
+    },
+    "number_of_plots": {
+      "type": "number",
+      "default": 0
+    },
+    "plots_sold": {
+      "type": "number",
+      "default": 0
+    },
+    "plots_available": {
+      "type": "number",
+      "default": 0
+    },
+    "estate_rules": {
+      "type": "object",
+      "description": "Future-ready estate rules and regulations"
+    },
+    "description": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "estate_name",
+    "estate_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

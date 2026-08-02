@@ -1,0 +1,102 @@
+{
+  "name": "MapMarker",
+  "type": "object",
+  "properties": {
+    "marker_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "project",
+        "buy2flip_opportunity",
+        "construction_site",
+        "office",
+        "agent",
+        "landmark",
+        "custom"
+      ],
+      "description": "Category of the map marker"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the referenced entity (property, project, etc.)"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Display name for the marker"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "icon_name": {
+      "type": "string",
+      "description": "Custom icon identifier"
+    },
+    "icon_color": {
+      "type": "string",
+      "description": "Hex color for the marker icon"
+    },
+    "popup_content": {
+      "type": "string",
+      "description": "HTML or text content for the marker popup"
+    },
+    "action_url": {
+      "type": "string",
+      "description": "URL to navigate to when marker is clicked"
+    },
+    "is_visible": {
+      "type": "boolean",
+      "default": true
+    },
+    "z_index": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "marker_type",
+    "latitude",
+    "longitude"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

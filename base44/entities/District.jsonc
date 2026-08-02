@@ -1,0 +1,65 @@
+{
+  "name": "District",
+  "type": "object",
+  "properties": {
+    "district_name": {
+      "type": "string"
+    },
+    "district_type": {
+      "type": "string",
+      "enum": [
+        "urban",
+        "government",
+        "residential",
+        "commercial",
+        "industrial",
+        "mixed"
+      ],
+      "default": "urban"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "city_name": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "district_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

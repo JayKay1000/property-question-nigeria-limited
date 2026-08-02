@@ -1,0 +1,80 @@
+{
+  "name": "NigerianLGA",
+  "type": "object",
+  "properties": {
+    "lga_name": {
+      "type": "string",
+      "description": "LGA name"
+    },
+    "lga_code": {
+      "type": "string",
+      "description": "LGA code"
+    },
+    "state_code": {
+      "type": "string",
+      "description": "State code from LookupState (e.g. LG for Lagos)"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "geo_zone": {
+      "type": "string",
+      "description": "Geopolitical zone"
+    },
+    "headquarters": {
+      "type": "string",
+      "description": "LGA headquarters city/town"
+    },
+    "chairman": {
+      "type": "string",
+      "description": "Current LGA chairman (optional)"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "population": {
+      "type": "number"
+    },
+    "area_sqkm": {
+      "type": "number",
+      "description": "Area in square kilometers"
+    },
+    "boundary_geometry": {
+      "type": "object",
+      "description": "Future-ready GeoJSON boundary"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "lga_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -22,6 +22,7 @@ import SOCDashboard from '@/pages/admin/SOCDashboard';
 import DatabaseGovernance from '@/pages/admin/DatabaseGovernance';
 import IdentityCenter from '@/pages/admin/IdentityCenter';
 import PropertyIntelligence from '@/pages/admin/PropertyIntelligence';
+import GISCommandCenter from '@/pages/admin/GISCommandCenter';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -100,6 +101,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/property-center" element={
             <RequirePermission permission="properties.view">
               <PropertyIntelligence />
+            </RequirePermission>
+          } />
+          <Route path="/admin/gis" element={
+            <RequirePermission permission="properties.view">
+              <GISCommandCenter />
             </RequirePermission>
           } />
         </Route>

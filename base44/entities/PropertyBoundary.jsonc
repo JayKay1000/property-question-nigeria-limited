@@ -1,0 +1,97 @@
+{
+  "name": "PropertyBoundary",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "boundary_points": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Array of {lat, lng} boundary points forming the polygon"
+    },
+    "boundary_geojson": {
+      "type": "object",
+      "description": "Full GeoJSON Polygon/MultiPolygon representation"
+    },
+    "area_sqm": {
+      "type": "number",
+      "description": "Calculated area in square meters"
+    },
+    "perimeter_meters": {
+      "type": "number",
+      "description": "Calculated perimeter in meters"
+    },
+    "survey_coordinates": {
+      "type": "string",
+      "description": "Raw survey coordinate data"
+    },
+    "boundary_description": {
+      "type": "string",
+      "description": "Textual boundary description (e.g. 'bounded by plot 3 to the north')"
+    },
+    "coordinate_reference_system": {
+      "type": "string",
+      "default": "WGS84",
+      "description": "CRS identifier"
+    },
+    "accuracy_level": {
+      "type": "string",
+      "enum": [
+        "surveyed",
+        "approximate",
+        "estimated",
+        "satellite"
+      ],
+      "default": "approximate"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "verified_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

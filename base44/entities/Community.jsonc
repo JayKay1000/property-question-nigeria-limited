@@ -1,0 +1,59 @@
+{
+  "name": "Community",
+  "type": "object",
+  "properties": {
+    "community_name": {
+      "type": "string"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "ward_name": {
+      "type": "string"
+    },
+    "district_name": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "community_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

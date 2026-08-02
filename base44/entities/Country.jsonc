@@ -1,0 +1,81 @@
+{
+  "name": "Country",
+  "type": "object",
+  "properties": {
+    "iso_code": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 code (e.g. NG)"
+    },
+    "iso_code_3": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-3 code (e.g. NGA)"
+    },
+    "country_name": {
+      "type": "string"
+    },
+    "official_name": {
+      "type": "string"
+    },
+    "currency_code": {
+      "type": "string",
+      "description": "ISO 4217 currency code (e.g. NGN)"
+    },
+    "currency_symbol": {
+      "type": "string"
+    },
+    "phone_code": {
+      "type": "string",
+      "description": "International dialing code (e.g. +234)"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "Africa/Lagos"
+    },
+    "flag_emoji": {
+      "type": "string",
+      "description": "Unicode flag emoji"
+    },
+    "flag_url": {
+      "type": "string",
+      "description": "Flag image URL"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Country centroid latitude"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Country centroid longitude"
+    },
+    "boundary_data": {
+      "type": "object",
+      "description": "Future-ready GeoJSON boundary"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "iso_code",
+    "country_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

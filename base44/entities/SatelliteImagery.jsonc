@@ -1,0 +1,91 @@
+{
+  "name": "SatelliteImagery",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "project",
+        "estate",
+        "location",
+        "area"
+      ],
+      "description": "What the imagery covers"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "Reference to the entity"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Satellite image URL"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "capture_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "image_provider": {
+      "type": "string",
+      "enum": [
+        "google",
+        "esri",
+        "maxar",
+        "local_survey",
+        "other"
+      ],
+      "default": "google"
+    },
+    "resolution_meters": {
+      "type": "number",
+      "description": "Image resolution in meters per pixel"
+    },
+    "coverage_area_sqkm": {
+      "type": "number"
+    },
+    "center_latitude": {
+      "type": "number"
+    },
+    "center_longitude": {
+      "type": "number"
+    },
+    "zoom_level": {
+      "type": "number"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "image_url"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

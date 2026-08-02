@@ -1,0 +1,137 @@
+{
+  "name": "InspectionRoute",
+  "type": "object",
+  "properties": {
+    "route_name": {
+      "type": "string",
+      "description": "Name for this inspection route"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Assigned sales executive/agent"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Customer for the inspection"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "property_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Properties to visit in order"
+    },
+    "stops": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Ordered stops with coordinates, addresses, timing"
+    },
+    "total_distance_km": {
+      "type": "number",
+      "description": "Total route distance"
+    },
+    "estimated_duration_minutes": {
+      "type": "number"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "confirmed",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "rescheduled"
+      ],
+      "default": "planned"
+    },
+    "optimization_method": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "shortest_distance",
+        "shortest_time",
+        "custom_order"
+      ],
+      "default": "manual"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "route_name",
+    "agent_id",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.agent_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.agent_id": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.agent_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

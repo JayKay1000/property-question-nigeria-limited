@@ -1,0 +1,73 @@
+{
+  "name": "City",
+  "type": "object",
+  "properties": {
+    "city_name": {
+      "type": "string"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "country_code": {
+      "type": "string",
+      "default": "NG"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "population": {
+      "type": "number"
+    },
+    "city_classification": {
+      "type": "string",
+      "enum": [
+        "major",
+        "emerging",
+        "administrative",
+        "commercial",
+        "industrial",
+        "residential"
+      ],
+      "default": "emerging"
+    },
+    "is_state_capital": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "city_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

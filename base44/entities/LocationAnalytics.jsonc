@@ -1,0 +1,103 @@
+{
+  "name": "LocationAnalytics",
+  "type": "object",
+  "properties": {
+    "analytics_type": {
+      "type": "string",
+      "enum": [
+        "search",
+        "view",
+        "enquiry",
+        "saved",
+        "tour_request"
+      ],
+      "description": "Type of location interaction"
+    },
+    "location_level": {
+      "type": "string",
+      "enum": [
+        "country",
+        "zone",
+        "state",
+        "lga",
+        "city",
+        "town",
+        "district",
+        "estate",
+        "street"
+      ],
+      "description": "Geographic level tracked"
+    },
+    "location_name": {
+      "type": "string",
+      "description": "Name of the location"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "city_name": {
+      "type": "string"
+    },
+    "count": {
+      "type": "number",
+      "default": 1,
+      "description": "Running count of interactions"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User if authenticated"
+    },
+    "search_term": {
+      "type": "string",
+      "description": "The search term used (for search analytics)"
+    }
+  },
+  "required": [
+    "analytics_type",
+    "location_level",
+    "location_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

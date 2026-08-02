@@ -1,0 +1,118 @@
+{
+  "name": "EstateLayout",
+  "type": "object",
+  "properties": {
+    "estate_id": {
+      "type": "string",
+      "description": "Reference to Estate entity"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "layout_name": {
+      "type": "string",
+      "description": "Name/version of this layout"
+    },
+    "layout_type": {
+      "type": "string",
+      "enum": [
+        "svg",
+        "cad",
+        "geojson",
+        "image",
+        "interactive"
+      ],
+      "default": "image"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to the layout file"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0"
+    },
+    "total_blocks": {
+      "type": "number",
+      "default": 0
+    },
+    "total_plots": {
+      "type": "number",
+      "default": 0
+    },
+    "total_roads": {
+      "type": "number",
+      "default": 0
+    },
+    "green_areas_count": {
+      "type": "number",
+      "default": 0
+    },
+    "utility_points": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Utility locations (water, electric, etc.)"
+    },
+    "reserved_areas": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Reserved/common areas"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "revision_needed"
+      ],
+      "default": "pending"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "estate_id",
+    "layout_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

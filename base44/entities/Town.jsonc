@@ -1,0 +1,57 @@
+{
+  "name": "Town",
+  "type": "object",
+  "properties": {
+    "town_name": {
+      "type": "string"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "city_name": {
+      "type": "string",
+      "description": "Parent city where applicable"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "population": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "town_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

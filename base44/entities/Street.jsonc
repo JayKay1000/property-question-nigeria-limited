@@ -1,0 +1,77 @@
+{
+  "name": "Street",
+  "type": "object",
+  "properties": {
+    "street_name": {
+      "type": "string"
+    },
+    "street_type": {
+      "type": "string",
+      "enum": [
+        "avenue",
+        "road",
+        "street",
+        "crescent",
+        "close",
+        "drive",
+        "way",
+        "lane",
+        "boulevard"
+      ],
+      "default": "street"
+    },
+    "state_code": {
+      "type": "string"
+    },
+    "state_name": {
+      "type": "string"
+    },
+    "lga_name": {
+      "type": "string"
+    },
+    "city_name": {
+      "type": "string"
+    },
+    "district_name": {
+      "type": "string"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "street_name",
+    "state_code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
