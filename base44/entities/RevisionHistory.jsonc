@@ -1,0 +1,148 @@
+{
+  "name": "RevisionHistory",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document",
+        "file_version",
+        "folder",
+        "legal_document",
+        "property_document",
+        "customer_document",
+        "agent_document",
+        "construction_document",
+        "corporate_document"
+      ],
+      "description": "Type of entity that was changed"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the changed entity"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Display name of the entity"
+    },
+    "version_number": {
+      "type": "number",
+      "description": "Version at time of change"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "created",
+        "uploaded",
+        "updated",
+        "replaced",
+        "approved",
+        "rejected",
+        "archived",
+        "restored",
+        "deleted",
+        "shared",
+        "downloaded",
+        "metadata_updated",
+        "permissions_changed"
+      ],
+      "description": "Type of change made"
+    },
+    "field_name": {
+      "type": "string",
+      "description": "Specific field that changed (if applicable)"
+    },
+    "old_value": {
+      "type": "string",
+      "description": "Previous value"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "New value"
+    },
+    "change_description": {
+      "type": "string",
+      "description": "Human-readable description of the change"
+    },
+    "change_reason": {
+      "type": "string",
+      "description": "Why the change was made"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "not_required"
+      ],
+      "default": "not_required"
+    },
+    "changed_by": {
+      "type": "string",
+      "description": "User who made the change"
+    },
+    "changed_by_name": {
+      "type": "string"
+    },
+    "change_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "user_agent": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "change_type",
+    "change_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.changed_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.changed_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

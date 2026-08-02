@@ -1,0 +1,113 @@
+{
+  "name": "FilePreview",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document"
+      ],
+      "description": "Type of entity being previewed"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "preview_type": {
+      "type": "string",
+      "enum": [
+        "pdf_preview",
+        "image_preview",
+        "video_preview",
+        "document_preview",
+        "audio_preview",
+        "3d_preview",
+        "code_preview",
+        "text_preview"
+      ],
+      "description": "Type of preview generated"
+    },
+    "preview_url": {
+      "type": "string",
+      "description": "Preview file URL"
+    },
+    "preview_html": {
+      "type": "string",
+      "description": "Embeddable HTML preview content"
+    },
+    "preview_width": {
+      "type": "number"
+    },
+    "preview_height": {
+      "type": "number"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "page_count": {
+      "type": "number",
+      "description": "Number of pages for multi-page documents"
+    },
+    "is_generated": {
+      "type": "boolean",
+      "default": false
+    },
+    "generation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "watermarked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether preview includes watermark"
+    },
+    "low_resolution": {
+      "type": "boolean",
+      "default": true,
+      "description": "Low-res preview to prevent full-quality theft"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "preview_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

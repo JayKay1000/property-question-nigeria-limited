@@ -1,0 +1,135 @@
+{
+  "name": "FileView",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document",
+        "video_asset",
+        "image_asset",
+        "brochure",
+        "property"
+      ],
+      "description": "Type of viewed entity"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User ID (null for anonymous views)"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "is_unique_view": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this is the first view by this user/session"
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "default": false
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Browser session identifier for unique tracking"
+    },
+    "view_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "view_duration_seconds": {
+      "type": "number",
+      "description": "How long the user viewed the asset"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "website",
+        "admin_portal",
+        "agent_portal",
+        "customer_portal",
+        "mobile_app",
+        "share_link",
+        "search",
+        "direct",
+        "email",
+        "social_media",
+        "other"
+      ],
+      "description": "Where the view originated"
+    },
+    "source_page": {
+      "type": "string",
+      "description": "Specific page URL or path"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "device_info": {
+      "type": "string"
+    },
+    "referrer": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "view_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

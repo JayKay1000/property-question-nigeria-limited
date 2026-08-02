@@ -1,0 +1,145 @@
+{
+  "name": "OCRMetadata",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document"
+      ],
+      "description": "Type of entity with OCR data"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "Full text extracted via OCR"
+    },
+    "text_language": {
+      "type": "string",
+      "description": "Detected language(s) of the text"
+    },
+    "language_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "ISO language codes detected"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "OCR confidence score 0-100"
+    },
+    "word_count": {
+      "type": "number",
+      "description": "Number of words extracted"
+    },
+    "page_count": {
+      "type": "number",
+      "description": "Pages processed (for multi-page documents)"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Extracted keywords for indexing"
+    },
+    "key_value_pairs": {
+      "type": "object",
+      "description": "Structured key-value extraction (e.g. document_number, dates, names)"
+    },
+    "tables_extracted": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Tables detected in the document"
+    },
+    "is_processed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether OCR processing is complete"
+    },
+    "processing_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed",
+        "not_applicable"
+      ],
+      "default": "pending"
+    },
+    "processed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ocr_engine": {
+      "type": "string",
+      "description": "OCR engine used (e.g. Tesseract, Google Vision)"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "is_searchable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether extracted text is indexed for search"
+    },
+    "search_index_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

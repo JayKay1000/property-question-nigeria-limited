@@ -1,0 +1,160 @@
+{
+  "name": "ConstructionDocument",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Reference to Document entity"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "engineering_report",
+        "structural_drawing",
+        "architectural_drawing",
+        "bills_of_quantities",
+        "inspection_report",
+        "site_photo",
+        "material_certification",
+        "permit",
+        "completion_certificate",
+        "method_statement",
+        "risk_assessment",
+        "quality_control_report",
+        "test_report",
+        "other"
+      ]
+    },
+    "document_number": {
+      "type": "string"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "issued_by": {
+      "type": "string",
+      "description": "Issuing firm/engineer"
+    },
+    "prepared_by": {
+      "type": "string"
+    },
+    "prepared_by_license": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "in_review",
+        "approved",
+        "rejected",
+        "superseded"
+      ],
+      "default": "draft"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "pending",
+        "verified",
+        "rejected"
+      ],
+      "default": "unverified"
+    },
+    "is_current_version": {
+      "type": "boolean",
+      "default": true
+    },
+    "version_number": {
+      "type": "number",
+      "default": 1
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "file_url_secure": {
+      "type": "string"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "construction_phase": {
+      "type": "string",
+      "description": "Construction phase this document relates to"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "project_id",
+    "document_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

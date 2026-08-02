@@ -1,0 +1,184 @@
+{
+  "name": "AIMetadata",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document",
+        "image_asset",
+        "video_asset"
+      ],
+      "description": "Type of entity with AI metadata"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "auto_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-generated tags"
+    },
+    "object_detection": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Detected objects with confidence scores [{object, confidence, bounding_box}]"
+    },
+    "scene_recognition": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Recognized scene types (interior, exterior, aerial, etc.)"
+    },
+    "document_classification": {
+      "type": "string",
+      "description": "AI-classified document type"
+    },
+    "classification_confidence": {
+      "type": "number",
+      "description": "Classification confidence 0-100"
+    },
+    "summary": {
+      "type": "string",
+      "description": "AI-generated summary of content"
+    },
+    "description_ai": {
+      "type": "string",
+      "description": "AI-generated description"
+    },
+    "alt_text_ai": {
+      "type": "string",
+      "description": "AI-generated alt text for accessibility"
+    },
+    "duplicate_detection": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether potential duplicates were detected"
+    },
+    "duplicate_group_id": {
+      "type": "string",
+      "description": "Group ID for detected duplicates"
+    },
+    "duplicate_confidence": {
+      "type": "number",
+      "description": "Duplicate detection confidence"
+    },
+    "face_detection_count": {
+      "type": "number",
+      "description": "Number of faces detected (for verification workflows)"
+    },
+    "face_recognition_status": {
+      "type": "string",
+      "enum": [
+        "not_processed",
+        "processing",
+        "completed",
+        "restricted",
+        "not_applicable"
+      ],
+      "default": "not_applicable",
+      "description": "Face recognition status (authorized workflows only)"
+    },
+    "text_in_image": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Text detected within images"
+    },
+    "dominant_colors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Dominant colors detected"
+    },
+    "quality_score": {
+      "type": "number",
+      "description": "AI image quality assessment 0-100"
+    },
+    "nsfw_flagged": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether content was flagged by AI moderation"
+    },
+    "is_processed": {
+      "type": "boolean",
+      "default": false
+    },
+    "processing_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "processed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ai_model_used": {
+      "type": "string",
+      "description": "AI model used for processing"
+    },
+    "error_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

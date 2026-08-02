@@ -1,0 +1,176 @@
+{
+  "name": "FileSharing",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document",
+        "folder"
+      ],
+      "description": "Type of shared entity"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the shared entity"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Display name of shared entity"
+    },
+    "sharing_type": {
+      "type": "string",
+      "enum": [
+        "internal",
+        "external",
+        "public_link",
+        "secure_link"
+      ],
+      "description": "Type of sharing"
+    },
+    "share_token": {
+      "type": "string",
+      "description": "Unique share token for link-based sharing"
+    },
+    "share_url": {
+      "type": "string",
+      "description": "Full shareable URL"
+    },
+    "shared_by": {
+      "type": "string"
+    },
+    "shared_by_name": {
+      "type": "string"
+    },
+    "shared_with_id": {
+      "type": "string",
+      "description": "User ID for internal sharing"
+    },
+    "shared_with_name": {
+      "type": "string"
+    },
+    "shared_with_email": {
+      "type": "string",
+      "description": "Email for external sharing"
+    },
+    "recipient_count": {
+      "type": "number",
+      "default": 1
+    },
+    "permission_level": {
+      "type": "string",
+      "enum": [
+        "view",
+        "download",
+        "comment",
+        "edit"
+      ],
+      "default": "view"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the share link expires"
+    },
+    "is_expired": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_password_protected": {
+      "type": "boolean",
+      "default": false,
+      "description": "Future-ready: password protection"
+    },
+    "password_hash": {
+      "type": "string",
+      "description": "Future-ready: hashed password"
+    },
+    "max_downloads": {
+      "type": "number",
+      "description": "Download limit (null = unlimited)"
+    },
+    "download_count": {
+      "type": "number",
+      "default": 0
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "is_revoked": {
+      "type": "boolean",
+      "default": false
+    },
+    "revoked_by": {
+      "type": "string"
+    },
+    "revoked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "sharing_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.shared_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.shared_by": "{{user.id}}"
+        },
+        {
+          "data.shared_with_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.shared_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

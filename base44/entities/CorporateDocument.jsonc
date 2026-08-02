@@ -1,0 +1,146 @@
+{
+  "name": "CorporateDocument",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "Reference to Document entity"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "company_registration",
+        "tax_clearance",
+        "audit_report",
+        "annual_report",
+        "board_resolution",
+        "shareholder_resolution",
+        "memorandum",
+        "articles_of_association",
+        "operating_license",
+        "insurance_policy",
+        "employment_contract",
+        "ndp_policy",
+        "financial_statement",
+        "shareholder_agreement",
+        "partnership_agreement",
+        "policy_document",
+        "manual",
+        "other"
+      ]
+    },
+    "document_number": {
+      "type": "string"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "issued_by": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "confidentiality_level": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+        "legal_hold"
+      ],
+      "default": "confidential"
+    },
+    "retention_period_days": {
+      "type": "number"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "approved",
+        "rejected",
+        "superseded"
+      ],
+      "default": "draft"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_current_version": {
+      "type": "boolean",
+      "default": true
+    },
+    "version_number": {
+      "type": "number",
+      "default": 1
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "file_url_secure": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_id",
+    "document_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

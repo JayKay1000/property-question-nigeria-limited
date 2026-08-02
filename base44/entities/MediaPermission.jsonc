@@ -1,0 +1,170 @@
+{
+  "name": "MediaPermission",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "media_asset",
+        "document",
+        "folder"
+      ],
+      "description": "Type of entity being permissioned"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the entity"
+    },
+    "grantee_type": {
+      "type": "string",
+      "enum": [
+        "user",
+        "role",
+        "department",
+        "team",
+        "public",
+        "authenticated"
+      ],
+      "description": "Who the permission is granted to"
+    },
+    "grantee_id": {
+      "type": "string",
+      "description": "User/role/department/team ID (null for public/authenticated)"
+    },
+    "grantee_name": {
+      "type": "string",
+      "description": "Display name of grantee"
+    },
+    "can_view": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_download": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_upload": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_replace": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_delete": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_approve": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_share": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_archive": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_edit_metadata": {
+      "type": "boolean",
+      "default": false
+    },
+    "can_manage_permissions": {
+      "type": "boolean",
+      "default": false
+    },
+    "granted_by": {
+      "type": "string"
+    },
+    "granted_by_name": {
+      "type": "string"
+    },
+    "granted_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional expiry for temporary permissions"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "permission_level": {
+      "type": "string",
+      "enum": [
+        "none",
+        "read",
+        "comment",
+        "edit",
+        "admin"
+      ],
+      "default": "read",
+      "description": "Simplified permission level"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "grantee_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.granted_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.grantee_id": "{{user.id}}"
+        },
+        {
+          "data.granted_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.granted_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

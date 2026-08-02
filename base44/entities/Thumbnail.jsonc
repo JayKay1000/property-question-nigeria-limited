@@ -1,0 +1,114 @@
+{
+  "name": "Thumbnail",
+  "type": "object",
+  "properties": {
+    "media_asset_id": {
+      "type": "string",
+      "description": "Reference to MediaAsset entity"
+    },
+    "document_id": {
+      "type": "string",
+      "description": "Reference to Document entity (for document thumbnails)"
+    },
+    "thumbnail_size": {
+      "type": "string",
+      "enum": [
+        "small",
+        "medium",
+        "large",
+        "mobile",
+        "retina",
+        "xlarge",
+        "custom"
+      ],
+      "description": "Thumbnail size variant"
+    },
+    "width": {
+      "type": "number",
+      "description": "Thumbnail width in pixels"
+    },
+    "height": {
+      "type": "number",
+      "description": "Thumbnail height in pixels"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "Thumbnail image URL"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "jpeg",
+        "webp",
+        "png",
+        "avif"
+      ],
+      "default": "webp",
+      "description": "Thumbnail format (webp for optimization)"
+    },
+    "is_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether thumbnail has been generated"
+    },
+    "generation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message if generation failed"
+    },
+    "cache_key": {
+      "type": "string",
+      "description": "Cache key for CDN"
+    },
+    "is_default": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is the default thumbnail"
+    }
+  },
+  "required": [
+    "thumbnail_size",
+    "file_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
