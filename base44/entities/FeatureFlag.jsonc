@@ -1,0 +1,57 @@
+{
+  "name": "FeatureFlag",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Unique feature flag key (e.g. buy2flip, property_tours, crm)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable label for the feature"
+    },
+    "description": {
+      "type": "string",
+      "description": "What this feature flag controls"
+    },
+    "module": {
+      "type": "string",
+      "description": "Which platform module this flag belongs to",
+      "enum": [
+        "buy2flip",
+        "property_tours",
+        "crm",
+        "estate_layouts",
+        "ai_features",
+        "payment_gateway",
+        "construction",
+        "property_management",
+        "agent_portal",
+        "customer_portal",
+        "reports",
+        "marketing",
+        "support",
+        "maps"
+      ]
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the feature is currently enabled",
+      "default": false
+    },
+    "is_public": {
+      "type": "boolean",
+      "description": "Whether this flag affects public-facing features",
+      "default": true
+    },
+    "required_permission": {
+      "type": "string",
+      "description": "Permission required to access this feature when enabled"
+    }
+  },
+  "required": [
+    "key",
+    "label",
+    "enabled"
+  ]
+}

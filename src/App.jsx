@@ -13,6 +13,11 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
+import AccessDenied from '@/pages/AccessDenied';
+import RBACDashboard from '@/pages/admin/RBACDashboard';
+import AuditLogs from '@/pages/admin/AuditLogs';
+import FeatureFlags from '@/pages/admin/FeatureFlags';
+import RequirePermission from '@/lib/rbac/RequirePermission';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -46,6 +51,22 @@ const AuthenticatedApp = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
+        <Route path="/admin/rbac" element={
+          <RequirePermission permission="security.view">
+            <RBACDashboard />
+          </RequirePermission>
+        } />
+        <Route path="/admin/audit-logs" element={
+          <RequirePermission permission="security.audit_logs">
+            <AuditLogs />
+          </RequirePermission>
+        } />
+        <Route path="/admin/feature-flags" element={
+          <RequirePermission permission="security.feature_flags">
+            <FeatureFlags />
+          </RequirePermission>
+        } />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

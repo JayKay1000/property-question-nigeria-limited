@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { Search, Menu, ChevronDown, Phone } from 'lucide-react';
+import { Search, Menu, ChevronDown, Phone, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/ui/Logo';
 import { navItems } from '@/lib/navigation';
+import { useRBAC } from '@/lib/rbac/useRBAC';
 import MegaMenu from './MegaMenu';
 import MobileNav from './MobileNav';
 import GlobalSearch from './GlobalSearch';
@@ -12,6 +13,7 @@ import GlobalSearch from './GlobalSearch';
 export default function Header() {
   const { pathname } = useLocation();
   const isHome = pathname === '/';
+  const rbac = useRBAC();
   const [scrolled, setScrolled] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -78,6 +80,11 @@ export default function Header() {
               <Link to="/contact"><Phone className="mr-1.5 h-4 w-4" />Contact</Link>
             </Button>
             <div className="hidden items-center gap-1.5 md:flex">
+              {rbac.isAdmin && (
+                <Button asChild variant="ghost" size="sm" className={transparent ? 'text-white hover:bg-white/10 hover:text-white' : 'text-brand-800'}>
+                  <Link to="/admin/rbac"><Shield className="mr-1.5 h-4 w-4" />Dashboard</Link>
+                </Button>
+              )}
               <Button asChild variant="ghost" size="sm" className={transparent ? 'text-white hover:bg-white/10 hover:text-white' : 'text-brand-800'}>
                 <Link to="/login">Login</Link>
               </Button>

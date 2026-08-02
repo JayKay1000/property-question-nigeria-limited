@@ -2,14 +2,63 @@
   "properties": {
     "role": {
       "type": "string",
-      "description": "The role of the user in the app",
+      "description": "Primary role of the user in the app (RBAC)",
       "enum": [
+        "super_admin",
+        "administrator",
+        "department_manager",
+        "hr_officer",
+        "marketing_officer",
+        "finance_officer",
+        "legal_officer",
+        "customer_service",
+        "buy2flip_manager",
+        "property_manager",
+        "construction_officer",
+        "sales_executive",
+        "verified_agent",
+        "prospective_agent",
+        "customer",
         "admin",
         "user",
         "agent",
-        "staff",
-        "super_admin"
-      ]
+        "staff"
+      ],
+      "default": "customer"
+    },
+    "additional_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional roles assigned to the user for multi-role support",
+      "default": []
+    },
+    "custom_permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional permissions granted beyond the user's role(s)",
+      "default": []
+    },
+    "department": {
+      "type": "string",
+      "description": "Department the user belongs to (for department-based access control)"
+    },
+    "agent_verification_status": {
+      "type": "string",
+      "description": "Verification status for agent applications",
+      "enum": [
+        "not_applicable",
+        "pending",
+        "under_review",
+        "approved",
+        "rejected",
+        "returned",
+        "suspended"
+      ],
+      "default": "not_applicable"
     },
     "first_name": {
       "type": "string",

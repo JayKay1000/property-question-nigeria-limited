@@ -1,0 +1,86 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "ID of the user who performed the action"
+    },
+    "user_name": {
+      "type": "string",
+      "description": "Display name of the user at time of action"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the user at time of action"
+    },
+    "user_role": {
+      "type": "string",
+      "description": "Role of the user at time of action"
+    },
+    "action": {
+      "type": "string",
+      "description": "The action performed (e.g. login, role_assign, property_delete)"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the audit event",
+      "enum": [
+        "auth",
+        "user_management",
+        "role_management",
+        "property_management",
+        "project_management",
+        "buy2flip",
+        "construction",
+        "security",
+        "approval",
+        "document",
+        "system",
+        "data_access"
+      ]
+    },
+    "resource": {
+      "type": "string",
+      "description": "The resource type affected"
+    },
+    "resource_id": {
+      "type": "string",
+      "description": "ID of the specific resource affected"
+    },
+    "resource_name": {
+      "type": "string",
+      "description": "Human-readable name of the resource"
+    },
+    "outcome": {
+      "type": "string",
+      "description": "Result of the action",
+      "enum": [
+        "success",
+        "failure",
+        "denied"
+      ],
+      "default": "success"
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "IP address of the request"
+    },
+    "device_info": {
+      "type": "string",
+      "description": "User agent / device information"
+    },
+    "details": {
+      "type": "string",
+      "description": "Human-readable summary of the event"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Structured metadata about the action (key-value pairs)"
+    }
+  },
+  "required": [
+    "action",
+    "outcome"
+  ]
+}
