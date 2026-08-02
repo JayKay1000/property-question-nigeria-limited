@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, ArrowLeft, Loader2 } from "lucide-react";
+import { Mail, ArrowLeft, Loader2, CheckCircle } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 
 export default function ForgotPassword() {
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
     try {
       await base44.auth.resetPasswordRequest(email);
     } catch {
-      // Always show success regardless
+      // Always show success regardless — prevents account enumeration
     } finally {
       setLoading(false);
       setSent(true);
@@ -27,19 +27,26 @@ export default function ForgotPassword() {
 
   return (
     <AuthLayout
-      icon={Mail}
-      title="Reset password"
-      subtitle="We'll send you a link to reset it"
+      title="Reset your password"
+      subtitle="We'll send you a secure link to reset it"
       footer={
-        <Link to="/login" className="text-primary font-medium hover:underline">
-          <ArrowLeft className="w-3 h-3 inline mr-1" />Back to log in
+        <Link to="/login" className="inline-flex items-center font-medium text-flame-600 hover:underline">
+          <ArrowLeft className="w-3.5 h-3.5 mr-1" />Back to log in
         </Link>
       }
     >
       {sent ? (
-        <p className="text-sm text-foreground text-center">
-          If an account exists with that email, you'll receive a password reset link shortly.
-        </p>
+        <div className="text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-success/10">
+            <CheckCircle className="h-7 w-7 text-success" />
+          </div>
+          <p className="text-sm text-brand-900">
+            If an account exists with that email, you'll receive a password reset link shortly.
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Check your spam folder if you don't see it within a few minutes.
+          </p>
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -59,11 +66,11 @@ export default function ForgotPassword() {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full h-12 font-medium" disabled={loading}>
+          <Button type="submit" className="w-full h-12 font-medium bg-flame-500 hover:bg-flame-600 text-white" disabled={loading}>
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Sending...
+                Sending link...
               </>
             ) : (
               "Send reset link"

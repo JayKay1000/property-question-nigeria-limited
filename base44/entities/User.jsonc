@@ -5,8 +5,99 @@
       "description": "The role of the user in the app",
       "enum": [
         "admin",
-        "user"
+        "user",
+        "agent",
+        "staff",
+        "super_admin"
       ]
+    },
+    "first_name": {
+      "type": "string",
+      "description": "User's first name"
+    },
+    "middle_name": {
+      "type": "string",
+      "description": "User's middle name (optional)"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "User's last name"
+    },
+    "phone": {
+      "type": "string",
+      "description": "User's phone number"
+    },
+    "country": {
+      "type": "string",
+      "description": "User's country of residence"
+    },
+    "state": {
+      "type": "string",
+      "description": "User's state/province"
+    },
+    "city": {
+      "type": "string",
+      "description": "User's city"
+    },
+    "address": {
+      "type": "string",
+      "description": "User's residential address"
+    },
+    "referral_code": {
+      "type": "string",
+      "description": "Referral code used during registration"
+    },
+    "communication_preference": {
+      "type": "string",
+      "description": "Preferred communication method",
+      "enum": [
+        "email",
+        "sms",
+        "both"
+      ],
+      "default": "email"
+    },
+    "marketing_consent": {
+      "type": "boolean",
+      "description": "Consent to receive marketing communications",
+      "default": false
+    },
+    "newsletter_subscribed": {
+      "type": "boolean",
+      "description": "Subscribed to newsletter",
+      "default": false
+    },
+    "phone_verified": {
+      "type": "boolean",
+      "description": "Whether phone number has been verified",
+      "default": false
+    },
+    "account_status": {
+      "type": "string",
+      "description": "Current account status",
+      "enum": [
+        "pending_verification",
+        "email_verified",
+        "phone_verified",
+        "pending_approval",
+        "active",
+        "suspended",
+        "rejected",
+        "disabled"
+      ],
+      "default": "pending_verification"
+    },
+    "profile_photo": {
+      "type": "string",
+      "description": "URL to profile photo"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Preferred display name"
+    },
+    "emergency_contact": {
+      "type": "string",
+      "description": "Emergency contact information"
     }
   },
   "required": [
