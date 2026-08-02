@@ -1,0 +1,110 @@
+{
+  "name": "AccountLock",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "lock_reason": {
+      "type": "string",
+      "enum": [
+        "too_many_failed_logins",
+        "admin_manual_lock",
+        "suspicious_activity",
+        "security_policy_violation",
+        "password_expired",
+        "verification_failed"
+      ]
+    },
+    "lock_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "unlock_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled unlock time (for automatic locks)"
+    },
+    "actual_unlock_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the lock was actually removed"
+    },
+    "locked_by": {
+      "type": "string",
+      "description": "User ID of the person who locked the account"
+    },
+    "locked_by_name": {
+      "type": "string"
+    },
+    "unlocked_by": {
+      "type": "string"
+    },
+    "unlocked_by_name": {
+      "type": "string"
+    },
+    "is_automatic": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this was an automatic (system) lock vs manual"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the lock is currently active"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "lock_reason"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

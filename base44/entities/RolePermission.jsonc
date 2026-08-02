@@ -1,0 +1,62 @@
+{
+  "name": "RolePermission",
+  "type": "object",
+  "properties": {
+    "role_key": {
+      "type": "string",
+      "description": "Role identifier from Role entity"
+    },
+    "role_name": {
+      "type": "string"
+    },
+    "permission_key": {
+      "type": "string",
+      "description": "Permission identifier from Permission entity"
+    },
+    "permission_name": {
+      "type": "string"
+    },
+    "effect": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "deny",
+        "inherited"
+      ],
+      "default": "allow",
+      "description": "Whether this permission is allowed, denied, or inherited"
+    },
+    "is_inherited": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this permission is inherited from a parent role"
+    },
+    "inherited_from_role": {
+      "type": "string",
+      "description": "Parent role key if inherited"
+    }
+  },
+  "required": [
+    "role_key",
+    "permission_key",
+    "effect"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

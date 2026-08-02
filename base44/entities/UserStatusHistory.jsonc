@@ -1,0 +1,113 @@
+{
+  "name": "UserStatusHistory",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_registration",
+        "email_pending",
+        "phone_pending",
+        "pending_approval",
+        "active",
+        "verified",
+        "suspended",
+        "disabled",
+        "locked",
+        "rejected",
+        "archived",
+        "deleted"
+      ],
+      "description": "Account lifecycle status"
+    },
+    "previous_status": {
+      "type": "string",
+      "enum": [
+        "pending_registration",
+        "email_pending",
+        "phone_pending",
+        "pending_approval",
+        "active",
+        "verified",
+        "suspended",
+        "disabled",
+        "locked",
+        "rejected",
+        "archived",
+        "deleted"
+      ]
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this status became effective"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for the status change"
+    },
+    "changed_by": {
+      "type": "string",
+      "description": "User ID of the person who changed the status"
+    },
+    "changed_by_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.changed_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

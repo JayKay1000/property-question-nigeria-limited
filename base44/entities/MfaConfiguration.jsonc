@@ -1,0 +1,125 @@
+{
+  "name": "MfaConfiguration",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "mfa_method": {
+      "type": "string",
+      "enum": [
+        "authenticator_app",
+        "sms_otp",
+        "email_otp",
+        "hardware_key",
+        "passkey",
+        "biometric"
+      ],
+      "description": "MFA method configured"
+    },
+    "is_enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_primary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Primary MFA method for the user"
+    },
+    "secret_hash": {
+      "type": "string",
+      "description": "Hashed MFA secret (for authenticator apps)"
+    },
+    "backup_codes_hash": {
+      "type": "string",
+      "description": "Hashed backup codes"
+    },
+    "backup_codes_remaining": {
+      "type": "number",
+      "default": 0
+    },
+    "configured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_used": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "device_identifier": {
+      "type": "string",
+      "description": "Device identifier for hardware keys / passkeys"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional MFA configuration metadata"
+    }
+  },
+  "required": [
+    "user_id",
+    "mfa_method"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

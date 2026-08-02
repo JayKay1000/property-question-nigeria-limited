@@ -20,6 +20,7 @@ import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
 import SOCDashboard from '@/pages/admin/SOCDashboard';
 import DatabaseGovernance from '@/pages/admin/DatabaseGovernance';
+import IdentityCenter from '@/pages/admin/IdentityCenter';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -88,6 +89,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/database" element={
             <RequirePermission permission="security.view">
               <DatabaseGovernance />
+            </RequirePermission>
+          } />
+          <Route path="/admin/identity" element={
+            <RequirePermission permission="security.view">
+              <IdentityCenter />
             </RequirePermission>
           } />
         </Route>

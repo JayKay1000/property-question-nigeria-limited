@@ -1,0 +1,130 @@
+{
+  "name": "UserDevice",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "device_name": {
+      "type": "string",
+      "description": "Friendly device name (e.g. iPhone 15, Chrome on Windows)"
+    },
+    "device_identifier": {
+      "type": "string",
+      "description": "Unique device fingerprint or identifier"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "mobile",
+        "tablet",
+        "laptop",
+        "other"
+      ]
+    },
+    "browser": {
+      "type": "string"
+    },
+    "operating_system": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "last_used": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "first_seen": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_ip_address": {
+      "type": "string"
+    },
+    "last_location": {
+      "type": "string"
+    },
+    "is_trusted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Trusted device for future MFA skip"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "notification_preferences": {
+      "type": "object",
+      "description": "Per-device notification settings"
+    }
+  },
+  "required": [
+    "user_id",
+    "device_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

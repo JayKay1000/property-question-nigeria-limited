@@ -1,0 +1,119 @@
+{
+  "name": "OtpRequest",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "otp_type": {
+      "type": "string",
+      "enum": [
+        "email_verification",
+        "phone_verification",
+        "password_reset",
+        "mfa_challenge",
+        "transaction"
+      ],
+      "description": "Purpose of the OTP"
+    },
+    "delivery_channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "authenticator_app"
+      ],
+      "default": "email"
+    },
+    "identifier": {
+      "type": "string",
+      "description": "Email or phone the OTP was sent to"
+    },
+    "otp_code_hash": {
+      "type": "string",
+      "description": "Hashed OTP code (never store plain text)"
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "attempts": {
+      "type": "number",
+      "default": 0
+    },
+    "max_attempts": {
+      "type": "number",
+      "default": 5
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "used",
+        "expired",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "used_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ip_address": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "otp_type",
+    "delivery_channel",
+    "identifier",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

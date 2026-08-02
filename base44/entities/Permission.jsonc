@@ -1,0 +1,61 @@
+{
+  "name": "Permission",
+  "type": "object",
+  "properties": {
+    "permission_key": {
+      "type": "string",
+      "description": "Unique permission identifier (e.g. properties.view, crm.create)"
+    },
+    "permission_name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "permission_group": {
+      "type": "string",
+      "description": "Group this permission belongs to (e.g. Properties, CRM, Security)"
+    },
+    "module": {
+      "type": "string",
+      "description": "Platform module this permission relates to"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "low"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "permission_key",
+    "permission_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Role",
+  "type": "object",
+  "properties": {
+    "role_key": {
+      "type": "string",
+      "description": "Unique role identifier (e.g. administrator, verified_agent)"
+    },
+    "role_name": {
+      "type": "string",
+      "description": "Display name for the role"
+    },
+    "description": {
+      "type": "string"
+    },
+    "parent_role_key": {
+      "type": "string",
+      "description": "Parent role for hierarchy (optional)"
+    },
+    "level": {
+      "type": "number",
+      "default": 0,
+      "description": "Hierarchy level (0=guest, 5=super_admin)"
+    },
+    "is_system_role": {
+      "type": "boolean",
+      "default": true,
+      "description": "System roles cannot be deleted"
+    },
+    "is_custom": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a custom (non-default) role"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "updated_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "role_key",
+    "role_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "name": "UserPreference",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark",
+        "system"
+      ],
+      "default": "system"
+    },
+    "dashboard_layout": {
+      "type": "string",
+      "description": "Preferred dashboard layout configuration"
+    },
+    "preferred_language": {
+      "type": "string",
+      "default": "en"
+    },
+    "preferred_currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "Africa/Lagos"
+    },
+    "default_landing_page": {
+      "type": "string",
+      "description": "Default page after login"
+    },
+    "date_format": {
+      "type": "string",
+      "default": "DD/MM/YYYY"
+    },
+    "number_format": {
+      "type": "string",
+      "default": "en_NG"
+    },
+    "email_digest_frequency": {
+      "type": "string",
+      "enum": [
+        "never",
+        "daily",
+        "weekly",
+        "monthly"
+      ],
+      "default": "weekly"
+    },
+    "sidebar_collapsed": {
+      "type": "boolean",
+      "default": false
+    },
+    "compact_mode": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

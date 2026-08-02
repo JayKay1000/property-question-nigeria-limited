@@ -1,0 +1,131 @@
+{
+  "name": "EmploymentProfile",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID"
+    },
+    "employee_number": {
+      "type": "string",
+      "description": "Unique employee number (e.g. PQ-EMP-0001)"
+    },
+    "department_id": {
+      "type": "string",
+      "description": "Reference to StaffDepartment entity"
+    },
+    "department_name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "description": "Job title / position"
+    },
+    "manager_id": {
+      "type": "string",
+      "description": "User ID of the direct manager"
+    },
+    "manager_name": {
+      "type": "string"
+    },
+    "hire_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "termination_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "employment_status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "on_leave",
+        "suspended",
+        "terminated",
+        "resigned",
+        "retired",
+        "probation"
+      ],
+      "default": "active"
+    },
+    "employment_type": {
+      "type": "string",
+      "enum": [
+        "full_time",
+        "part_time",
+        "contract",
+        "intern",
+        "consultant"
+      ],
+      "default": "full_time"
+    },
+    "work_location": {
+      "type": "string"
+    },
+    "reports_to_department": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this staff member reports to a department head"
+    }
+  },
+  "required": [
+    "user_id",
+    "employment_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.manager_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

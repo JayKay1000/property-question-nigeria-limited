@@ -1,0 +1,81 @@
+{
+  "name": "FailedLoginAttempt",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Reference to the platform User ID (if known)"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email used in the failed attempt"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "device_info": {
+      "type": "string"
+    },
+    "attempt_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "failure_reason": {
+      "type": "string",
+      "enum": [
+        "invalid_password",
+        "user_not_found",
+        "account_locked",
+        "account_disabled",
+        "email_not_verified",
+        "mfa_failed",
+        "rate_limited"
+      ]
+    },
+    "attempt_count_for_ip": {
+      "type": "number",
+      "default": 1,
+      "description": "Running count of attempts from this IP"
+    },
+    "is_resolved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_email",
+    "failure_reason"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
