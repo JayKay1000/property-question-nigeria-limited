@@ -28,7 +28,7 @@ export default function ServicesPreview() {
                 to={service.href}
                 className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-brand-100 bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-flame-200 hover:shadow-card-hover lg:p-7"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-colors group-hover:bg-flame-500 group-hover:text-white">
+                <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl transition-colors group-hover:bg-flame-500 group-hover:text-white ${i % 2 === 0 ? 'bg-brand-50 text-brand-700' : 'bg-ice-100 text-ice-700'}`}>
                   <service.icon className="h-6 w-6" />
                 </div>
                 <h3 className="font-heading text-lg font-bold text-brand-900">{service.title}</h3>

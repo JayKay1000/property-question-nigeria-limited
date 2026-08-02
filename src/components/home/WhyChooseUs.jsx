@@ -15,7 +15,7 @@ const IMAGE = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=90
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 lg:py-28">
+    <section className="bg-ice-50 py-20 lg:py-28">
       <div className="container-wide section-pad">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
@@ -43,7 +43,7 @@ export default function WhyChooseUs() {
               {features.map((f, i) => (
                 <Reveal key={f.title} delay={i * 0.08}>
                   <div className="flex gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-flame-50 text-flame-600">
+                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${i % 2 === 0 ? 'bg-flame-50 text-flame-600' : 'bg-ice-100 text-ice-700'}`}>
                       <f.icon className="h-5 w-5" />
                     </div>
                     <div>

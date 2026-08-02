@@ -32,6 +32,7 @@ export default function StatsSection() {
     <section className="relative overflow-hidden bg-brand-900 py-20 lg:py-24">
       <div className="absolute inset-0">
         <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-flame-500/10 blur-3xl" />
+        <div className="absolute right-1/3 top-1/2 h-72 w-72 rounded-full bg-ice-400/15 blur-3xl" />
         <div className="absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-brand-500/20 blur-3xl" />
       </div>
       <div className="container-wide section-pad relative">

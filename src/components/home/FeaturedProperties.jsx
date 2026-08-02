@@ -13,7 +13,7 @@ const properties = [
 
 export default function FeaturedProperties() {
   return (
-    <section className="bg-soft-gray py-20 lg:py-28">
+    <section className="bg-ice-100 py-20 lg:py-28">
       <div className="container-wide section-pad">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeader

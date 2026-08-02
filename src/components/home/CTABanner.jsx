@@ -12,6 +12,7 @@ export default function CTABanner() {
         <div className="relative overflow-hidden rounded-3xl">
           <img src={BG_IMAGE} alt="Get started" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-950/95 via-brand-900/85 to-brand-800/70" />
+          <div className="absolute -right-12 top-0 h-72 w-72 rounded-full bg-ice-400/25 blur-3xl" />
           <div className="relative z-10 px-6 py-14 text-center sm:px-12 lg:py-20 lg:text-left">
             <div className="mx-auto max-w-2xl lg:mx-0">
               <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl lg:text-5xl">

@@ -22,6 +22,7 @@ export default function Hero() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-br from-brand-950/90 via-brand-900/70 to-brand-800/50" />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-950 via-transparent to-transparent" />
+        <div className="absolute -right-20 top-1/4 h-96 w-96 rounded-full bg-ice-400/20 blur-3xl" />
       </div>
 
       <div className="container-wide section-pad relative z-10 py-32">
