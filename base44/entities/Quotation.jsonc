@@ -1,0 +1,166 @@
+{
+  "name": "Quotation",
+  "type": "object",
+  "properties": {
+    "quote_number": {
+      "type": "string",
+      "description": "Unique quote number (e.g. PQ-QUO-2024-0001)"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "quotation_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "project",
+        "buy2flip_projection",
+        "construction",
+        "property_management"
+      ],
+      "default": "property"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "opportunity_id": {
+      "type": "string"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date"
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Array of {description, quantity, unit_price, total}"
+    },
+    "subtotal_ngn": {
+      "type": "number"
+    },
+    "discount_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "discount_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "tax_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "total_amount_ngn": {
+      "type": "number"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "approved",
+        "rejected",
+        "expired",
+        "sent",
+        "accepted",
+        "declined"
+      ],
+      "default": "draft"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_by_name": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "accepted",
+        "declined",
+        "expired",
+        "converted",
+        "cancelled"
+      ],
+      "default": "draft"
+    },
+    "document_url": {
+      "type": "string",
+      "description": "Link to generated PDF quotation"
+    }
+  },
+  "required": [
+    "quote_number",
+    "customer_id",
+    "quotation_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

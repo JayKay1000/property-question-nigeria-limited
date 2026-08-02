@@ -1,0 +1,135 @@
+{
+  "name": "Referral",
+  "type": "object",
+  "properties": {
+    "referrer_id": {
+      "type": "string",
+      "description": "Customer who made the referral"
+    },
+    "referrer_name": {
+      "type": "string"
+    },
+    "referred_customer_id": {
+      "type": "string",
+      "description": "New customer referred"
+    },
+    "referred_customer_name": {
+      "type": "string"
+    },
+    "referred_email": {
+      "type": "string"
+    },
+    "referred_phone": {
+      "type": "string"
+    },
+    "referral_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "referral_source": {
+      "type": "string",
+      "description": "How the referral was made"
+    },
+    "reward_type": {
+      "type": "string",
+      "enum": [
+        "cash",
+        "discount",
+        "commission",
+        "gift",
+        "none"
+      ],
+      "default": "cash"
+    },
+    "reward_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "eligible",
+        "issued",
+        "redeemed",
+        "expired",
+        "denied"
+      ],
+      "default": "pending"
+    },
+    "reward_value_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "conversion_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When referral converted to sale"
+    },
+    "conversion_value_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "converted_property_id": {
+      "type": "string"
+    },
+    "converted_project_id": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "referrer_id",
+    "referral_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.referrer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.referrer_id": "{{user.id}}"
+        },
+        {
+          "data.referred_customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

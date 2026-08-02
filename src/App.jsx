@@ -24,6 +24,7 @@ import IdentityCenter from '@/pages/admin/IdentityCenter';
 import PropertyIntelligence from '@/pages/admin/PropertyIntelligence';
 import GISCommandCenter from '@/pages/admin/GISCommandCenter';
 import ProjectOperations from '@/pages/admin/ProjectOperations';
+import CRMOperations from '@/pages/admin/CRMOperations';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -112,6 +113,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/projects" element={
             <RequirePermission permission="properties.view">
               <ProjectOperations />
+            </RequirePermission>
+          } />
+          <Route path="/admin/crm" element={
+            <RequirePermission permission="properties.view">
+              <CRMOperations />
             </RequirePermission>
           } />
         </Route>

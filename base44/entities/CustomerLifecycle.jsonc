@@ -1,0 +1,137 @@
+{
+  "name": "CustomerLifecycle",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "first_contact_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "first_contact_channel": {
+      "type": "string"
+    },
+    "first_inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "first_reservation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "first_purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "documentation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "allocation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "ownership_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "repeat_purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "lifecycle_stage": {
+      "type": "string",
+      "enum": [
+        "lead",
+        "prospect",
+        "active_buyer",
+        "owner",
+        "repeat_buyer",
+        "advocate",
+        "churned"
+      ],
+      "default": "lead"
+    },
+    "total_purchases": {
+      "type": "number",
+      "default": 0
+    },
+    "total_value_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "total_inspections": {
+      "type": "number",
+      "default": 0
+    },
+    "total_interactions": {
+      "type": "number",
+      "default": 0
+    },
+    "last_activity_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "days_as_customer": {
+      "type": "number",
+      "description": "Days since first contact"
+    },
+    "referrals_made": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "customer_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

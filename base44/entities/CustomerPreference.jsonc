@@ -1,0 +1,145 @@
+{
+  "name": "CustomerPreference",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "preferred_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "budget_min_ngn": {
+      "type": "number"
+    },
+    "budget_max_ngn": {
+      "type": "number"
+    },
+    "preferred_property_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "communication_method": {
+      "type": "string",
+      "enum": [
+        "email",
+        "phone",
+        "sms",
+        "whatsapp",
+        "in_person"
+      ],
+      "default": "phone"
+    },
+    "investment_interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Types of investments interested in"
+    },
+    "buy2flip_interest": {
+      "type": "boolean",
+      "default": false
+    },
+    "buy2flip_plan_level": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "growth",
+        "premium",
+        "elite"
+      ],
+      "description": "Preferred Buy2Flip plan level"
+    },
+    "preferred_inspection_days": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Preferred days for inspections"
+    },
+    "preferred_inspection_times": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Preferred time slots"
+    },
+    "timeline_to_purchase": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "1_3_months",
+        "3_6_months",
+        "6_12_months",
+        "over_12_months",
+        "just_browsing"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

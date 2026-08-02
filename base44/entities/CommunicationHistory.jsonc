@@ -1,0 +1,142 @@
+{
+  "name": "CommunicationHistory",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "whatsapp",
+        "call",
+        "meeting",
+        "notification",
+        "in_app",
+        "letter"
+      ],
+      "description": "Communication channel"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound",
+        "internal"
+      ],
+      "default": "outbound"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "description": "Full message content"
+    },
+    "sent_by": {
+      "type": "string"
+    },
+    "sent_by_name": {
+      "type": "string"
+    },
+    "sent_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delivered_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "delivered",
+        "read",
+        "failed",
+        "bounced",
+        "undelivered"
+      ],
+      "default": "pending"
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "Type of related entity (lead, opportunity, ticket, etc.)"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "customer_id",
+    "channel",
+    "sent_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.sent_by": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "data.sent_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

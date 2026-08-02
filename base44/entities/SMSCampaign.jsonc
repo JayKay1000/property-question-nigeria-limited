@@ -1,0 +1,123 @@
+{
+  "name": "SMSCampaign",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string",
+      "description": "SMS message content (max 160 chars per segment)"
+    },
+    "sender_id": {
+      "type": "string",
+      "description": "Sender ID / alphanumeric"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "scheduled",
+        "sending",
+        "sent",
+        "failed"
+      ],
+      "default": "draft"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sent_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "total_sent": {
+      "type": "number",
+      "default": 0
+    },
+    "total_delivered": {
+      "type": "number",
+      "default": 0
+    },
+    "total_failed": {
+      "type": "number",
+      "default": 0
+    },
+    "total_pending": {
+      "type": "number",
+      "default": 0
+    },
+    "cost_per_sms_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "total_cost_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "delivery_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "Delivery rate percentage"
+    },
+    "click_through_url": {
+      "type": "string",
+      "description": "Optional tracking URL in SMS"
+    },
+    "total_clicks": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "campaign_id",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

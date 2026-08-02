@@ -1,0 +1,130 @@
+{
+  "name": "LandingPage",
+  "type": "object",
+  "properties": {
+    "page_name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug"
+    },
+    "campaign_id": {
+      "type": "string"
+    },
+    "campaign_name": {
+      "type": "string"
+    },
+    "page_type": {
+      "type": "string",
+      "enum": [
+        "property_launch",
+        "buy2flip",
+        "lead_capture",
+        "event",
+        "newsletter_signup",
+        "promotional",
+        "informational"
+      ],
+      "default": "lead_capture"
+    },
+    "url": {
+      "type": "string",
+      "description": "Full landing page URL"
+    },
+    "headline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "hero_image_url": {
+      "type": "string"
+    },
+    "conversion_goal": {
+      "type": "string",
+      "description": "Primary conversion goal (form submit, call, etc.)"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "unique_visitors": {
+      "type": "number",
+      "default": 0
+    },
+    "conversions": {
+      "type": "number",
+      "default": 0
+    },
+    "conversion_rate": {
+      "type": "number",
+      "default": 0
+    },
+    "bounce_rate": {
+      "type": "number",
+      "default": 0
+    },
+    "avg_time_on_page": {
+      "type": "number",
+      "description": "Average time in seconds"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "unpublished",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "page_name",
+    "slug",
+    "page_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "name": "SalesReservation",
+  "type": "object",
+  "properties": {
+    "reservation_number": {
+      "type": "string",
+      "description": "Unique reservation number"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "plot_id": {
+      "type": "string"
+    },
+    "plot_number": {
+      "type": "string"
+    },
+    "opportunity_id": {
+      "type": "string"
+    },
+    "reservation_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "deposit_amount_ngn": {
+      "type": "number"
+    },
+    "total_value_ngn": {
+      "type": "number"
+    },
+    "reservation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "expired",
+        "converted_to_sale",
+        "cancelled",
+        "refunded",
+        "extended"
+      ],
+      "default": "pending"
+    },
+    "reserved_by_id": {
+      "type": "string"
+    },
+    "reserved_by_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_id",
+    "reservation_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.reserved_by_id": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.reserved_by_id": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.reserved_by_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

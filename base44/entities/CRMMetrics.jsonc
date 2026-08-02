@@ -1,0 +1,105 @@
+{
+  "name": "CRMMetrics",
+  "type": "object",
+  "properties": {
+    "metric_type": {
+      "type": "string",
+      "enum": [
+        "lead_conversion",
+        "sales_performance",
+        "customer_acquisition_cost",
+        "lifetime_value",
+        "retention_rate",
+        "response_time",
+        "pipeline_velocity",
+        "marketing_roi",
+        "agent_performance",
+        "geographic_demand",
+        "buy2flip_engagement"
+      ],
+      "description": "Type of CRM metric"
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "Display name for the metric"
+    },
+    "metric_value": {
+      "type": "number",
+      "description": "Primary metric value"
+    },
+    "metric_unit": {
+      "type": "string",
+      "description": "Unit (percentage, count, ngn, days)",
+      "default": "count"
+    },
+    "metric_period": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "all_time",
+        "custom"
+      ]
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "Optional related entity type"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "calculated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metric breakdown data"
+    }
+  },
+  "required": [
+    "metric_type",
+    "metric_name",
+    "metric_value"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

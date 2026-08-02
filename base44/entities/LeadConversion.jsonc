@@ -1,0 +1,101 @@
+{
+  "name": "LeadConversion",
+  "type": "object",
+  "properties": {
+    "lead_id": {
+      "type": "string"
+    },
+    "lead_name": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "conversion_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "converted_by": {
+      "type": "string"
+    },
+    "converted_by_name": {
+      "type": "string"
+    },
+    "conversion_value_ngn": {
+      "type": "number"
+    },
+    "conversion_type": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "reservation",
+        "buy2flip",
+        "property_management",
+        "construction"
+      ],
+      "default": "sale"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "opportunity_id": {
+      "type": "string"
+    },
+    "time_to_convert_days": {
+      "type": "number",
+      "description": "Days from lead creation to conversion"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "lead_id",
+    "conversion_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.converted_by": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

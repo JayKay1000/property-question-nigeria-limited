@@ -20,7 +20,7 @@ export const adminNavItems = [
   { label: 'Properties', href: '/admin/properties', icon: 'Building2', permission: 'properties.view' },
   { label: 'Projects', href: '/admin/projects', icon: 'HardHat', permission: 'projects.view' },
   { label: 'Buy2Flip', href: '/admin/buy2flip', icon: 'TrendingUp', permission: 'buy2flip.view' },
-  { label: 'CRM', href: '/admin/crm', icon: 'Contact', permission: 'crm.view' },
+  { label: 'CRM Center', href: '/admin/crm', icon: 'Contact', permission: 'properties.view' },
   { label: 'Media', href: '/admin/media', icon: 'Image', permission: 'media.view' },
   { label: 'Blog', href: '/admin/blog', icon: 'FileText', permission: 'blog.view' },
   { label: 'Reports', href: '/admin/reports', icon: 'BarChart3', permission: 'reports.view' },
