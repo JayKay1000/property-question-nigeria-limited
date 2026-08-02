@@ -1,0 +1,133 @@
+{
+  "name": "PlotAllocation",
+  "type": "object",
+  "properties": {
+    "plot_id": {
+      "type": "string",
+      "description": "Reference to EstatePlot entity"
+    },
+    "plot_number": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "purchaser_id": {
+      "type": "string",
+      "description": "Purchaser user ID"
+    },
+    "purchaser_name": {
+      "type": "string"
+    },
+    "purchaser_email": {
+      "type": "string"
+    },
+    "purchaser_phone": {
+      "type": "string"
+    },
+    "allocation_letter_number": {
+      "type": "string",
+      "description": "Allocation letter reference number"
+    },
+    "allocation_letter_url": {
+      "type": "string",
+      "description": "Link to allocation letter document"
+    },
+    "allocation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Admin who approved the allocation"
+    },
+    "approved_by_name": {
+      "type": "string"
+    },
+    "documentation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "verified",
+        "disputed"
+      ],
+      "default": "pending"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "revoked",
+        "transferred"
+      ],
+      "default": "pending"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "plot_id",
+    "purchaser_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.purchaser_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.purchaser_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

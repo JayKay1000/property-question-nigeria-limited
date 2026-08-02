@@ -1,0 +1,86 @@
+{
+  "name": "ProjectAnalytics",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "analytics_type": {
+      "type": "string",
+      "enum": [
+        "project_view",
+        "plot_view",
+        "reservation",
+        "sale",
+        "enquiry",
+        "conversion"
+      ],
+      "description": "Type of analytics event"
+    },
+    "plot_id": {
+      "type": "string",
+      "description": "Plot ID if plot-specific event"
+    },
+    "count": {
+      "type": "number",
+      "default": 1
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User if authenticated"
+    },
+    "source": {
+      "type": "string",
+      "description": "Traffic source (web, mobile, agent_portal, etc.)"
+    }
+  },
+  "required": [
+    "analytics_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

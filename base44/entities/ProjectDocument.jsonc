@@ -1,0 +1,118 @@
+{
+  "name": "ProjectDocument",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "Reference to Project entity"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "document_name": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "layout_approval",
+        "survey_plan",
+        "engineering_drawing",
+        "environmental_report",
+        "certificate",
+        "allocation_letter",
+        "title_document",
+        "construction_permit",
+        "other"
+      ],
+      "description": "Type of project document"
+    },
+    "document_url": {
+      "type": "string",
+      "description": "File URL"
+    },
+    "version": {
+      "type": "string",
+      "default": "1.0",
+      "description": "Document version"
+    },
+    "previous_version_url": {
+      "type": "string",
+      "description": "Link to previous version for version history"
+    },
+    "issued_by": {
+      "type": "string",
+      "description": "Issuing authority"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_id",
+    "document_name",
+    "document_type",
+    "document_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

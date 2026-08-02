@@ -1,0 +1,62 @@
+{
+  "name": "ProjectType",
+  "type": "object",
+  "properties": {
+    "type_key": {
+      "type": "string",
+      "description": "Unique type identifier (e.g. residential_estate, commercial_estate)"
+    },
+    "type_name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "residential",
+        "commercial",
+        "industrial",
+        "agricultural",
+        "mixed_use",
+        "special_purpose"
+      ],
+      "description": "Broad category"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "type_key",
+    "type_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

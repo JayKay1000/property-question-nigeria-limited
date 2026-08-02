@@ -1,0 +1,103 @@
+{
+  "name": "EstatePhase",
+  "type": "object",
+  "properties": {
+    "estate_id": {
+      "type": "string",
+      "description": "Reference to Estate entity"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to parent Project"
+    },
+    "phase_name": {
+      "type": "string",
+      "description": "Phase name (e.g. Phase 1, Phase 2)"
+    },
+    "phase_code": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "launch_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "total_plots": {
+      "type": "number",
+      "default": 0
+    },
+    "plots_sold": {
+      "type": "number",
+      "default": 0
+    },
+    "plots_available": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planning",
+        "active",
+        "selling",
+        "sold_out",
+        "completed",
+        "suspended"
+      ],
+      "default": "planning"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "estate_id",
+    "phase_name"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

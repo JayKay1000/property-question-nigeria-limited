@@ -1,0 +1,94 @@
+{
+  "name": "PlotDimension",
+  "type": "object",
+  "properties": {
+    "plot_id": {
+      "type": "string",
+      "description": "Reference to EstatePlot entity"
+    },
+    "plot_number": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "width_meters": {
+      "type": "number",
+      "description": "Plot width in meters"
+    },
+    "length_meters": {
+      "type": "number",
+      "description": "Plot length in meters"
+    },
+    "total_area_sqm": {
+      "type": "number",
+      "description": "Total calculated area in square meters"
+    },
+    "measurement_unit": {
+      "type": "string",
+      "default": "sqm"
+    },
+    "survey_coordinates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Array of survey boundary points {lat, lng}"
+    },
+    "boundary_description": {
+      "type": "string",
+      "description": "Textual boundary description"
+    },
+    "shape_type": {
+      "type": "string",
+      "enum": [
+        "rectangular",
+        "square",
+        "irregular",
+        "triangular",
+        "trapezoidal"
+      ],
+      "default": "rectangular",
+      "description": "Plot shape classification"
+    },
+    "survey_plan_url": {
+      "type": "string",
+      "description": "Link to survey plan document"
+    }
+  },
+  "required": [
+    "plot_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -6,35 +6,88 @@
       "type": "string",
       "description": "Project name"
     },
+    "reference_number": {
+      "type": "string",
+      "description": "Unique project reference (e.g. PQ-PROJ-2024-0001)"
+    },
     "code": {
       "type": "string",
       "description": "Unique project code (e.g. PQ-PROJ-2024-001)"
     },
+    "slug": {
+      "type": "string",
+      "description": "SEO-friendly URL slug"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Brief description for cards and previews"
+    },
     "description": {
-      "type": "string"
+      "type": "string",
+      "description": "Full detailed project description"
     },
     "project_type": {
       "type": "string",
-      "enum": [
-        "estate_development",
-        "construction",
-        "renovation",
-        "mixed_use"
-      ]
+      "description": "Project type key from ProjectType entity (residential_estate, commercial_estate, mixed_use_estate, etc.)"
+    },
+    "project_category": {
+      "type": "string",
+      "description": "Project category classification"
     },
     "status": {
       "type": "string",
       "enum": [
         "draft",
         "planning",
-        "approved",
-        "active",
-        "on_hold",
+        "survey_completed",
+        "approval_pending",
+        "infrastructure_development",
+        "construction",
+        "selling",
+        "allocation",
+        "handover",
         "completed",
+        "suspended",
         "cancelled",
         "archived"
       ],
       "default": "draft"
+    },
+    "development_stage": {
+      "type": "string",
+      "enum": [
+        "land_only",
+        "survey",
+        "layout_approval",
+        "infrastructure",
+        "construction",
+        "selling",
+        "handover",
+        "completed",
+        "off_plan"
+      ],
+      "description": "Current development stage"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Featured project flag"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "private",
+        "internal",
+        "agents_only"
+      ],
+      "default": "public",
+      "description": "Project visibility scope"
+    },
+    "launch_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Official project launch date"
     },
     "start_date": {
       "type": "string",
@@ -51,6 +104,10 @@
     "progress_percentage": {
       "type": "number",
       "default": 0
+    },
+    "total_land_area_sqm": {
+      "type": "number",
+      "description": "Total project land area in square meters"
     },
     "location_state": {
       "type": "string"
@@ -69,6 +126,9 @@
     },
     "longitude": {
       "type": "number"
+    },
+    "google_maps_link": {
+      "type": "string"
     },
     "total_units": {
       "type": "number"
@@ -99,6 +159,10 @@
     "developer_name": {
       "type": "string"
     },
+    "primary_estate_id": {
+      "type": "string",
+      "description": "Reference to primary Estate entity"
+    },
     "featured_image_url": {
       "type": "string"
     },
@@ -107,6 +171,13 @@
       "items": {
         "type": "string"
       }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key project selling points"
     },
     "approved_by": {
       "type": "string"

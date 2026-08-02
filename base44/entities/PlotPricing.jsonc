@@ -1,0 +1,103 @@
+{
+  "name": "PlotPricing",
+  "type": "object",
+  "properties": {
+    "plot_id": {
+      "type": "string",
+      "description": "Reference to EstatePlot entity"
+    },
+    "plot_number": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "base_price_ngn": {
+      "type": "number",
+      "description": "Base listing price"
+    },
+    "promotional_price_ngn": {
+      "type": "number",
+      "description": "Promotional/discounted price"
+    },
+    "current_price_ngn": {
+      "type": "number",
+      "description": "Currently effective price"
+    },
+    "price_per_sqm_ngn": {
+      "type": "number",
+      "description": "Price per square meter"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "buy2flip_eligible": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this plot is eligible for Buy2Flip program"
+    },
+    "installment_available": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether installment payment is available"
+    },
+    "installment_plan": {
+      "type": "string",
+      "description": "Installment plan description (e.g. 6 months, 12 months)"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When this price becomes effective"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When this price expires"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "plot_id",
+    "base_price_ngn"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

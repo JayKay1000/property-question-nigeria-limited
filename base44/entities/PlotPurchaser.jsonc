@@ -1,0 +1,159 @@
+{
+  "name": "PlotPurchaser",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "Reference to Project entity"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "plot_id": {
+      "type": "string",
+      "description": "Reference to EstatePlot"
+    },
+    "plot_number": {
+      "type": "string"
+    },
+    "purchaser_id": {
+      "type": "string",
+      "description": "Platform user ID of purchaser"
+    },
+    "purchaser_name": {
+      "type": "string"
+    },
+    "purchaser_email": {
+      "type": "string"
+    },
+    "purchaser_phone": {
+      "type": "string"
+    },
+    "purchased_plots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Plot IDs purchased by this customer"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "part_paid",
+        "fully_paid",
+        "overdue",
+        "refunded"
+      ],
+      "default": "pending"
+    },
+    "total_amount_ngn": {
+      "type": "number"
+    },
+    "amount_paid_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "balance_ngn": {
+      "type": "number",
+      "default": 0
+    },
+    "documentation_progress": {
+      "type": "string",
+      "enum": [
+        "not_started",
+        "in_progress",
+        "submitted",
+        "verified",
+        "completed"
+      ],
+      "default": "not_started"
+    },
+    "allocation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "allocated",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "construction_approval": {
+      "type": "string",
+      "enum": [
+        "not_applied",
+        "pending",
+        "approved",
+        "rejected",
+        "expired"
+      ],
+      "default": "not_applied"
+    },
+    "handover_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "purchaser_name",
+    "payment_status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.purchaser_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.purchaser_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

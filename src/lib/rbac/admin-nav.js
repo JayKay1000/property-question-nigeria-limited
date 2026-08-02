@@ -12,6 +12,7 @@ export const adminNavItems = [
   { label: 'DB Governance', href: '/admin/database', icon: 'Database', permission: 'security.view' },
   { label: 'Property Center', href: '/admin/property-center', icon: 'Building2', permission: 'properties.view' },
   { label: 'GIS Command', href: '/admin/gis', icon: 'Map', permission: 'properties.view' },
+  { label: 'Project Ops', href: '/admin/projects', icon: 'HardHat', permission: 'properties.view' },
   { label: 'RBAC Overview', href: '/admin/rbac', icon: 'Shield', permission: 'security.view' },
   { label: 'Audit Logs', href: '/admin/audit-logs', icon: 'ScrollText', permission: 'security.audit_logs' },
   { label: 'Feature Flags', href: '/admin/feature-flags', icon: 'Flag', permission: 'security.feature_flags' },

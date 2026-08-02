@@ -1,0 +1,137 @@
+{
+  "name": "EstateInfrastructure",
+  "type": "object",
+  "properties": {
+    "estate_id": {
+      "type": "string",
+      "description": "Reference to Estate entity"
+    },
+    "estate_name": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "infrastructure_name": {
+      "type": "string",
+      "description": "Name of the infrastructure asset"
+    },
+    "infrastructure_type": {
+      "type": "string",
+      "enum": [
+        "road",
+        "drainage",
+        "electricity",
+        "street_light",
+        "water_supply",
+        "borehole",
+        "sewage",
+        "perimeter_fence",
+        "gate_house",
+        "security_post",
+        "park",
+        "playground",
+        "club_house",
+        "health_centre",
+        "school",
+        "shopping_centre",
+        "other"
+      ],
+      "description": "Type of infrastructure"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "survey",
+        "under_construction",
+        "completed",
+        "inspected",
+        "operational",
+        "maintenance",
+        "delayed"
+      ],
+      "default": "planned"
+    },
+    "completion_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "responsible_contractor_id": {
+      "type": "string",
+      "description": "Reference to ProjectContractor"
+    },
+    "responsible_contractor_name": {
+      "type": "string"
+    },
+    "inspection_dates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Scheduled and completed inspection dates"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expected_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "budget_ngn": {
+      "type": "number"
+    },
+    "actual_cost_ngn": {
+      "type": "number"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "estate_id",
+    "infrastructure_name",
+    "infrastructure_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

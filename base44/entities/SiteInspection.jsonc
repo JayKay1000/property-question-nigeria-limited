@@ -1,0 +1,135 @@
+{
+  "name": "SiteInspection",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "infrastructure_id": {
+      "type": "string",
+      "description": "Reference to EstateInfrastructure if applicable"
+    },
+    "inspection_type": {
+      "type": "string",
+      "enum": [
+        "routine",
+        "milestone",
+        "quality",
+        "safety",
+        "final",
+        "interim"
+      ],
+      "default": "routine"
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspector_name": {
+      "type": "string"
+    },
+    "inspector_organization": {
+      "type": "string"
+    },
+    "findings": {
+      "type": "string",
+      "description": "Inspection findings"
+    },
+    "issues_identified": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "corrective_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "overall_rating": {
+      "type": "string",
+      "enum": [
+        "excellent",
+        "good",
+        "satisfactory",
+        "needs_improvement",
+        "failed"
+      ],
+      "default": "satisfactory"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "in_progress",
+        "completed",
+        "failed"
+      ],
+      "default": "scheduled"
+    },
+    "next_inspection_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "project_id",
+    "inspection_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

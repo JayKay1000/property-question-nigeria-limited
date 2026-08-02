@@ -1,0 +1,111 @@
+{
+  "name": "ProjectMedia",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "Reference to Project entity"
+    },
+    "project_name": {
+      "type": "string"
+    },
+    "estate_id": {
+      "type": "string"
+    },
+    "media_type": {
+      "type": "string",
+      "enum": [
+        "image",
+        "drone_video",
+        "progress_video",
+        "marketing_video",
+        "brochure",
+        "virtual_tour",
+        "site_plan",
+        "other"
+      ],
+      "description": "Type of media"
+    },
+    "media_url": {
+      "type": "string",
+      "description": "Media file URL"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "capture_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "captured_by": {
+      "type": "string"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "internal",
+        "admin_only"
+      ],
+      "default": "public"
+    }
+  },
+  "required": [
+    "project_id",
+    "media_type",
+    "media_url"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": null,
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

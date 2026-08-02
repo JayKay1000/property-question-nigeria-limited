@@ -1,0 +1,132 @@
+{
+  "name": "ProjectContractor",
+  "type": "object",
+  "properties": {
+    "contractor_name": {
+      "type": "string",
+      "description": "Primary contact or company name"
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Registered company name"
+    },
+    "company_registration_number": {
+      "type": "string"
+    },
+    "assigned_project_id": {
+      "type": "string",
+      "description": "Primary assigned project"
+    },
+    "assigned_project_name": {
+      "type": "string"
+    },
+    "assigned_estate_id": {
+      "type": "string"
+    },
+    "scope_of_work": {
+      "type": "string",
+      "description": "Description of contracted scope"
+    },
+    "specialization": {
+      "type": "string",
+      "enum": [
+        "civil",
+        "electrical",
+        "plumbing",
+        "landscaping",
+        "security",
+        "road_construction",
+        "general",
+        "other"
+      ],
+      "default": "general"
+    },
+    "contract_value_ngn": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "active",
+        "completed",
+        "suspended",
+        "terminated"
+      ],
+      "default": "active"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "contact_address": {
+      "type": "string"
+    },
+    "performance_rating": {
+      "type": "number",
+      "default": 0,
+      "description": "Performance rating 0-5"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "contractor_name",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

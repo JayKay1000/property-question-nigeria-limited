@@ -9,6 +9,10 @@
     "estate_name": {
       "type": "string"
     },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to parent Project entity"
+    },
     "layout_id": {
       "type": "string",
       "description": "Reference to EstateLayout entity"
@@ -17,12 +21,68 @@
       "type": "string",
       "description": "Plot identifier (e.g. Block A, Plot 12)"
     },
+    "plot_code": {
+      "type": "string",
+      "description": "Unique plot code across the estate/project"
+    },
     "block_name": {
       "type": "string",
       "description": "Block within the estate"
     },
-    "plot_size_sqm": {
-      "type": "number"
+    "phase_name": {
+      "type": "string",
+      "description": "Estate phase this plot belongs to"
+    },
+    "section_name": {
+      "type": "string",
+      "description": "Estate section/zone this plot belongs to"
+    },
+    "property_reference": {
+      "type": "string",
+      "description": "Reference to linked Property listing"
+    },
+    "property_id": {
+      "type": "string",
+      "description": "Property entity ID if linked"
+    },
+    "plot_size": {
+      "type": "number",
+      "description": "Plot size value"
+    },
+    "measurement_unit": {
+      "type": "string",
+      "enum": [
+        "sqm",
+        "sqft",
+        "acres",
+        "hectares",
+        "plots"
+      ],
+      "default": "sqm"
+    },
+    "facing_direction": {
+      "type": "string",
+      "enum": [
+        "north",
+        "south",
+        "east",
+        "west",
+        "north_east",
+        "north_west",
+        "south_east",
+        "south_west"
+      ],
+      "description": "Plot facing direction"
+    },
+    "corner_piece": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a corner plot"
+    },
+    "road_access": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether plot has direct road access"
     },
     "latitude": {
       "type": "number"
@@ -35,15 +95,25 @@
       "enum": [
         "available",
         "reserved",
+        "pending_payment",
+        "allocated",
         "sold",
+        "under_documentation",
         "under_construction",
-        "unavailable"
+        "completed",
+        "not_available"
       ],
       "default": "available"
     },
-    "property_id": {
+    "visibility": {
       "type": "string",
-      "description": "Reference to Property entity if linked"
+      "enum": [
+        "public",
+        "private",
+        "internal",
+        "agents_only"
+      ],
+      "default": "public"
     },
     "price_ngn": {
       "type": "number"
@@ -56,6 +126,12 @@
       "format": "date"
     },
     "notes": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "verified_by": {
       "type": "string"
     }
   },
