@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, Search, Bell, Moon, Sun, LogOut, User, Settings } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +12,11 @@ import { useRBAC } from '@/lib/rbac/useRBAC';
 import { base44 } from '@/api/base44Client';
 import { dashboardNav } from '@/lib/dashboard-nav';
 
-export default function DashboardTopbar({ onMobileMenu }) {
+export default function DashboardTopbar({ onMobileMenu, onSearchClick }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const rbac = useRBAC();
   const [dark, setDark] = useState(false);
-  const [search, setSearch] = useState('');
 
   const currentItem =
     [...dashboardNav]
@@ -49,17 +47,25 @@ export default function DashboardTopbar({ onMobileMenu }) {
         {currentItem.label}
       </h1>
 
-      <div className="relative ml-auto hidden max-w-xs flex-1 md:block">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search properties, people, documents…"
-          className="pl-9"
-        />
-      </div>
+      <button
+        onClick={onSearchClick}
+        className="relative ml-auto hidden h-9 max-w-xs flex-1 items-center gap-2 rounded-md border border-input bg-transparent px-3 text-sm text-muted-foreground shadow-sm transition-colors hover:bg-accent md:flex"
+      >
+        <Search className="h-4 w-4" />
+        <span className="flex-1 text-left">Search…</span>
+        <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium lg:flex">
+          ⌘K
+        </kbd>
+      </button>
 
       <div className="ml-auto flex items-center gap-1 md:ml-0">
+        <button
+          onClick={onSearchClick}
+          className="rounded-lg p-2 text-brand-800 hover:bg-brand-50 md:hidden"
+          aria-label="Search"
+        >
+          <Search className="h-5 w-5" />
+        </button>
         <button
           onClick={toggleTheme}
           className="rounded-lg p-2 text-brand-800 hover:bg-brand-50"
