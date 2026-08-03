@@ -3,7 +3,7 @@ import Reveal from '@/components/ui/Reveal';
 
 const benefits = [
 { icon: TrendingUp, title: 'High ROI Potential', desc: 'Access curated property flipping opportunities with strong, projected returns across Nigeria.' },
-{ icon: ShieldCheck, title: 'Verified Listings', desc: 'Every property is vetted and verified by our investment team before it reaches you.' },
+{ icon: ShieldCheck, title: 'Verified Listings', desc: "Every property is vetted and verified by our team before it reaches you." },
 { icon: BadgeDollarSign, title: 'Transparent Pricing', desc: 'Clear cost breakdowns with no hidden fees or surprise charges at any stage.' },
 { icon: Users, title: 'Expert Support', desc: 'Dedicated investment advisors guide you through every flip from start to finish.' },
 { icon: Eye, title: 'Full Visibility', desc: 'Track project progress, costs, and timelines in real time on the Buy2Flip platform.' },
