@@ -7,7 +7,7 @@ const benefits = [
 { icon: BadgeDollarSign, title: 'Transparent Pricing', desc: 'Clear cost breakdowns with no hidden fees or surprise charges at any stage.' },
 { icon: Users, title: 'Expert Support', desc: 'Dedicated investment advisors guide you through every flip from start to finish.' },
 { icon: Eye, title: 'Full Visibility', desc: 'Track project progress, costs, and timelines in real time on the Buy2Flip platform.' },
-{ icon: Lock, title: 'Secure Transactions', desc: 'Bank-grade security protecting your investments, documents, and personal data.' }];
+{ icon: Lock, title: 'Secure Transactions', desc: "High-grade security protecting your commitments, documents, and personal data." }];
 
 
 export default function Benefits() {
