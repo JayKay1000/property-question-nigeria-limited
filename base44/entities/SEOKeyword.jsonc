@@ -1,0 +1,117 @@
+{
+  "name": "SEOKeyword",
+  "type": "object",
+  "properties": {
+    "keyword": {
+      "type": "string",
+      "description": "Target keyword phrase"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "search_intent": {
+      "type": "string",
+      "enum": [
+        "informational",
+        "commercial",
+        "transactional",
+        "navigational"
+      ],
+      "default": "informational"
+    },
+    "search_volume": {
+      "type": "number",
+      "description": "Estimated monthly search volume"
+    },
+    "keyword_difficulty": {
+      "type": "number",
+      "description": "Difficulty score 0-100"
+    },
+    "current_ranking": {
+      "type": "number",
+      "description": "Current SERP position (1 = top)"
+    },
+    "previous_ranking": {
+      "type": "number"
+    },
+    "ranking_url": {
+      "type": "string",
+      "description": "URL currently ranking for this keyword"
+    },
+    "target_url": {
+      "type": "string",
+      "description": "Page we want to rank"
+    },
+    "category": {
+      "type": "string",
+      "description": "e.g. property, project, location, service"
+    },
+    "cpc": {
+      "type": "number",
+      "description": "Estimated cost per click in NGN"
+    },
+    "competition": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "tracking",
+        "ranking",
+        "not_ranking",
+        "opportunity",
+        "archived"
+      ],
+      "default": "tracking"
+    },
+    "last_checked": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "keyword"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

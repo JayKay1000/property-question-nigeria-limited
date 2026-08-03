@@ -26,5 +26,6 @@ export const dashboardNav = [
   { label: 'AI Center', href: '/admin/ai', icon: BrainCircuit, permission: 'security.view' },
   { label: 'Financial Center', href: '/admin/finance', icon: Wallet, permission: 'security.view' },
   { label: 'CMS', href: '/admin/cms', icon: FileText, permission: 'security.view' },
+  { label: 'Marketing Center', href: '/admin/marketing', icon: Megaphone, permission: 'security.view' },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

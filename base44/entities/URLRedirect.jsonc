@@ -1,0 +1,92 @@
+{
+  "name": "URLRedirect",
+  "type": "object",
+  "properties": {
+    "redirect_code": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Old URL to redirect from"
+    },
+    "target_url": {
+      "type": "string",
+      "description": "New URL to redirect to"
+    },
+    "redirect_type": {
+      "type": "string",
+      "enum": [
+        "301",
+        "302",
+        "307",
+        "410"
+      ],
+      "default": "301",
+      "description": "301=permanent, 302=found, 307=temporary, 410=gone"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "expired"
+      ],
+      "default": "active"
+    },
+    "hit_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of times this redirect was used"
+    },
+    "last_hit": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "created_by_name": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "source_url",
+    "target_url",
+    "redirect_type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

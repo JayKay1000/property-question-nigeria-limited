@@ -50,6 +50,7 @@ import CMSDashboard from '@/pages/admin/CMSDashboard';
 import WorkflowEngine from '@/pages/admin/WorkflowEngine';
 import AIIntelligenceCenter from '@/pages/admin/AIIntelligenceCenter';
 import FinancialCenter from '@/pages/admin/FinancialCenter';
+import MarketingCenter from '@/pages/admin/MarketingCenter';
 import AboutUs from '@/pages/AboutUs';
 import Services from '@/pages/Services';
 import Blog from '@/pages/Blog';
@@ -228,6 +229,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/finance" element={
             <RequirePermission permission="security.view">
               <FinancialCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/marketing" element={
+            <RequirePermission permission="security.view">
+              <MarketingCenter />
             </RequirePermission>
           } />
         </Route>

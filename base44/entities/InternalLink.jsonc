@@ -1,0 +1,87 @@
+{
+  "name": "InternalLink",
+  "type": "object",
+  "properties": {
+    "source_url": {
+      "type": "string",
+      "description": "Page containing the link"
+    },
+    "source_title": {
+      "type": "string"
+    },
+    "target_url": {
+      "type": "string",
+      "description": "Page being linked to"
+    },
+    "target_title": {
+      "type": "string"
+    },
+    "anchor_text": {
+      "type": "string",
+      "description": "Visible clickable text"
+    },
+    "link_type": {
+      "type": "string",
+      "enum": [
+        "contextual",
+        "navigation",
+        "footer",
+        "sidebar",
+        "image"
+      ],
+      "default": "contextual"
+    },
+    "is_dofollow": {
+      "type": "boolean",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "broken",
+        "removed"
+      ],
+      "default": "active"
+    },
+    "last_checked": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "source_url",
+    "target_url",
+    "anchor_text"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
