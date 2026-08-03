@@ -54,6 +54,9 @@ import MarketingCenter from '@/pages/admin/MarketingCenter';
 import APIGatewayCenter from '@/pages/admin/APIGatewayCenter';
 import SchedulingCenter from '@/pages/admin/SchedulingCenter';
 import UnifiedCommandCenter from '@/pages/admin/UnifiedCommandCenter';
+import DocumentSigningCenter from '@/pages/admin/DocumentSigningCenter';
+import MediaOpsCenter from '@/pages/admin/MediaOpsCenter';
+import SecurityOpsCenter from '@/pages/admin/SecurityOpsCenter';
 import AboutUs from '@/pages/AboutUs';
 import Services from '@/pages/Services';
 import Blog from '@/pages/Blog';
@@ -252,6 +255,21 @@ const AuthenticatedApp = () => {
           <Route path="/admin/command-center" element={
             <RequirePermission permission="security.view">
               <UnifiedCommandCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/dms" element={
+            <RequirePermission permission="security.view">
+              <DocumentSigningCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/media-ops" element={
+            <RequirePermission permission="security.view">
+              <MediaOpsCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/security-ops" element={
+            <RequirePermission permission="security.view">
+              <SecurityOpsCenter />
             </RequirePermission>
           } />
         </Route>

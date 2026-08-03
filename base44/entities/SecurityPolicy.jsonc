@@ -1,0 +1,118 @@
+{
+  "name": "SecurityPolicy",
+  "type": "object",
+  "properties": {
+    "policy_code": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "access_control",
+        "data_protection",
+        "password",
+        "encryption",
+        "incident_response",
+        "compliance",
+        "network",
+        "endpoint",
+        "backup",
+        "privacy",
+        "audit"
+      ],
+      "default": "access_control"
+    },
+    "framework": {
+      "type": "string",
+      "enum": [
+        "iso27001",
+        "pci_dss",
+        "gdpr",
+        "ndpr",
+        "soc2",
+        "nist",
+        "custom"
+      ],
+      "default": "custom"
+    },
+    "description": {
+      "type": "string"
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "draft",
+        "under_review",
+        "deprecated"
+      ],
+      "default": "active"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_review": {
+      "type": "string",
+      "format": "date"
+    },
+    "compliance_level": {
+      "type": "string",
+      "enum": [
+        "compliant",
+        "partially_compliant",
+        "non_compliant",
+        "not_assessed"
+      ],
+      "default": "not_assessed"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "policy_code",
+    "title",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

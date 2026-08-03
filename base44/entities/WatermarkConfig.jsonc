@@ -1,0 +1,101 @@
+{
+  "name": "WatermarkConfig",
+  "type": "object",
+  "properties": {
+    "config_code": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string"
+    },
+    "watermark_text": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string",
+      "enum": [
+        "top-left",
+        "top-right",
+        "bottom-left",
+        "bottom-right",
+        "center",
+        "tile"
+      ],
+      "default": "bottom-right"
+    },
+    "opacity": {
+      "type": "number",
+      "default": 70,
+      "description": "0-100"
+    },
+    "scale": {
+      "type": "number",
+      "default": 30,
+      "description": "0-100 percentage of source"
+    },
+    "text_color": {
+      "type": "string",
+      "default": "#FFFFFF"
+    },
+    "font_size": {
+      "type": "number",
+      "default": 24
+    },
+    "apply_to": {
+      "type": "string",
+      "enum": [
+        "all",
+        "images",
+        "videos",
+        "documents"
+      ],
+      "default": "all"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "active"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "config_code",
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
