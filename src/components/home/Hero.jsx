@@ -32,10 +32,7 @@ export default function Hero() {
             animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
             
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md">Nigeria's Premier Real Agency
-
-
-            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md" translate="no">Nigeria's Premier Real Estate Platform</span>
           </motion.div>
 
           <motion.h1
