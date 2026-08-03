@@ -25,6 +25,8 @@ import PropertySubmit from '@/pages/PropertySubmit';
 import SubmissionTrack from '@/pages/SubmissionTrack';
 import CustomerPortal from '@/pages/CustomerPortal';
 import Search from '@/pages/Search';
+import Notifications from '@/pages/Notifications';
+import NotificationSettings from '@/pages/NotificationSettings';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -43,6 +45,7 @@ import ProjectOperations from '@/pages/admin/ProjectOperations';
 import CRMOperations from '@/pages/admin/CRMOperations';
 import MediaDocumentCenter from '@/pages/admin/MediaDocumentCenter';
 import OperationsIntelligenceCenter from '@/pages/admin/OperationsIntelligenceCenter';
+import NotificationCenterAdmin from '@/pages/admin/NotificationCenterAdmin';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -98,6 +101,8 @@ const AuthenticatedApp = () => {
         <Route path="/submit/track" element={<SubmissionTrack />} />
         <Route path="/portal" element={<CustomerPortal />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/notification-settings" element={<NotificationSettings />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
@@ -162,6 +167,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/intelligence" element={
             <RequirePermission permission="security.view">
               <OperationsIntelligenceCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/notifications" element={
+            <RequirePermission permission="security.view">
+              <NotificationCenterAdmin />
             </RequirePermission>
           } />
         </Route>

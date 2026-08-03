@@ -9,6 +9,9 @@ import { useRBAC } from '@/lib/rbac/useRBAC';
 import MegaMenu from './MegaMenu';
 import MobileNav from './MobileNav';
 import GlobalSearch from './GlobalSearch';
+import NotificationBell from '@/components/notifications/NotificationBell';
+import NotificationCenter from '@/components/notifications/NotificationCenter';
+import { useNotifications } from '@/hooks/useNotifications';
 
 export default function Header() {
   const { pathname } = useLocation();
@@ -18,6 +21,8 @@ export default function Header() {
   const [activeMenu, setActiveMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 24);
@@ -71,6 +76,9 @@ export default function Header() {
             >
               <Search className="h-5 w-5" />
             </button>
+            <div className="relative">
+              <NotificationBell unreadCount={unreadCount} onClick={() => setNotifOpen((v) => !v)} />
+            </div>
             <Button
               asChild
               variant="ghost"
@@ -111,6 +119,14 @@ export default function Header() {
 
       <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />
       <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <NotificationCenter
+        open={notifOpen}
+        onClose={() => setNotifOpen(false)}
+        notifications={notifications}
+        onMarkRead={markAsRead}
+        onMarkAllRead={markAllAsRead}
+        onViewAll={() => { window.location.href = '/notifications'; }}
+      />
     </>
   );
 }
