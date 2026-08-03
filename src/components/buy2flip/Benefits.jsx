@@ -22,8 +22,8 @@ export default function Benefits() {
             <h2 className="mt-4 text-3xl font-heading font-bold text-brand-900 sm:text-4xl">Subscribe with Confidence
 
             </h2>
-            <p className="mt-3 text-muted-foreground">
-              Buy2Flip combines property expertise with investment intelligence to deliver exceptional flipping opportunities.
+            <p className="mt-3 text-muted-foreground">Buy2Flip combines property expertise with commitment intelligence to deliver exceptional flipping opportunities.
+
             </p>
           </div>
         </Reveal>
