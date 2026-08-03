@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import PageHero from '@/components/marketing/PageHero';
 import LeadForm from '@/components/marketing/LeadForm';
 import { Card } from '@/components/ui/card';
+import OfficeMap from '@/components/contact/OfficeMap';
 import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react';
 
 export default function Contact() {
@@ -120,14 +121,14 @@ export default function Contact() {
       </section>
 
       {/* Map */}
-      <section className="h-[400px] bg-ice-50 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="w-12 h-12 text-flame-500 mx-auto mb-2" />
-            <p className="text-muted-foreground">Interactive map of our office locations</p>
+      <section className="bg-ice-50 relative overflow-hidden">
+        <div className="container-wide section-pad py-12">
+          <h3 className="text-2xl font-heading font-bold text-center mb-2">Find Us on the Map</h3>
+          <p className="text-muted-foreground text-center mb-6 max-w-2xl mx-auto">Visit our headquarters in Ogba, Lagos. Click the pin for office details.</p>
+          <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
+            <OfficeMap offices={offices} height={420} />
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-900/5 to-transparent" />
       </section>
     </div>
   );
