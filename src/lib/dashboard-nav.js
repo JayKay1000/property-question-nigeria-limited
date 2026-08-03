@@ -2,7 +2,7 @@ import {
   LayoutDashboard, Building2, TrendingUp, Users, HardHat,
   Briefcase, UserCog, Headphones, Scale, Wallet,
   Megaphone, BarChart3, Shield, ShieldAlert, Database, Settings, Bell, FileText,
-  Workflow, BrainCircuit,
+  Workflow, BrainCircuit, Plug, CalendarDays, LayoutGrid,
 } from 'lucide-react';
 
 export const dashboardNav = [
@@ -27,5 +27,8 @@ export const dashboardNav = [
   { label: 'Financial Center', href: '/admin/finance', icon: Wallet, permission: 'security.view' },
   { label: 'CMS', href: '/admin/cms', icon: FileText, permission: 'security.view' },
   { label: 'Marketing Center', href: '/admin/marketing', icon: Megaphone, permission: 'security.view' },
+  { label: 'API Gateway', href: '/admin/api-gateway', icon: Plug, permission: 'security.view' },
+  { label: 'Scheduling', href: '/admin/scheduling', icon: CalendarDays, permission: 'security.view' },
+  { label: 'Command Center', href: '/admin/command-center', icon: LayoutGrid, permission: 'security.view' },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

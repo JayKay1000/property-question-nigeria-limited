@@ -1,0 +1,111 @@
+{
+  "name": "BookingSlot",
+  "type": "object",
+  "properties": {
+    "slot_code": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "title": {
+      "type": "string"
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "property",
+        "project",
+        "tour",
+        "inspection",
+        "consultation",
+        "office"
+      ],
+      "default": "consultation"
+    },
+    "resource_id": {
+      "type": "string"
+    },
+    "resource_name": {
+      "type": "string"
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "end_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "capacity": {
+      "type": "number",
+      "default": 1
+    },
+    "booked_count": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "available",
+        "limited",
+        "full",
+        "closed",
+        "blocked"
+      ],
+      "default": "available"
+    },
+    "day_of_week": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "default": 0
+    },
+    "recurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "slot_code",
+    "resource_type",
+    "start_time",
+    "end_time"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

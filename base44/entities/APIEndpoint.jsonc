@@ -1,0 +1,137 @@
+{
+  "name": "APIEndpoint",
+  "type": "object",
+  "properties": {
+    "endpoint_code": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string",
+      "description": "API path e.g. /api/properties"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "HEAD",
+        "OPTIONS"
+      ],
+      "default": "GET"
+    },
+    "auth_type": {
+      "type": "string",
+      "enum": [
+        "public",
+        "api_key",
+        "oauth",
+        "jwt",
+        "webhook"
+      ],
+      "default": "jwt"
+    },
+    "rate_limit": {
+      "type": "number",
+      "description": "Requests per minute"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "crm",
+        "property",
+        "project",
+        "media",
+        "finance",
+        "notification",
+        "auth",
+        "integration",
+        "webhook",
+        "general"
+      ],
+      "default": "general"
+    },
+    "integration_name": {
+      "type": "string",
+      "description": "Backing integration if any"
+    },
+    "version": {
+      "type": "string",
+      "default": "v1"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "deprecated",
+        "maintenance",
+        "disabled"
+      ],
+      "default": "active"
+    },
+    "avg_response_ms": {
+      "type": "number"
+    },
+    "request_count": {
+      "type": "number",
+      "default": 0
+    },
+    "error_count": {
+      "type": "number",
+      "default": 0
+    },
+    "error_rate": {
+      "type": "number",
+      "description": "Error percentage"
+    },
+    "last_called": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "endpoint_code",
+    "name",
+    "path",
+    "method"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
