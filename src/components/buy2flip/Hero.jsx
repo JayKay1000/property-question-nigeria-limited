@@ -13,8 +13,8 @@ export default function Hero({ onContinue }) {
         muted
         playsInline
         poster={POSTER_URL}
-        className="absolute inset-0 h-full w-full object-cover"
-      >
+        className="absolute inset-0 h-full w-full object-cover">
+        
         <source src={VIDEO_URL} type="video/mp4" />
       </video>
 
@@ -40,16 +40,16 @@ export default function Hero({ onContinue }) {
           </span>
         </h1>
 
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg">
-          Buy2Flip is Nigeria's premier property flipping platform — connecting investors with verified,
-          high-potential real estate opportunities. Browse curated listings, track project progress, and
-          invest with confidence.
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg">Buy2Flip is Nigeria's premier property flipping platform — connecting participa with verified, high-potential real estate opportunities. Browse curated listings, track project progress, and invest with confidence.
+
+
+
         </p>
 
         <button
           onClick={onContinue}
-          className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-flame-500 px-7 py-4 text-base font-heading font-semibold text-white shadow-glow-flame transition-all hover:bg-flame-600 hover:shadow-lg active:scale-[0.98] sm:text-lg"
-        >
+          className="group mt-8 inline-flex items-center gap-3 rounded-xl bg-flame-500 px-7 py-4 text-base font-heading font-semibold text-white shadow-glow-flame transition-all hover:bg-flame-600 hover:shadow-lg active:scale-[0.98] sm:text-lg">
+          
           Continue to the Official Buy2Flip Platform
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </button>
@@ -60,6 +60,6 @@ export default function Hero({ onContinue }) {
           official Buy2Flip platform.
         </p>
       </div>
-    </section>
-  );
+    </section>);
+
 }
