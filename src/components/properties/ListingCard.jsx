@@ -14,8 +14,8 @@ export default function ListingCard({ property, onCompare, isCompared, onSave, i
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-ice-50 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
       <Link to={detailUrl} className="relative aspect-[4/3] overflow-hidden">
         {image ? (
-          <Image src={image} alt={property.title} fittingType="fill"
-            className="h-full w-full transition-transform duration-500 group-hover:scale-105" />
+          <Image src={image} alt={property.title} fittingType="fit"
+            className="h-full w-full bg-ice-50 transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-brand-50 text-brand-200">
             <Maximize className="h-12 w-12" />

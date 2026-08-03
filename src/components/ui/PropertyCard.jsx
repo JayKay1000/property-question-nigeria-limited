@@ -26,8 +26,8 @@ export default function PropertyCard({ property, href = '#' }) {
           <Image
             src={image}
             alt={title}
-            fittingType="fill"
-            className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+            fittingType="fit"
+            className="h-full w-full bg-brand-50/40 transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-brand-50 text-brand-200">

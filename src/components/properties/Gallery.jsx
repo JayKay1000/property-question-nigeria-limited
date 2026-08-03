@@ -33,7 +33,7 @@ export default function Gallery({ property }) {
       {/* Main media */}
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-brand-900 shadow-premium-lg">
         {active?.type === 'image' ? (
-          <Image src={active.url} alt={property.title} fittingType="fill"
+          <Image src={active.url} alt={property.title} fittingType="fit"
             className="h-full w-full" />
         ) : active?.type === 'video' ? (
           <video src={active.url} controls className="h-full w-full object-contain" />
@@ -67,7 +67,7 @@ export default function Gallery({ property }) {
               i === activeIndex ? 'border-flame-500' : 'border-transparent hover:border-brand-200'
             }`}>
             {media.type === 'image' ? (
-              <Image src={media.url} alt="" fittingType="fill" className="h-full w-full" />
+              <Image src={media.url} alt="" fittingType="fit" className="h-full w-full bg-brand-900" />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-brand-800 text-white">
                 <Video className="h-5 w-5" />
