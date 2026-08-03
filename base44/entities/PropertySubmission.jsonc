@@ -1,0 +1,395 @@
+{
+  "name": "PropertySubmission",
+  "type": "object",
+  "properties": {
+    "submission_reference": {
+      "type": "string",
+      "description": "Unique tracking reference"
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Platform User ID of the submitter"
+    },
+    "owner_name": {
+      "type": "string",
+      "description": "Full name of the primary owner"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "owner_phone": {
+      "type": "string"
+    },
+    "owner_address": {
+      "type": "string"
+    },
+    "owner_state": {
+      "type": "string"
+    },
+    "owner_lga": {
+      "type": "string"
+    },
+    "owner_city": {
+      "type": "string"
+    },
+    "owner_nationality": {
+      "type": "string",
+      "default": "Nigerian"
+    },
+    "owner_contact_method": {
+      "type": "string",
+      "enum": [
+        "phone",
+        "email",
+        "whatsapp"
+      ],
+      "default": "phone"
+    },
+    "owner_id_number": {
+      "type": "string",
+      "description": "National ID, NIN, or other identification number"
+    },
+    "owner_type": {
+      "type": "string",
+      "enum": [
+        "individual",
+        "corporate",
+        "government",
+        "joint_venture"
+      ],
+      "default": "individual"
+    },
+    "co_owners": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "ownership_percentage": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Additional owners for jointly owned properties"
+    },
+    "property_title": {
+      "type": "string",
+      "description": "Property listing title"
+    },
+    "property_type": {
+      "type": "string",
+      "description": "house, apartment, land, commercial, etc."
+    },
+    "property_description": {
+      "type": "string"
+    },
+    "property_purpose": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "lease",
+        "rent",
+        "management",
+        "valuation",
+        "joint_development"
+      ]
+    },
+    "services_requested": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sale",
+          "lease",
+          "management",
+          "valuation",
+          "joint_development"
+        ]
+      }
+    },
+    "current_occupancy": {
+      "type": "string",
+      "enum": [
+        "vacant",
+        "owner_occupied",
+        "tenant_occupied",
+        "under_construction"
+      ],
+      "default": "vacant"
+    },
+    "construction_status": {
+      "type": "string",
+      "enum": [
+        "completed",
+        "ongoing",
+        "not_started",
+        "renovation_needed"
+      ],
+      "default": "completed"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "land_size_sqm": {
+      "type": "number"
+    },
+    "building_size_sqm": {
+      "type": "number"
+    },
+    "year_built": {
+      "type": "number"
+    },
+    "asking_price_ngn": {
+      "type": "number"
+    },
+    "is_negotiable": {
+      "type": "boolean",
+      "default": true
+    },
+    "encumbrances": {
+      "type": "string",
+      "description": "Any existing encumbrances, liens, or legal issues"
+    },
+    "utilities_available": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessibility": {
+      "type": "string"
+    },
+    "nearby_landmarks": {
+      "type": "string"
+    },
+    "location_state": {
+      "type": "string"
+    },
+    "location_lga": {
+      "type": "string"
+    },
+    "location_city": {
+      "type": "string"
+    },
+    "location_district": {
+      "type": "string"
+    },
+    "location_estate": {
+      "type": "string"
+    },
+    "location_street": {
+      "type": "string"
+    },
+    "location_plot_number": {
+      "type": "string"
+    },
+    "gps_latitude": {
+      "type": "number"
+    },
+    "gps_longitude": {
+      "type": "number"
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "doc_type": {
+            "type": "string"
+          },
+          "file_url": {
+            "type": "string"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "media_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "signature_url": {
+      "type": "string"
+    },
+    "signature_method": {
+      "type": "string",
+      "enum": [
+        "typed",
+        "drawn",
+        "uploaded"
+      ],
+      "default": "typed"
+    },
+    "declarations_accepted": {
+      "type": "object"
+    },
+    "submission_form_url": {
+      "type": "string"
+    },
+    "poa_wishes_to_proceed": {
+      "type": "boolean",
+      "default": false
+    },
+    "poa_info": {
+      "type": "object"
+    },
+    "poa_uploaded_url": {
+      "type": "string"
+    },
+    "poa_review_status": {
+      "type": "string",
+      "enum": [
+        "not_required",
+        "pending_review",
+        "under_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "not_required"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "initial_review",
+        "document_verification",
+        "gis_verification",
+        "legal_review",
+        "valuation_review",
+        "marketing_review",
+        "approved",
+        "rejected",
+        "info_requested",
+        "listing_created"
+      ],
+      "default": "draft"
+    },
+    "assigned_reviewer_id": {
+      "type": "string"
+    },
+    "assigned_reviewer_name": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "additional_info_request": {
+      "type": "string"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "by": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "owner_name",
+    "owner_email",
+    "property_title",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_reviewer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.assigned_reviewer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

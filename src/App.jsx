@@ -21,6 +21,8 @@ import GISMap from '@/pages/GISMap';
 import Agents from '@/pages/Agents';
 import AgentRegister from '@/pages/AgentRegister';
 import AgentDetail from '@/pages/AgentDetail';
+import PropertySubmit from '@/pages/PropertySubmit';
+import SubmissionTrack from '@/pages/SubmissionTrack';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -90,6 +92,8 @@ const AuthenticatedApp = () => {
         <Route path="/agents" element={<Agents />} />
         <Route path="/agents/register" element={<AgentRegister />} />
         <Route path="/agents/:id" element={<AgentDetail />} />
+        <Route path="/submit" element={<PropertySubmit />} />
+        <Route path="/submit/track" element={<SubmissionTrack />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
