@@ -1,0 +1,151 @@
+{
+  "name": "Receipt",
+  "type": "object",
+  "properties": {
+    "receipt_number": {
+      "type": "string",
+      "description": "Display receipt number"
+    },
+    "receipt_code": {
+      "type": "string",
+      "description": "Unique system code"
+    },
+    "invoice_id": {
+      "type": "string",
+      "description": "Reference to Invoice"
+    },
+    "invoice_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "cash",
+        "bank_transfer",
+        "card",
+        "cheque",
+        "online",
+        "mobile_money",
+        "pos"
+      ],
+      "default": "bank_transfer"
+    },
+    "payment_reference": {
+      "type": "string",
+      "description": "Bank/transaction reference"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "payment_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "confirmed",
+        "pending",
+        "disputed",
+        "reversed",
+        "cancelled"
+      ],
+      "default": "confirmed"
+    },
+    "received_by": {
+      "type": "string",
+      "description": "User ID who received payment"
+    },
+    "received_by_name": {
+      "type": "string"
+    },
+    "property_reference": {
+      "type": "string"
+    },
+    "project_reference": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "pdf_url": {
+      "type": "string"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "receipt_number",
+    "receipt_code",
+    "customer_name",
+    "amount",
+    "payment_method",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

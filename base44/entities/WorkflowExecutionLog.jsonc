@@ -1,0 +1,140 @@
+{
+  "name": "WorkflowExecutionLog",
+  "type": "object",
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "description": "Reference to WorkflowDefinition"
+    },
+    "workflow_code": {
+      "type": "string"
+    },
+    "workflow_name": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "trigger_type": {
+      "type": "string"
+    },
+    "trigger_entity": {
+      "type": "string"
+    },
+    "trigger_record_id": {
+      "type": "string",
+      "description": "ID of the record that triggered"
+    },
+    "trigger_record_summary": {
+      "type": "string",
+      "description": "Human-readable summary of trigger record"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "completed",
+        "failed",
+        "skipped",
+        "cancelled",
+        "timeout"
+      ],
+      "default": "running"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_ms": {
+      "type": "number"
+    },
+    "steps_executed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_index": {
+            "type": "number"
+          },
+          "action_type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "started_at": {
+            "type": "string"
+          },
+          "completed_at": {
+            "type": "string"
+          },
+          "result": {
+            "type": "object"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "total_steps": {
+      "type": "number"
+    },
+    "successful_steps": {
+      "type": "number"
+    },
+    "failed_steps": {
+      "type": "number"
+    },
+    "output_data": {
+      "type": "object",
+      "description": "Final output of the workflow"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "triggered_by": {
+      "type": "string",
+      "description": "user id or system"
+    },
+    "triggered_by_name": {
+      "type": "string"
+    },
+    "execution_context": {
+      "type": "object",
+      "description": "Snapshot of trigger context"
+    }
+  },
+  "required": [
+    "workflow_id",
+    "workflow_code",
+    "status",
+    "started_at"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "name": "AIRequestLog",
+  "type": "object",
+  "properties": {
+    "request_type": {
+      "type": "string",
+      "enum": [
+        "property_recommendation",
+        "document_summarization",
+        "property_description",
+        "valuation_assistance",
+        "fraud_detection",
+        "duplicate_detection",
+        "search_assistant",
+        "content_generation",
+        "chatbot",
+        "analytics_insight"
+      ],
+      "default": "chatbot"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "input_prompt": {
+      "type": "string",
+      "description": "The prompt or query sent to the AI"
+    },
+    "input_context": {
+      "type": "object",
+      "description": "Structured context data passed to the AI"
+    },
+    "input_file_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_result": {
+      "type": "object",
+      "description": "The AI response (parsed)"
+    },
+    "output_text": {
+      "type": "string",
+      "description": "Raw text response"
+    },
+    "model_used": {
+      "type": "string"
+    },
+    "tokens_input": {
+      "type": "number"
+    },
+    "tokens_output": {
+      "type": "number"
+    },
+    "credits_used": {
+      "type": "number"
+    },
+    "response_time_ms": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "partial",
+        "timeout"
+      ],
+      "default": "success"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "entity_reference": {
+      "type": "string",
+      "description": "Related entity e.g. Property"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "Related record ID"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "AI confidence 0-1"
+    },
+    "quality_rating": {
+      "type": "number",
+      "description": "User quality rating 1-5"
+    },
+    "conversation_id": {
+      "type": "string",
+      "description": "Link to AIConversation if part of one"
+    },
+    "request_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "request_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "request_type",
+    "status",
+    "request_timestamp"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

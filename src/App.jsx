@@ -47,6 +47,9 @@ import MediaDocumentCenter from '@/pages/admin/MediaDocumentCenter';
 import OperationsIntelligenceCenter from '@/pages/admin/OperationsIntelligenceCenter';
 import NotificationCenterAdmin from '@/pages/admin/NotificationCenterAdmin';
 import CMSDashboard from '@/pages/admin/CMSDashboard';
+import WorkflowEngine from '@/pages/admin/WorkflowEngine';
+import AIIntelligenceCenter from '@/pages/admin/AIIntelligenceCenter';
+import FinancialCenter from '@/pages/admin/FinancialCenter';
 import AboutUs from '@/pages/AboutUs';
 import Services from '@/pages/Services';
 import Blog from '@/pages/Blog';
@@ -210,6 +213,21 @@ const AuthenticatedApp = () => {
           <Route path="/admin/cms" element={
             <RequirePermission permission="security.view">
               <CMSDashboard />
+            </RequirePermission>
+          } />
+          <Route path="/admin/workflows" element={
+            <RequirePermission permission="security.view">
+              <WorkflowEngine />
+            </RequirePermission>
+          } />
+          <Route path="/admin/ai" element={
+            <RequirePermission permission="security.view">
+              <AIIntelligenceCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/finance" element={
+            <RequirePermission permission="security.view">
+              <FinancialCenter />
             </RequirePermission>
           } />
         </Route>

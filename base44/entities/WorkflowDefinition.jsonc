@@ -1,0 +1,211 @@
+{
+  "name": "WorkflowDefinition",
+  "type": "object",
+  "properties": {
+    "workflow_code": {
+      "type": "string",
+      "description": "Unique identifier e.g. lead_lifecycle_auto, agent_verification"
+    },
+    "workflow_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string",
+      "enum": [
+        "crm",
+        "property",
+        "project",
+        "agent",
+        "customer",
+        "notification",
+        "document",
+        "media",
+        "financial",
+        "security",
+        "general"
+      ],
+      "default": "crm"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "lead_lifecycle",
+        "opportunity_management",
+        "sales_pipeline",
+        "follow_up",
+        "task_assignment",
+        "reminder",
+        "customer_lifecycle",
+        "segmentation",
+        "marketing",
+        "notification",
+        "approval",
+        "verification",
+        "onboarding",
+        "escalation",
+        "scheduling",
+        "custom"
+      ],
+      "default": "custom"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "entity_create",
+        "entity_update",
+        "entity_delete",
+        "scheduled",
+        "manual",
+        "webhook",
+        "condition_met",
+        "status_changed"
+      ],
+      "default": "entity_create"
+    },
+    "trigger_entity": {
+      "type": "string",
+      "description": "Entity that triggers this workflow"
+    },
+    "trigger_event": {
+      "type": "string",
+      "description": "Specific event e.g. created, updated, status_changed"
+    },
+    "trigger_condition": {
+      "type": "object",
+      "description": "MongoDB-style filter for trigger conditions"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action_type": {
+            "type": "string",
+            "enum": [
+              "create_record",
+              "update_record",
+              "send_notification",
+              "send_email",
+              "send_sms",
+              "create_task",
+              "assign_user",
+              "create_lead",
+              "create_opportunity",
+              "schedule_reminder",
+              "wait",
+              "branch",
+              "call_function",
+              "ai_process"
+            ]
+          },
+          "target_entity": {
+            "type": "string"
+          },
+          "field_mappings": {
+            "type": "object"
+          },
+          "template_id": {
+            "type": "string"
+          },
+          "delay_minutes": {
+            "type": "number"
+          },
+          "condition": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Ordered list of actions to execute"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "paused",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "execution_count": {
+      "type": "number",
+      "default": 0
+    },
+    "last_executed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "success_count": {
+      "type": "number",
+      "default": 0
+    },
+    "failure_count": {
+      "type": "number",
+      "default": 0
+    },
+    "avg_duration_ms": {
+      "type": "number"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "workflow_code",
+    "workflow_name",
+    "module",
+    "trigger_type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

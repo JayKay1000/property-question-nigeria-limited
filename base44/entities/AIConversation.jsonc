@@ -1,0 +1,158 @@
+{
+  "name": "AIConversation",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "Unique session identifier"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "conversation_type": {
+      "type": "string",
+      "enum": [
+        "chatbot",
+        "property_recommendation",
+        "search_assistant",
+        "valuation_assistant",
+        "document_summary",
+        "content_generation",
+        "fraud_analysis"
+      ],
+      "default": "chatbot"
+    },
+    "title": {
+      "type": "string",
+      "description": "Conversation title/summary"
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "assistant",
+              "system"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "message_count": {
+      "type": "number",
+      "default": 0
+    },
+    "context_entity": {
+      "type": "string",
+      "description": "Entity context e.g. Property, Project"
+    },
+    "context_record_id": {
+      "type": "string"
+    },
+    "context_summary": {
+      "type": "string",
+      "description": "Human-readable context"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "completed",
+        "archived",
+        "error"
+      ],
+      "default": "active"
+    },
+    "ai_model": {
+      "type": "string",
+      "description": "Model used"
+    },
+    "total_tokens": {
+      "type": "number",
+      "default": 0
+    },
+    "credits_used": {
+      "type": "number",
+      "default": 0
+    },
+    "satisfaction_rating": {
+      "type": "number",
+      "description": "1-5 user rating"
+    },
+    "feedback": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_message_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "conversation_id",
+    "conversation_type",
+    "status"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
