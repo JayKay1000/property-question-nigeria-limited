@@ -24,6 +24,7 @@ import AgentDetail from '@/pages/AgentDetail';
 import PropertySubmit from '@/pages/PropertySubmit';
 import SubmissionTrack from '@/pages/SubmissionTrack';
 import CustomerPortal from '@/pages/CustomerPortal';
+import Search from '@/pages/Search';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -96,6 +97,7 @@ const AuthenticatedApp = () => {
         <Route path="/submit" element={<PropertySubmit />} />
         <Route path="/submit/track" element={<SubmissionTrack />} />
         <Route path="/portal" element={<CustomerPortal />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>

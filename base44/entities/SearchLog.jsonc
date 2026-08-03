@@ -1,0 +1,79 @@
+{
+  "name": "SearchLog",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "User who performed the search (null for anonymous)"
+    },
+    "search_query": {
+      "type": "string",
+      "description": "The text query entered by the user"
+    },
+    "filters": {
+      "type": "object",
+      "description": "Applied filter object"
+    },
+    "result_type": {
+      "type": "string",
+      "enum": [
+        "all",
+        "properties",
+        "projects",
+        "agents",
+        "locations"
+      ],
+      "default": "all"
+    },
+    "results_count": {
+      "type": "number",
+      "default": 0
+    },
+    "zero_results": {
+      "type": "boolean",
+      "default": false
+    },
+    "clicked_result_id": {
+      "type": "string"
+    },
+    "clicked_result_type": {
+      "type": "string"
+    },
+    "search_duration_ms": {
+      "type": "number"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "tablet",
+        "mobile",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "search_query"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

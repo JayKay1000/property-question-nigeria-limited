@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, TrendingUp, Building2, FileText, MapPin, Users } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const categories = [
   { icon: Building2, label: 'Properties', results: ['Luxury Villa in Lekki', '3-Bed Apartment in Ikoyi', 'Land in Epe'] },
@@ -13,6 +13,7 @@ const categories = [
 export default function GlobalSearch({ open, onClose }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (open) {
@@ -27,6 +28,11 @@ export default function GlobalSearch({ open, onClose }) {
     if (open) window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [open, onClose]);
+
+  const goToSearch = (q) => {
+    onClose();
+    navigate(`/search?q=${encodeURIComponent(q.trim())}`);
+  };
 
   return (
     <AnimatePresence>
@@ -52,9 +58,13 @@ export default function GlobalSearch({ open, onClose }) {
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter' && query.trim()) goToSearch(query); }}
                 placeholder="Search properties, projects, locations..."
                 className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
               />
+              {query.trim() && (
+                <button onClick={() => goToSearch(query)} className="rounded-lg bg-flame-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-flame-600">Search</button>
+              )}
               <button onClick={onClose} className="rounded-lg p-1 text-muted-foreground hover:bg-brand-50" aria-label="Close search">
                 <X className="h-5 w-5" />
               </button>
@@ -68,7 +78,7 @@ export default function GlobalSearch({ open, onClose }) {
                       .map((result) => (
                         <Link
                           key={result}
-                          to="/properties"
+                          to={`/search?q=${encodeURIComponent(result)}`}
                           onClick={onClose}
                           className="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-brand-50"
                         >
@@ -85,7 +95,7 @@ export default function GlobalSearch({ open, onClose }) {
                   {['Luxury homes in Lekki', 'Buy2Flip opportunities', 'New estate projects'].map((t) => (
                     <button
                       key={t}
-                      onClick={() => setQuery(t)}
+                      onClick={() => goToSearch(t)}
                       className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left hover:bg-brand-50"
                     >
                       <TrendingUp className="h-4 w-4 text-flame-500" />
