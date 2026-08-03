@@ -178,21 +178,7 @@
     "source"
   ],
   "rls": {
-    "create": {
-      "$or": [
-        {
-          "data.assigned_to_id": "{{user.id}}"
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        },
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        }
-      ]
-    },
+    "create": null,
     "read": {
       "$or": [
         {
