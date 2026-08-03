@@ -9,6 +9,9 @@ import ScrollToTop from './components/ScrollToTop';
 // Add page imports here
 import Home from '@/pages/Home';
 import Buy2Flip from '@/pages/Buy2Flip';
+import Properties from '@/pages/Properties';
+import PropertyDetail from '@/pages/PropertyDetail';
+import PropertyCompare from '@/pages/PropertyCompare';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -66,6 +69,9 @@ const AuthenticatedApp = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/buy2flip" element={<Buy2Flip />} />
+        <Route path="/properties" element={<Properties />} />
+        <Route path="/properties/compare" element={<PropertyCompare />} />
+        <Route path="/properties/:id" element={<PropertyDetail />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
