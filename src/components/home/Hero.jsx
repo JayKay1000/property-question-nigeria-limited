@@ -16,8 +16,8 @@ export default function Hero() {
           loop
           playsInline
           poster={HERO_IMAGE}
-          className="h-full w-full object-cover"
-        >
+          className="h-full w-full object-cover">
+          
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-br from-brand-950/90 via-brand-900/70 to-brand-800/50" />
@@ -30,11 +30,11 @@ export default function Hero() {
           <motion.div
             initial={{ y: 30 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md">
-              <MapPin className="h-3.5 w-3.5 text-flame-400" />
-              Nigeria's Premier PropTech Platform
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+            
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md">Nigeria's Premier Real 
+
+
             </span>
           </motion.div>
 
@@ -42,8 +42,8 @@ export default function Hero() {
             initial={{ y: 30 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl"
-          >
+            className="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+            
             The Future of
             <span className="block bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">
               Nigerian Real Estate
@@ -54,8 +54,8 @@ export default function Hero() {
             initial={{ y: 30 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg"
-          >
+            className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
+            
             From property sales and construction to estate development and Buy2Flip investments — we're redefining how Nigerians buy, sell, and invest in real estate.
           </motion.p>
 
@@ -63,8 +63,8 @@ export default function Hero() {
             initial={{ y: 30 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 flex flex-wrap items-center gap-4"
-          >
+            className="mt-8 flex flex-wrap items-center gap-4">
+            
             <Button asChild size="lg" className="bg-flame-500 hover:bg-flame-600 text-white shadow-glow-flame">
               <Link to="/properties">Explore Properties <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
@@ -74,33 +74,33 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8"
-          >
+            className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8">
+            
             {[
-              { value: '₦200B+', label: 'Property Value Sold' },
-              { value: '1,200+', label: 'Happy Clients' },
-              { value: '45+', label: 'Estate Projects' },
-            ].map((stat) => (
-              <div key={stat.label}>
+            { value: '₦200B+', label: 'Property Value Sold' },
+            { value: '1,200+', label: 'Happy Clients' },
+            { value: '45+', label: 'Estate Projects' }].
+            map((stat) =>
+            <div key={stat.label}>
                 <div className="font-heading text-2xl font-bold text-white">{stat.value}</div>
                 <div className="text-xs text-white/60">{stat.label}</div>
               </div>
-            ))}
+            )}
           </motion.div>
         </div>
       </div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 sm:block"
-      >
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 sm:block">
+        
         <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/30 p-1.5">
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
-            className="h-2 w-1 rounded-full bg-white/70"
-          />
+            className="h-2 w-1 rounded-full bg-white/70" />
+          
         </div>
       </motion.div>
-    </section>
-  );
+    </section>);
+
 }
