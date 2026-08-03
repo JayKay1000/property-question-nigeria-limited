@@ -1,0 +1,83 @@
+{
+  "name": "ContentVersion",
+  "type": "object",
+  "properties": {
+    "entity_name": {
+      "type": "string",
+      "description": "Entity being versioned e.g. BlogPost, NewsArticle"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "ID of the versioned record"
+    },
+    "record_title": {
+      "type": "string",
+      "description": "Title at time of versioning"
+    },
+    "version_number": {
+      "type": "number",
+      "default": 1
+    },
+    "snapshot": {
+      "type": "object",
+      "description": "Full field snapshot for rollback"
+    },
+    "change_note": {
+      "type": "string",
+      "description": "Editor note describing the change"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "scheduled",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "scheduled_publish_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_current": {
+      "type": "boolean",
+      "default": false
+    },
+    "created_by_name": {
+      "type": "string"
+    },
+    "rollback_of_version": {
+      "type": "number",
+      "description": "If this version is a rollback, which version it restored"
+    }
+  },
+  "required": [
+    "entity_name",
+    "record_id",
+    "version_number",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

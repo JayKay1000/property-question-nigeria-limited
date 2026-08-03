@@ -1,0 +1,109 @@
+{
+  "name": "ContentApproval",
+  "type": "object",
+  "properties": {
+    "entity_name": {
+      "type": "string",
+      "description": "Entity of the content being approved"
+    },
+    "record_id": {
+      "type": "string",
+      "description": "ID of the content record"
+    },
+    "record_title": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "blog",
+        "news",
+        "page",
+        "banner",
+        "faq",
+        "testimonial",
+        "service",
+        "menu",
+        "footer",
+        "seo",
+        "landing"
+      ],
+      "default": "blog"
+    },
+    "requested_by": {
+      "type": "string"
+    },
+    "requested_by_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "changes_requested"
+      ],
+      "default": "pending"
+    },
+    "reviewer_id": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "comments": {
+      "type": "string"
+    },
+    "change_summary": {
+      "type": "string",
+      "description": "Summary of changes for the reviewer"
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    }
+  },
+  "required": [
+    "entity_name",
+    "record_id",
+    "content_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
