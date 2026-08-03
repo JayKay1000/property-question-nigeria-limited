@@ -62,7 +62,7 @@ export default function SupportCentre({ tickets, userId, userName, userEmail, us
         <div className="rounded-xl border border-brand-100 bg-ice-50 p-4 text-center">
           <Mail className="mx-auto h-6 w-6 text-flame-500" />
           <h3 className="mt-2 font-heading text-sm font-bold text-brand-900">Email Us</h3>
-          <p className="text-xs text-muted-foreground">support@propertyquestion.com</p>
+          <p className="text-xs text-muted-foreground">support@propertyquestion.net</p>
         </div>
         <div className="rounded-xl border border-brand-100 bg-ice-50 p-4 text-center">
           <MessageSquare className="mx-auto h-6 w-6 text-flame-500" />

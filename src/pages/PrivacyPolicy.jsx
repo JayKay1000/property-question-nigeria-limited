@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
     { title: 'Data Retention', content: 'We retain your personal information only for as long as necessary to fulfil the purposes for which it was collected, comply with legal obligations, resolve disputes, and enforce our agreements.' },
     { title: 'Children\'s Privacy', content: 'Our website and services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.' },
     { title: 'Changes to This Policy', content: 'We may update this Privacy Policy from time to time. We will notify you of any significant changes by posting the new policy on this page and updating the effective date. We encourage you to review this page periodically.' },
-    { title: 'Contact Us', content: 'If you have questions or concerns about this Privacy Policy or our data practices, please contact us at info@propertyquestion.com or at our office address.' },
+    { title: 'Contact Us', content: 'If you have questions or concerns about this Privacy Policy or our data practices, please contact us at info@propertyquestion.net or at our office address.' },
   ];
 
   return (

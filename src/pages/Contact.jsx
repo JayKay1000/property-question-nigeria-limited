@@ -47,7 +47,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm font-medium">Phone</p>
-                    <a href="tel:+2348000000000" className="text-muted-foreground hover:text-flame-600 transition-colors">+234 800 000 0000</a>
+                    <a href="tel:+2349033393000" className="text-muted-foreground hover:text-flame-600 transition-colors">+234 903 339 3000</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -56,7 +56,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm font-medium">Email</p>
-                    <a href="mailto:info@propertyquestion.com" className="text-muted-foreground hover:text-flame-600 transition-colors">info@propertyquestion.com</a>
+                    <a href="mailto:info@propertyquestion.net" className="text-muted-foreground hover:text-flame-600 transition-colors">info@propertyquestion.net</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -65,7 +65,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-sm font-medium">WhatsApp</p>
-                    <a href="#" className="text-muted-foreground hover:text-flame-600 transition-colors">+234 800 000 0000</a>
+                    <a href="https://wa.me/2349033393000" className="text-muted-foreground hover:text-flame-600 transition-colors">+234 903 339 3000</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -90,7 +90,7 @@ export default function Contact() {
                     <MapPin className="w-5 h-5 text-flame-500 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium">Head Office — Lagos</p>
-                      <p className="text-sm text-muted-foreground">123 Victoria Island, Lagos, Nigeria</p>
+                      <p className="text-sm text-muted-foreground">Suite 43, Ogba Shopping Arcade, Ijaiye Road, Ogba, Lagos, Nigeria</p>
                     </div>
                   </div>
                 </Card>

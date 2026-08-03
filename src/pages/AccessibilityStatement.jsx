@@ -73,8 +73,8 @@ export default function AccessibilityStatement() {
               any part of our website, or if you have suggestions for improvement, please contact us:
             </p>
             <ul className="space-y-1 text-muted-foreground">
-              <li>Email: <a href="mailto:accessibility@propertyquestion.com" className="text-flame-600 hover:underline">accessibility@propertyquestion.com</a></li>
-              <li>Phone: +234 800 000 0000</li>
+              <li>Email: <a href="mailto:accessibility@propertyquestion.net" className="text-flame-600 hover:underline">accessibility@propertyquestion.net</a></li>
+              <li>Phone: +234 903 339 3000</li>
             </ul>
             <p className="text-muted-foreground mt-4 text-sm">
               We aim to respond to accessibility feedback within 5 business days.

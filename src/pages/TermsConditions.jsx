@@ -16,7 +16,7 @@ export default function TermsConditions() {
     { title: 'Transactions', content: 'Any property transactions, purchases, or agreements are subject to separate contracts and terms specific to each transaction. These Terms and Conditions do not override any specific agreement you enter into with the Company.' },
     { title: 'Governing Law', content: 'These Terms and Conditions are governed by and construed in accordance with the laws of the Federal Republic of Nigeria. Any disputes shall be subject to the exclusive jurisdiction of the courts of Nigeria.' },
     { title: 'Changes to Terms', content: 'We reserve the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting on this page. Continued use of the website constitutes acceptance of the modified terms.' },
-    { title: 'Contact', content: 'For questions about these Terms and Conditions, please contact us at info@propertyquestion.com.' },
+    { title: 'Contact', content: 'For questions about these Terms and Conditions, please contact us at info@propertyquestion.net.' },
   ];
 
   return (

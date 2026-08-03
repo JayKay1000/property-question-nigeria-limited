@@ -74,9 +74,9 @@ export default function Footer() {
               Property Question Nigeria Limited is a premier PropTech company transforming Nigeria's real estate landscape through technology, transparency, and trust.
             </p>
             <div className="mt-6 space-y-2 text-sm text-white/70">
-              <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-flame-500" />Lekki Phase 1, Lagos, Nigeria</div>
-              <div className="flex items-center gap-2"><Phone className="h-4 w-4 text-flame-500" />+234 800 000 0000</div>
-              <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-flame-500" />info@propertyquestion.com</div>
+              <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-flame-500" />Suite 43, Ogba Shopping Arcade, Ijaiye Road, Ogba, Lagos, Nigeria</div>
+              <div className="flex items-center gap-2"><Phone className="h-4 w-4 text-flame-500" />+234 903 339 3000</div>
+              <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-flame-500" />info@propertyquestion.net</div>
             </div>
           </div>
 
