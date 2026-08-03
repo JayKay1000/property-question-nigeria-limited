@@ -8,33 +8,33 @@ const footerLinks = {
   company: {
     title: 'Company',
     links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Our Team', href: '/about#team' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'CSR', href: '/csr' },
-      { label: 'Contact', href: '/contact' },
-    ],
+    { label: 'About Us', href: '/about' },
+    { label: 'Our Team', href: '/about#team' },
+    { label: 'Careers', href: '/careers' },
+    { label: 'CSR', href: '/csr' },
+    { label: 'Contact', href: '/contact' }]
+
   },
   resources: {
     title: 'Resources',
     links: [
-      { label: 'Blog & Insights', href: '/blog' },
-      { label: 'News', href: '/news' },
-      { label: 'FAQ', href: '/faq' },
-      { label: 'Testimonials', href: '/testimonials' },
-      { label: 'Sitemap', href: '/sitemap' },
-    ],
+    { label: 'Blog & Insights', href: '/blog' },
+    { label: 'News', href: '/news' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Testimonials', href: '/testimonials' },
+    { label: 'Sitemap', href: '/sitemap' }]
+
   },
   locations: {
     title: 'Locations',
     links: [
-      { label: 'Lekki', href: '/properties?loc=lekki' },
-      { label: 'Ikoyi', href: '/properties?loc=ikoyi' },
-      { label: 'Victoria Island', href: '/properties?loc=vi' },
-      { label: 'Abuja', href: '/properties?loc=abuja' },
-      { label: 'Port Harcourt', href: '/properties?loc=ph' },
-    ],
-  },
+    { label: 'Lekki', href: '/properties?loc=lekki' },
+    { label: 'Ikoyi', href: '/properties?loc=ikoyi' },
+    { label: 'Victoria Island', href: '/properties?loc=vi' },
+    { label: 'Abuja', href: '/properties?loc=abuja' },
+    { label: 'Port Harcourt', href: '/properties?loc=ph' }]
+
+  }
 };
 
 const socials = ['FB', 'IG', 'in', 'X'];
@@ -60,8 +60,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <Logo variant="light" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-              Property Question Nigeria Limited is a premier PropTech company transforming Nigeria's real estate landscape through technology, transparency, and trust.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Property Question Nigeria Limited is a premier property company transforming Nigeria's real estate landscape through technology, transparency, and trust.
+
             </p>
             <div className="mt-6 space-y-2 text-sm text-white/70">
               <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-flame-500" />Suite 43, Ogba Shopping Arcade, Ijaiye Road, Ogba, Lagos, Nigeria</div>
@@ -70,30 +70,30 @@ export default function Footer() {
             </div>
           </div>
 
-          {Object.values(footerLinks).map((col) => (
-            <div key={col.title}>
+          {Object.values(footerLinks).map((col) =>
+          <div key={col.title}>
               <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/90">{col.title}</h4>
               <ul className="space-y-2.5">
-                {col.links.map((link) => (
-                  <li key={link.label}>
+                {col.links.map((link) =>
+              <li key={link.label}>
                     <Link to={link.href} className="text-sm text-white/60 transition-colors hover:text-flame-400">
                       {link.label}
                     </Link>
                   </li>
-                ))}
+              )}
               </ul>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row">
           <p className="text-xs text-white/50">© 2026 Property Question Nigeria Limited. All rights reserved.</p>
           <div className="flex items-center gap-2">
-            {socials.map((s) => (
-              <a key={s} href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white transition-colors hover:bg-flame-500">
+            {socials.map((s) =>
+            <a key={s} href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white transition-colors hover:bg-flame-500">
                 {s}
               </a>
-            ))}
+            )}
           </div>
           <div className="flex items-center gap-4 text-xs text-white/50">
             <Link to="/privacy" className="hover:text-flame-400">Privacy</Link>
@@ -103,6 +103,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
