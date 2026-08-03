@@ -1,0 +1,131 @@
+{
+  "name": "ExportLog",
+  "type": "object",
+  "properties": {
+    "export_reference": {
+      "type": "string"
+    },
+    "exported_by_id": {
+      "type": "string",
+      "description": "User who exported the data"
+    },
+    "exported_by_name": {
+      "type": "string"
+    },
+    "exported_by_role": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Type of entity exported (Property, Customer, Lead, etc.)"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "export_name": {
+      "type": "string",
+      "description": "Name/description of the export"
+    },
+    "record_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of records exported"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "csv",
+        "excel",
+        "pdf",
+        "json",
+        "xml"
+      ],
+      "default": "csv"
+    },
+    "export_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purpose": {
+      "type": "string",
+      "description": "Purpose of the export"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to the exported file"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "rejected",
+        "auto_approved"
+      ],
+      "default": "not_required"
+    },
+    "approved_by_id": {
+      "type": "string"
+    },
+    "approved_by_name": {
+      "type": "string"
+    },
+    "approved_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "module": {
+      "type": "string"
+    },
+    "is_bulk_export": {
+      "type": "boolean",
+      "default": false
+    },
+    "contains_sensitive_data": {
+      "type": "boolean",
+      "default": false
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "exported_by_id",
+    "entity_type",
+    "export_date"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.exported_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

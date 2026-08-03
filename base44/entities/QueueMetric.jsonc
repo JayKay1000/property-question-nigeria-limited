@@ -1,0 +1,101 @@
+{
+  "name": "QueueMetric",
+  "type": "object",
+  "properties": {
+    "metric_reference": {
+      "type": "string"
+    },
+    "queue_name": {
+      "type": "string",
+      "description": "Name of the processing queue"
+    },
+    "queue_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "notification",
+        "media",
+        "report",
+        "sync",
+        "analytics",
+        "default"
+      ],
+      "default": "default"
+    },
+    "depth": {
+      "type": "number",
+      "description": "Current queue depth (items waiting)"
+    },
+    "throughput_per_minute": {
+      "type": "number",
+      "description": "Items processed per minute"
+    },
+    "avg_wait_time_seconds": {
+      "type": "number"
+    },
+    "avg_process_time_seconds": {
+      "type": "number"
+    },
+    "failed_count": {
+      "type": "number",
+      "default": 0
+    },
+    "dead_letter_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Items moved to dead letter queue"
+    },
+    "consumer_count": {
+      "type": "number",
+      "description": "Number of active consumers/workers"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "idle",
+        "congested",
+        "stalled",
+        "down"
+      ],
+      "default": "active"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_hour": {
+      "type": "number"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "queue_name",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

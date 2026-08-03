@@ -1,0 +1,136 @@
+{
+  "name": "ErrorLog",
+  "type": "object",
+  "properties": {
+    "error_reference": {
+      "type": "string"
+    },
+    "error_code": {
+      "type": "string",
+      "description": "Error code (e.g. AUTH_001, PROP_002)"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error message (no sensitive information)"
+    },
+    "error_type": {
+      "type": "string",
+      "enum": [
+        "runtime",
+        "validation",
+        "authentication",
+        "authorization",
+        "network",
+        "database",
+        "api",
+        "timeout",
+        "configuration",
+        "unknown"
+      ],
+      "default": "runtime"
+    },
+    "stack_reference": {
+      "type": "string",
+      "description": "Reference to stack trace file (never store full stack in record)"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical",
+        "fatal"
+      ],
+      "default": "error"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module where error occurred"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User who encountered the error (if applicable)"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "request_url": {
+      "type": "string"
+    },
+    "request_method": {
+      "type": "string"
+    },
+    "occurrence_count": {
+      "type": "number",
+      "default": 1
+    },
+    "first_occurrence": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_occurrence": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "investigating",
+        "fixing",
+        "resolved",
+        "wont_fix",
+        "monitoring"
+      ],
+      "default": "open"
+    },
+    "resolved_by": {
+      "type": "string"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_notes": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "error_code",
+    "error_message",
+    "severity"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

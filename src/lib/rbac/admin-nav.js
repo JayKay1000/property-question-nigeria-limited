@@ -22,6 +22,7 @@ export const adminNavItems = [
   { label: 'Buy2Flip', href: '/admin/buy2flip', icon: 'TrendingUp', permission: 'buy2flip.view' },
   { label: 'CRM Center', href: '/admin/crm', icon: 'Contact', permission: 'properties.view' },
   { label: 'Media & Docs', href: '/admin/media-docs', icon: 'FolderOpen', permission: 'properties.view' },
+  { label: 'Intelligence', href: '/admin/intelligence', icon: 'BarChart3', permission: 'security.view' },
   { label: 'Blog', href: '/admin/blog', icon: 'FileText', permission: 'blog.view' },
   { label: 'Reports', href: '/admin/reports', icon: 'BarChart3', permission: 'reports.view' },
   { label: 'Settings', href: '/admin/settings', icon: 'Settings', permission: 'settings.view' },

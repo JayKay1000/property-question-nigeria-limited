@@ -1,0 +1,130 @@
+{
+  "name": "SyncStatus",
+  "type": "object",
+  "properties": {
+    "sync_reference": {
+      "type": "string"
+    },
+    "source_system": {
+      "type": "string",
+      "description": "Source system name (e.g. base44_db, external_crm, payment_gateway)"
+    },
+    "target_system": {
+      "type": "string",
+      "description": "Target system name"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity being synchronized"
+    },
+    "sync_type": {
+      "type": "string",
+      "enum": [
+        "full",
+        "incremental",
+        "delta",
+        "one_way",
+        "two_way",
+        "webhook"
+      ],
+      "default": "incremental"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "idle",
+        "syncing",
+        "completed",
+        "failed",
+        "paused",
+        "error",
+        "queued"
+      ],
+      "default": "idle"
+    },
+    "last_sync_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_sync_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "records_processed": {
+      "type": "number",
+      "default": 0
+    },
+    "records_created": {
+      "type": "number",
+      "default": 0
+    },
+    "records_updated": {
+      "type": "number",
+      "default": 0
+    },
+    "records_deleted": {
+      "type": "number",
+      "default": 0
+    },
+    "records_failed": {
+      "type": "number",
+      "default": 0
+    },
+    "error_count": {
+      "type": "number",
+      "default": 0
+    },
+    "last_error": {
+      "type": "string"
+    },
+    "sync_duration_seconds": {
+      "type": "number",
+      "default": 0
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "realtime",
+        "hourly",
+        "daily",
+        "weekly",
+        "manual"
+      ],
+      "default": "daily"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "source_system",
+    "target_system",
+    "entity_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

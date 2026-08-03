@@ -1,0 +1,138 @@
+{
+  "name": "ReportDefinition",
+  "type": "object",
+  "properties": {
+    "report_code": {
+      "type": "string",
+      "description": "Unique report code"
+    },
+    "report_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "executive",
+        "sales",
+        "marketing",
+        "operations",
+        "financial",
+        "compliance",
+        "audit",
+        "crm",
+        "properties",
+        "projects",
+        "security",
+        "custom"
+      ]
+    },
+    "report_type": {
+      "type": "string",
+      "enum": [
+        "summary",
+        "detailed",
+        "tabular",
+        "chart",
+        "dashboard",
+        "export"
+      ],
+      "default": "summary"
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Entity or query source"
+    },
+    "query_template": {
+      "type": "string",
+      "description": "Query/filter template for the report"
+    },
+    "output_formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "pdf",
+          "excel",
+          "csv",
+          "json",
+          "html",
+          "chart"
+        ]
+      }
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "User who owns this report"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "audience_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Roles allowed to access this report"
+    },
+    "is_scheduled": {
+      "type": "boolean",
+      "default": false
+    },
+    "default_schedule": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "none"
+      ],
+      "default": "none"
+    },
+    "parameters_schema": {
+      "type": "object",
+      "description": "JSON schema for report parameters"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "report_code",
+    "report_name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

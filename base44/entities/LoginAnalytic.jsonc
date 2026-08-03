@@ -1,0 +1,111 @@
+{
+  "name": "LoginAnalytic",
+  "type": "object",
+  "properties": {
+    "analytic_reference": {
+      "type": "string"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_hour": {
+      "type": "number"
+    },
+    "total_logins": {
+      "type": "number",
+      "default": 0
+    },
+    "successful_logins": {
+      "type": "number",
+      "default": 0
+    },
+    "failed_logins": {
+      "type": "number",
+      "default": 0
+    },
+    "success_rate_percentage": {
+      "type": "number"
+    },
+    "failure_rate_percentage": {
+      "type": "number"
+    },
+    "unique_users": {
+      "type": "number",
+      "default": 0
+    },
+    "peak_hour": {
+      "type": "number",
+      "description": "Hour with most logins"
+    },
+    "geographic_distribution": {
+      "type": "object",
+      "description": "Login counts by location/region"
+    },
+    "device_distribution": {
+      "type": "object",
+      "description": "Login counts by device type"
+    },
+    "os_distribution": {
+      "type": "object",
+      "description": "Login counts by operating system"
+    },
+    "browser_distribution": {
+      "type": "object",
+      "description": "Login counts by browser"
+    },
+    "new_users": {
+      "type": "number",
+      "default": 0
+    },
+    "returning_users": {
+      "type": "number",
+      "default": 0
+    },
+    "mfa_challenges": {
+      "type": "number",
+      "default": 0
+    },
+    "mfa_success_rate": {
+      "type": "number"
+    },
+    "avg_session_duration_minutes": {
+      "type": "number"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly"
+      ],
+      "default": "daily"
+    }
+  },
+  "required": [
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

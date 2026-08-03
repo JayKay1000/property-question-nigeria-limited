@@ -1,0 +1,124 @@
+{
+  "name": "CustomerAnalytic",
+  "type": "object",
+  "properties": {
+    "analytic_reference": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Reference to Customer entity (optional \u2014 can be aggregate)"
+    },
+    "analytic_type": {
+      "type": "string",
+      "enum": [
+        "growth",
+        "retention",
+        "repeat_purchase",
+        "referral",
+        "preference",
+        "satisfaction",
+        "engagement",
+        "lifetime_value",
+        "churn_risk"
+      ],
+      "description": "Type of customer analytics record"
+    },
+    "metric_name": {
+      "type": "string"
+    },
+    "metric_value": {
+      "type": "number"
+    },
+    "metric_unit": {
+      "type": "string"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "all_time"
+      ],
+      "default": "monthly"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "preferred_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferred_property_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "buy2flip_engagement_score": {
+      "type": "number",
+      "description": "0-100 engagement score"
+    },
+    "satisfaction_score": {
+      "type": "number",
+      "description": "0-100 satisfaction score"
+    },
+    "total_purchases": {
+      "type": "number",
+      "default": 0
+    },
+    "total_referrals": {
+      "type": "number",
+      "default": 0
+    },
+    "retention_months": {
+      "type": "number",
+      "description": "Customer retention in months"
+    },
+    "is_aggregate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is an aggregate or customer-specific record"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "analytic_type",
+    "metric_name",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

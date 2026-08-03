@@ -1,0 +1,107 @@
+{
+  "name": "APIMetric",
+  "type": "object",
+  "properties": {
+    "metric_reference": {
+      "type": "string"
+    },
+    "api_name": {
+      "type": "string",
+      "description": "Name of the API endpoint"
+    },
+    "api_endpoint": {
+      "type": "string",
+      "description": "URL path of the endpoint"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE"
+      ],
+      "default": "GET"
+    },
+    "module": {
+      "type": "string"
+    },
+    "request_count": {
+      "type": "number",
+      "default": 0
+    },
+    "success_count": {
+      "type": "number",
+      "default": 0
+    },
+    "failure_count": {
+      "type": "number",
+      "default": 0
+    },
+    "success_rate_percentage": {
+      "type": "number",
+      "description": "Success rate (0-100)"
+    },
+    "avg_response_time_ms": {
+      "type": "number",
+      "description": "Average response time in milliseconds"
+    },
+    "p95_response_time_ms": {
+      "type": "number",
+      "description": "95th percentile response time"
+    },
+    "p99_response_time_ms": {
+      "type": "number",
+      "description": "99th percentile response time"
+    },
+    "rate_limit_hits": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of rate-limited requests"
+    },
+    "unique_callers": {
+      "type": "number",
+      "default": 0
+    },
+    "bandwidth_used_mb": {
+      "type": "number"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_hour": {
+      "type": "number"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "api_name",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

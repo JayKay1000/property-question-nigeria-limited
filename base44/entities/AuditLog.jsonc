@@ -2,6 +2,15 @@
   "name": "AuditLog",
   "type": "object",
   "properties": {
+    "audit_reference": {
+      "type": "string",
+      "description": "Unique audit reference number (e.g. AUD-2024-00001)"
+    },
+    "event_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Precise timestamp of the event"
+    },
     "user_id": {
       "type": "string",
       "description": "ID of the user who performed the action"
@@ -18,6 +27,37 @@
       "type": "string",
       "description": "Role of the user at time of action"
     },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier"
+    },
+    "device_id": {
+      "type": "string",
+      "description": "Device identifier if known"
+    },
+    "module": {
+      "type": "string",
+      "description": "Platform module (auth, properties, projects, crm, media, etc.)",
+      "enum": [
+        "auth",
+        "identity",
+        "properties",
+        "projects",
+        "buy2flip",
+        "construction",
+        "crm",
+        "media",
+        "documents",
+        "agents",
+        "customers",
+        "finance",
+        "marketing",
+        "security",
+        "admin",
+        "system",
+        "api"
+      ]
+    },
     "action": {
       "type": "string",
       "description": "The action performed (e.g. login, role_assign, property_delete)"
@@ -33,42 +73,91 @@
         "project_management",
         "buy2flip",
         "construction",
+        "crm",
+        "media",
         "security",
         "approval",
         "document",
         "system",
-        "data_access"
+        "data_access",
+        "financial",
+        "marketing"
       ]
     },
-    "resource": {
+    "entity_name": {
       "type": "string",
-      "description": "The resource type affected"
+      "description": "Name/type of the entity affected (e.g. Property, User, Document)"
     },
-    "resource_id": {
+    "entity_id": {
       "type": "string",
-      "description": "ID of the specific resource affected"
+      "description": "ID of the specific entity affected"
     },
-    "resource_name": {
+    "entity_display_name": {
       "type": "string",
-      "description": "Human-readable name of the resource"
+      "description": "Human-readable name of the entity"
     },
-    "outcome": {
+    "previous_value": {
+      "type": "string",
+      "description": "Reference to previous value/state (file URL or JSON reference)"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "Reference to new value/state (file URL or JSON reference)"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for the action (for admin actions)"
+    },
+    "source": {
+      "type": "string",
+      "description": "Source of the action (web, mobile_app, api, system, workflow)",
+      "enum": [
+        "web",
+        "mobile_app",
+        "api",
+        "system",
+        "workflow",
+        "scheduled_task"
+      ]
+    },
+    "result": {
       "type": "string",
       "description": "Result of the action",
       "enum": [
         "success",
         "failure",
-        "denied"
+        "denied",
+        "warning"
       ],
       "default": "success"
+    },
+    "severity": {
+      "type": "string",
+      "description": "Severity level of the audit event",
+      "enum": [
+        "info",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "info"
     },
     "ip_address": {
       "type": "string",
       "description": "IP address of the request"
     },
+    "browser": {
+      "type": "string",
+      "description": "Browser used (e.g. Chrome, Safari, Firefox)"
+    },
+    "operating_system": {
+      "type": "string",
+      "description": "Operating system (e.g. Windows, macOS, iOS, Android)"
+    },
     "device_info": {
       "type": "string",
-      "description": "User agent / device information"
+      "description": "Full user agent / device information"
     },
     "details": {
       "type": "string",
@@ -77,11 +166,21 @@
     "metadata": {
       "type": "object",
       "description": "Structured metadata about the action (key-value pairs)"
+    },
+    "is_immutable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Audit records are immutable and cannot be modified"
+    },
+    "retention_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date until which this record must be retained"
     }
   },
   "required": [
     "action",
-    "outcome"
+    "result"
   ],
   "rls": {
     "create": {

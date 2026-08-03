@@ -1,0 +1,99 @@
+{
+  "name": "ConversionMetric",
+  "type": "object",
+  "properties": {
+    "metric_reference": {
+      "type": "string"
+    },
+    "funnel_name": {
+      "type": "string",
+      "description": "Name of the conversion funnel"
+    },
+    "from_stage": {
+      "type": "string",
+      "description": "Starting stage (e.g. visitor, lead, inspection)"
+    },
+    "to_stage": {
+      "type": "string",
+      "description": "Ending stage (e.g. lead, inspection, reservation)"
+    },
+    "from_count": {
+      "type": "number",
+      "description": "Count at starting stage"
+    },
+    "to_count": {
+      "type": "number",
+      "description": "Count that converted to ending stage"
+    },
+    "conversion_rate": {
+      "type": "number",
+      "description": "Percentage conversion rate"
+    },
+    "drop_off_count": {
+      "type": "number",
+      "description": "Count that did not convert"
+    },
+    "drop_off_rate": {
+      "type": "number",
+      "description": "Percentage drop-off rate"
+    },
+    "avg_time_to_convert_hours": {
+      "type": "number",
+      "description": "Average time to convert in hours"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ],
+      "default": "monthly"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "module": {
+      "type": "string",
+      "default": "crm"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "funnel_name",
+    "from_stage",
+    "to_stage",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

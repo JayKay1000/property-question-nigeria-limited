@@ -26,6 +26,7 @@ import GISCommandCenter from '@/pages/admin/GISCommandCenter';
 import ProjectOperations from '@/pages/admin/ProjectOperations';
 import CRMOperations from '@/pages/admin/CRMOperations';
 import MediaDocumentCenter from '@/pages/admin/MediaDocumentCenter';
+import OperationsIntelligenceCenter from '@/pages/admin/OperationsIntelligenceCenter';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -124,6 +125,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/media-docs" element={
             <RequirePermission permission="properties.view">
               <MediaDocumentCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/intelligence" element={
+            <RequirePermission permission="security.view">
+              <OperationsIntelligenceCenter />
             </RequirePermission>
           } />
         </Route>

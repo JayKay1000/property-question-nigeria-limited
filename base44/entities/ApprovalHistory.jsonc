@@ -1,0 +1,142 @@
+{
+  "name": "ApprovalHistory",
+  "type": "object",
+  "properties": {
+    "approval_reference": {
+      "type": "string",
+      "description": "Unique approval reference"
+    },
+    "request_type": {
+      "type": "string",
+      "description": "Type of approval request",
+      "enum": [
+        "agent_verification",
+        "property_approval",
+        "project_approval",
+        "document_approval",
+        "customer_verification",
+        "marketing_approval",
+        "plot_allocation",
+        "price_change",
+        "legal_document",
+        "construction_document",
+        "role_assignment",
+        "custom"
+      ]
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity being approved"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_display_name": {
+      "type": "string"
+    },
+    "requested_by_id": {
+      "type": "string"
+    },
+    "requested_by_name": {
+      "type": "string"
+    },
+    "request_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request_notes": {
+      "type": "string"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "description": "Assigned reviewer user ID"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "review_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "revision_required",
+        "escalated",
+        "withdrawn"
+      ],
+      "default": "pending"
+    },
+    "decision_notes": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "time_taken_hours": {
+      "type": "number",
+      "description": "Time from request to decision in hours"
+    },
+    "approval_level": {
+      "type": "number",
+      "default": 1,
+      "description": "Approval level (1=first, 2=second, etc.)"
+    },
+    "escalated_to_id": {
+      "type": "string"
+    },
+    "escalated_to_name": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "request_type",
+    "entity_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.requested_by_id": "{{user.id}}"
+        },
+        {
+          "data.reviewer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.reviewer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

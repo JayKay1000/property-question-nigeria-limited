@@ -1,0 +1,122 @@
+{
+  "name": "EventMetric",
+  "type": "object",
+  "properties": {
+    "metric_reference": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "property_view",
+        "download",
+        "share",
+        "click",
+        "search",
+        "video_play",
+        "tour_booking",
+        "enquiry",
+        "inspection_booking",
+        "brochure_download",
+        "virtual_tour",
+        "newsletter_signup",
+        "agent_contact"
+      ],
+      "description": "Type of tracked event"
+    },
+    "event_name": {
+      "type": "string",
+      "description": "Human-readable event name"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Type of entity the event relates to"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "count": {
+      "type": "number",
+      "default": 1,
+      "description": "Number of occurrences"
+    },
+    "unique_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Unique visitor count"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "metric_hour": {
+      "type": "number",
+      "description": "Hour of day (0-23) for hourly aggregation"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "desktop",
+        "tablet",
+        "mobile",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "source": {
+      "type": "string",
+      "description": "Traffic source (direct, search, social, referral, email)"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "default": 0
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "event_type",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

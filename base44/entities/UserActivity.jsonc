@@ -1,0 +1,135 @@
+{
+  "name": "UserActivity",
+  "type": "object",
+  "properties": {
+    "activity_reference": {
+      "type": "string",
+      "description": "Unique activity reference"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User ID"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_role": {
+      "type": "string"
+    },
+    "activity_type": {
+      "type": "string",
+      "description": "Type of activity",
+      "enum": [
+        "login",
+        "logout",
+        "property_view",
+        "property_saved",
+        "property_shared",
+        "document_download",
+        "reservation",
+        "allocation",
+        "payment_initiated",
+        "dashboard_access",
+        "profile_update",
+        "search",
+        "enquiry",
+        "inspection_booking",
+        "report_view",
+        "export",
+        "agent_verification",
+        "document_upload",
+        "settings_change"
+      ]
+    },
+    "activity_description": {
+      "type": "string"
+    },
+    "activity_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "default": 0,
+      "description": "Duration of the activity in seconds"
+    },
+    "module": {
+      "type": "string",
+      "description": "Platform module where activity occurred"
+    },
+    "entity_type": {
+      "type": "string",
+      "description": "Type of entity interacted with"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string"
+    },
+    "session_id": {
+      "type": "string"
+    },
+    "device_id": {
+      "type": "string"
+    },
+    "device_info": {
+      "type": "string"
+    },
+    "browser": {
+      "type": "string"
+    },
+    "operating_system": {
+      "type": "string"
+    },
+    "ip_address": {
+      "type": "string"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "partial"
+      ],
+      "default": "success"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "user_id",
+    "activity_type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "name": "DataQuality",
+  "type": "object",
+  "properties": {
+    "quality_reference": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity being assessed"
+    },
+    "module": {
+      "type": "string"
+    },
+    "total_records": {
+      "type": "number",
+      "default": 0
+    },
+    "complete_records": {
+      "type": "number",
+      "default": 0,
+      "description": "Records with all required fields filled"
+    },
+    "missing_data_count": {
+      "type": "number",
+      "default": 0
+    },
+    "duplicate_count": {
+      "type": "number",
+      "default": 0
+    },
+    "invalid_values_count": {
+      "type": "number",
+      "default": 0
+    },
+    "incomplete_profiles_count": {
+      "type": "number",
+      "default": 0
+    },
+    "broken_references_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Records with broken foreign key references"
+    },
+    "quality_score": {
+      "type": "number",
+      "description": "Overall quality score (0-100)"
+    },
+    "completeness_percentage": {
+      "type": "number"
+    },
+    "accuracy_percentage": {
+      "type": "number"
+    },
+    "consistency_percentage": {
+      "type": "number"
+    },
+    "validity_percentage": {
+      "type": "number"
+    },
+    "uniqueness_percentage": {
+      "type": "number"
+    },
+    "assessment_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "issues_summary": {
+      "type": "object",
+      "description": "Summary of data quality issues by type"
+    },
+    "recommendations": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "entity_name",
+    "assessment_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

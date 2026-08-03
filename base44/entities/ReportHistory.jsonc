@@ -1,0 +1,118 @@
+{
+  "name": "ReportHistory",
+  "type": "object",
+  "properties": {
+    "history_reference": {
+      "type": "string"
+    },
+    "report_definition_id": {
+      "type": "string"
+    },
+    "report_name": {
+      "type": "string"
+    },
+    "scheduled_report_id": {
+      "type": "string",
+      "description": "Reference to ScheduledReport if triggered by schedule"
+    },
+    "generation_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "execution_time_seconds": {
+      "type": "number",
+      "description": "Total execution time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "default": "queued"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "excel",
+        "csv",
+        "json",
+        "html"
+      ]
+    },
+    "file_url": {
+      "type": "string",
+      "description": "Generated report file URL"
+    },
+    "file_size_bytes": {
+      "type": "number"
+    },
+    "row_count": {
+      "type": "number",
+      "description": "Number of data rows in the report"
+    },
+    "triggered_by_id": {
+      "type": "string"
+    },
+    "triggered_by_name": {
+      "type": "string"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "scheduled",
+        "api",
+        "workflow"
+      ],
+      "default": "manual"
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "parameters_used": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "report_definition_id",
+    "generation_date",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

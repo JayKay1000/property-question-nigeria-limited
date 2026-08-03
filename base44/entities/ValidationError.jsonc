@@ -1,0 +1,120 @@
+{
+  "name": "ValidationError",
+  "type": "object",
+  "properties": {
+    "error_reference": {
+      "type": "string"
+    },
+    "validation_rule": {
+      "type": "string",
+      "description": "Name of the validation rule that failed"
+    },
+    "rule_type": {
+      "type": "string",
+      "enum": [
+        "required_field",
+        "format",
+        "range",
+        "uniqueness",
+        "reference_integrity",
+        "business_logic",
+        "custom"
+      ],
+      "default": "required_field"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity where validation failed"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "field_name": {
+      "type": "string",
+      "description": "Field that failed validation"
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "invalid_value": {
+      "type": "string"
+    },
+    "expected_value": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ],
+      "default": "error"
+    },
+    "occurrence_count": {
+      "type": "number",
+      "default": 1
+    },
+    "first_detected": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_detected": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "fixing",
+        "resolved",
+        "wont_fix",
+        "false_positive"
+      ],
+      "default": "open"
+    },
+    "resolved_by": {
+      "type": "string"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_notes": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "validation_rule",
+    "entity_name",
+    "error_message"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

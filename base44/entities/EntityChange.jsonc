@@ -1,0 +1,125 @@
+{
+  "name": "EntityChange",
+  "type": "object",
+  "properties": {
+    "change_reference": {
+      "type": "string",
+      "description": "Unique change reference (e.g. CHG-2024-00001)"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity type changed (Property, Project, Customer, User, etc.)"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the changed entity"
+    },
+    "entity_display_name": {
+      "type": "string",
+      "description": "Human-readable name of the entity"
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "create",
+        "update",
+        "delete",
+        "restore",
+        "merge",
+        "archive"
+      ],
+      "default": "update"
+    },
+    "field_changed": {
+      "type": "string",
+      "description": "Name of the field that changed"
+    },
+    "previous_value": {
+      "type": "string",
+      "description": "Previous value (stringified)"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "New value (stringified)"
+    },
+    "changed_by_id": {
+      "type": "string",
+      "description": "User ID who made the change"
+    },
+    "changed_by_name": {
+      "type": "string"
+    },
+    "changed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "change_reason": {
+      "type": "string",
+      "description": "Reason for the change"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "web",
+        "mobile_app",
+        "api",
+        "system",
+        "workflow"
+      ],
+      "default": "web"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "not_required",
+        "pending",
+        "approved",
+        "rejected",
+        "auto_approved"
+      ],
+      "default": "not_required"
+    },
+    "approved_by_id": {
+      "type": "string"
+    },
+    "approved_by_name": {
+      "type": "string"
+    },
+    "approved_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "module": {
+      "type": "string",
+      "description": "Module this entity belongs to"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "entity_name",
+    "entity_id",
+    "change_type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

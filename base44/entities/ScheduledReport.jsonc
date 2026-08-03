@@ -1,0 +1,126 @@
+{
+  "name": "ScheduledReport",
+  "type": "object",
+  "properties": {
+    "schedule_reference": {
+      "type": "string"
+    },
+    "report_definition_id": {
+      "type": "string",
+      "description": "Reference to ReportDefinition"
+    },
+    "report_name": {
+      "type": "string"
+    },
+    "schedule_name": {
+      "type": "string"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "bi_weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "custom"
+      ],
+      "default": "monthly"
+    },
+    "cron_expression": {
+      "type": "string",
+      "description": "Cron expression for custom scheduling"
+    },
+    "next_run_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_run_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_run_status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "partial",
+        "pending",
+        "never_run"
+      ],
+      "default": "never_run"
+    },
+    "output_format": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "excel",
+        "csv",
+        "json",
+        "html"
+      ],
+      "default": "pdf"
+    },
+    "recipients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Email addresses or user IDs to receive the report"
+    },
+    "recipient_roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Parameter values for this schedule"
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": [
+        "email",
+        "download_link",
+        "dashboard",
+        "webhook"
+      ],
+      "default": "email"
+    },
+    "created_by_id": {
+      "type": "string"
+    },
+    "created_by_name": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "report_definition_id",
+    "schedule_name",
+    "frequency"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

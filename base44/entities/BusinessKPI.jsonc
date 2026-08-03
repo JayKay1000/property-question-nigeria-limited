@@ -1,0 +1,128 @@
+{
+  "name": "BusinessKPI",
+  "type": "object",
+  "properties": {
+    "kpi_code": {
+      "type": "string",
+      "description": "Unique KPI code (e.g. total_properties, active_listings)"
+    },
+    "kpi_name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "kpi_description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "properties",
+        "projects",
+        "buy2flip",
+        "crm",
+        "finance",
+        "construction",
+        "agents",
+        "customers",
+        "marketing",
+        "operations",
+        "growth"
+      ],
+      "description": "KPI category"
+    },
+    "value": {
+      "type": "number",
+      "description": "Current KPI value"
+    },
+    "previous_value": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Unit of measurement (count, NGN, percentage, days)"
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly",
+        "all_time",
+        "realtime"
+      ],
+      "default": "monthly"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "calculation_method": {
+      "type": "string",
+      "description": "How the KPI is calculated (count, sum, average, ratio)"
+    },
+    "data_source": {
+      "type": "string",
+      "description": "Entity or source the KPI is derived from"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value for this period"
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "up",
+        "down",
+        "flat",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "trend_percentage": {
+      "type": "number",
+      "description": "Percentage change from previous period"
+    },
+    "is_executive": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this KPI appears on executive dashboards"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "kpi_code",
+    "kpi_name",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

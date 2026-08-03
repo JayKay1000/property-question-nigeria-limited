@@ -1,0 +1,117 @@
+{
+  "name": "RetentionPolicy",
+  "type": "object",
+  "properties": {
+    "policy_code": {
+      "type": "string",
+      "description": "Unique policy code"
+    },
+    "policy_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity this policy applies to"
+    },
+    "module": {
+      "type": "string"
+    },
+    "retention_period_days": {
+      "type": "number",
+      "description": "Number of days to retain records"
+    },
+    "retention_period_human": {
+      "type": "string",
+      "description": "Human-readable retention period (e.g. 7 years)"
+    },
+    "archive_after_days": {
+      "type": "number",
+      "description": "Days after which records are archived"
+    },
+    "delete_after_days": {
+      "type": "number",
+      "description": "Days after which archived records are deleted (0 = never)"
+    },
+    "is_immutable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether records are immutable during retention"
+    },
+    "compliance_type": {
+      "type": "string",
+      "enum": [
+        "legal",
+        "regulatory",
+        "operational",
+        "business",
+        "security",
+        "financial"
+      ],
+      "default": "operational"
+    },
+    "regulatory_reference": {
+      "type": "string",
+      "description": "Reference to applicable regulation (e.g. NDPR, CBN)"
+    },
+    "archival_strategy": {
+      "type": "string",
+      "enum": [
+        "cold_storage",
+        "compressed_archive",
+        "data_warehouse",
+        "data_lake",
+        "none"
+      ],
+      "default": "compressed_archive"
+    },
+    "auto_archive": {
+      "type": "boolean",
+      "default": true
+    },
+    "auto_delete": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to automatically delete after retention period"
+    },
+    "notification_days_before": {
+      "type": "number",
+      "default": 30,
+      "description": "Days before expiry to notify administrators"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "policy_code",
+    "policy_name",
+    "entity_name",
+    "retention_period_days"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

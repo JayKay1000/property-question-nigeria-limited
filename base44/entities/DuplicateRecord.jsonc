@@ -1,0 +1,119 @@
+{
+  "name": "DuplicateRecord",
+  "type": "object",
+  "properties": {
+    "duplicate_reference": {
+      "type": "string"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Entity type with potential duplicates (Customer, Property, Agent, etc.)"
+    },
+    "module": {
+      "type": "string"
+    },
+    "primary_record_id": {
+      "type": "string",
+      "description": "Primary record (recommended to keep)"
+    },
+    "primary_record_name": {
+      "type": "string"
+    },
+    "duplicate_record_id": {
+      "type": "string",
+      "description": "Suspected duplicate record"
+    },
+    "duplicate_record_name": {
+      "type": "string"
+    },
+    "similarity_score": {
+      "type": "number",
+      "description": "Similarity percentage (0-100)"
+    },
+    "match_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fields that matched (email, name, phone, etc.)"
+    },
+    "detection_method": {
+      "type": "string",
+      "enum": [
+        "exact_match",
+        "fuzzy_match",
+        "ai_model",
+        "manual"
+      ],
+      "default": "fuzzy_match"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "detected",
+        "reviewing",
+        "confirmed",
+        "rejected",
+        "merged",
+        "resolved"
+      ],
+      "default": "detected"
+    },
+    "detected_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "merge_action": {
+      "type": "string",
+      "enum": [
+        "none",
+        "keep_primary",
+        "keep_duplicate",
+        "merge_fields",
+        "manual_review"
+      ],
+      "default": "none"
+    },
+    "merge_notes": {
+      "type": "string"
+    },
+    "is_resolved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "entity_name",
+    "primary_record_id",
+    "duplicate_record_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

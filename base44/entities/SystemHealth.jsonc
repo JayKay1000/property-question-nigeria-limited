@@ -1,0 +1,122 @@
+{
+  "name": "SystemHealth",
+  "type": "object",
+  "properties": {
+    "health_reference": {
+      "type": "string"
+    },
+    "component": {
+      "type": "string",
+      "description": "System component (database, api_server, storage, cache, queue, cdn)"
+    },
+    "component_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "degraded",
+        "warning",
+        "critical",
+        "down",
+        "maintenance"
+      ],
+      "default": "healthy"
+    },
+    "uptime_percentage": {
+      "type": "number",
+      "description": "Uptime percentage (0-100)"
+    },
+    "cpu_usage_percentage": {
+      "type": "number"
+    },
+    "memory_usage_percentage": {
+      "type": "number"
+    },
+    "memory_used_mb": {
+      "type": "number"
+    },
+    "memory_total_mb": {
+      "type": "number"
+    },
+    "storage_used_gb": {
+      "type": "number"
+    },
+    "storage_total_gb": {
+      "type": "number"
+    },
+    "storage_usage_percentage": {
+      "type": "number"
+    },
+    "database_connections": {
+      "type": "number"
+    },
+    "database_query_avg_ms": {
+      "type": "number",
+      "description": "Average database query latency in milliseconds"
+    },
+    "api_response_avg_ms": {
+      "type": "number"
+    },
+    "active_connections": {
+      "type": "number"
+    },
+    "queue_depth": {
+      "type": "number",
+      "description": "Number of items in processing queue"
+    },
+    "queue_throughput_per_sec": {
+      "type": "number"
+    },
+    "error_rate_percentage": {
+      "type": "number"
+    },
+    "last_check_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metric_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "health_metadata": {
+      "type": "object"
+    },
+    "alert_threshold": {
+      "type": "string",
+      "description": "Threshold that triggers alerts"
+    },
+    "is_alert_active": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "component",
+    "status",
+    "metric_date"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

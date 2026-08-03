@@ -1,0 +1,136 @@
+{
+  "name": "ThreatDetection",
+  "type": "object",
+  "properties": {
+    "threat_reference": {
+      "type": "string"
+    },
+    "threat_type": {
+      "type": "string",
+      "enum": [
+        "brute_force",
+        "credential_stuffing",
+        "sql_injection",
+        "xss",
+        "csrf",
+        "rate_abuse",
+        "suspicious_login",
+        "data_exfiltration",
+        "privilege_escalation",
+        "account_takeover",
+        "bot_activity",
+        "ddos",
+        "api_abuse",
+        "content_injection"
+      ],
+      "description": "Type of detected threat"
+    },
+    "threat_name": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "Detection confidence (0-100)"
+    },
+    "source_ip": {
+      "type": "string"
+    },
+    "target_resource": {
+      "type": "string",
+      "description": "Resource being targeted"
+    },
+    "target_user_id": {
+      "type": "string"
+    },
+    "target_user_email": {
+      "type": "string"
+    },
+    "detection_method": {
+      "type": "string",
+      "enum": [
+        "rule_based",
+        "ai_model",
+        "threshold",
+        "manual",
+        "siem_integration"
+      ],
+      "default": "rule_based"
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "occurrence_count": {
+      "type": "number",
+      "default": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "detected",
+        "investigating",
+        "mitigated",
+        "false_positive",
+        "escalated",
+        "blocked"
+      ],
+      "default": "detected"
+    },
+    "mitigation_action": {
+      "type": "string",
+      "description": "Action taken to mitigate"
+    },
+    "mitigated_by": {
+      "type": "string"
+    },
+    "mitigated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_auto_mitigated": {
+      "type": "boolean",
+      "default": false
+    },
+    "indicators": {
+      "type": "object",
+      "description": "Threat indicators (IOCs)"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "threat_type",
+    "severity"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

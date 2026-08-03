@@ -1,0 +1,154 @@
+{
+  "name": "AIInsight",
+  "type": "object",
+  "properties": {
+    "insight_reference": {
+      "type": "string"
+    },
+    "insight_type": {
+      "type": "string",
+      "enum": [
+        "demand_forecast",
+        "property_recommendation",
+        "sales_prediction",
+        "lead_scoring",
+        "anomaly_detection",
+        "executive_summary",
+        "market_trend",
+        "churn_prediction",
+        "price_optimization",
+        "risk_assessment",
+        "operational_recommendation"
+      ],
+      "description": "Type of AI insight"
+    },
+    "insight_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "model_name": {
+      "type": "string",
+      "description": "AI model that generated the insight"
+    },
+    "model_version": {
+      "type": "string"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "Confidence score (0-100)"
+    },
+    "predicted_value": {
+      "type": "number"
+    },
+    "predicted_trend": {
+      "type": "string",
+      "enum": [
+        "up",
+        "down",
+        "flat",
+        "volatile",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "time_horizon": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "short_term",
+        "medium_term",
+        "long_term"
+      ],
+      "description": "Prediction time horizon"
+    },
+    "target_entity_type": {
+      "type": "string"
+    },
+    "target_entity_id": {
+      "type": "string"
+    },
+    "target_entity_name": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "input_data_summary": {
+      "type": "string",
+      "description": "Summary of input data used"
+    },
+    "recommendation": {
+      "type": "string",
+      "description": "Recommended action"
+    },
+    "narrative_summary": {
+      "type": "string",
+      "description": "Executive narrative summary"
+    },
+    "key_factors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key factors influencing the prediction"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "reviewed",
+        "actioned",
+        "archived",
+        "rejected"
+      ],
+      "default": "active"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "reviewed_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "insight_type",
+    "insight_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

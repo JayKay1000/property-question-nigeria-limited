@@ -1,0 +1,140 @@
+{
+  "name": "BackgroundJob",
+  "type": "object",
+  "properties": {
+    "job_reference": {
+      "type": "string"
+    },
+    "job_name": {
+      "type": "string",
+      "description": "Name of the background job"
+    },
+    "job_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "notification",
+        "media_processing",
+        "ocr",
+        "thumbnail_generation",
+        "report_generation",
+        "backup",
+        "data_sync",
+        "analytics_aggregation",
+        "ai_processing",
+        "cleanup",
+        "workflow",
+        "scheduled_task"
+      ],
+      "description": "Type of background job"
+    },
+    "module": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled",
+        "retrying",
+        "paused"
+      ],
+      "default": "queued"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "critical"
+      ],
+      "default": "normal"
+    },
+    "queued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "default": 0
+    },
+    "retry_count": {
+      "type": "number",
+      "default": 0
+    },
+    "max_retries": {
+      "type": "number",
+      "default": 3
+    },
+    "error_message": {
+      "type": "string"
+    },
+    "error_stack": {
+      "type": "string"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0
+    },
+    "input_data": {
+      "type": "object",
+      "description": "Input parameters for the job"
+    },
+    "output_data": {
+      "type": "object",
+      "description": "Output/results of the job"
+    },
+    "related_entity_type": {
+      "type": "string"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "triggered_by": {
+      "type": "string",
+      "description": "User ID or system that triggered the job"
+    },
+    "is_scheduled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "job_name",
+    "job_type",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
