@@ -2,13 +2,13 @@ import { TrendingUp, ShieldCheck, BadgeDollarSign, Users, Eye, Lock } from 'luci
 import Reveal from '@/components/ui/Reveal';
 
 const benefits = [
-  { icon: TrendingUp, title: 'High ROI Potential', desc: 'Access curated property flipping opportunities with strong, projected returns across Nigeria.' },
-  { icon: ShieldCheck, title: 'Verified Listings', desc: 'Every property is vetted and verified by our investment team before it reaches you.' },
-  { icon: BadgeDollarSign, title: 'Transparent Pricing', desc: 'Clear cost breakdowns with no hidden fees or surprise charges at any stage.' },
-  { icon: Users, title: 'Expert Support', desc: 'Dedicated investment advisors guide you through every flip from start to finish.' },
-  { icon: Eye, title: 'Full Visibility', desc: 'Track project progress, costs, and timelines in real time on the Buy2Flip platform.' },
-  { icon: Lock, title: 'Secure Transactions', desc: 'Bank-grade security protecting your investments, documents, and personal data.' },
-];
+{ icon: TrendingUp, title: 'High ROI Potential', desc: 'Access curated property flipping opportunities with strong, projected returns across Nigeria.' },
+{ icon: ShieldCheck, title: 'Verified Listings', desc: 'Every property is vetted and verified by our investment team before it reaches you.' },
+{ icon: BadgeDollarSign, title: 'Transparent Pricing', desc: 'Clear cost breakdowns with no hidden fees or surprise charges at any stage.' },
+{ icon: Users, title: 'Expert Support', desc: 'Dedicated investment advisors guide you through every flip from start to finish.' },
+{ icon: Eye, title: 'Full Visibility', desc: 'Track project progress, costs, and timelines in real time on the Buy2Flip platform.' },
+{ icon: Lock, title: 'Secure Transactions', desc: 'Bank-grade security protecting your investments, documents, and personal data.' }];
+
 
 export default function Benefits() {
   return (
@@ -19,8 +19,8 @@ export default function Benefits() {
             <span className="inline-block rounded-full bg-flame-50 px-4 py-1.5 text-sm font-medium text-flame-600">
               Why Buy2Flip
             </span>
-            <h2 className="mt-4 text-3xl font-heading font-bold text-brand-900 sm:text-4xl">
-              Invest with Confidence
+            <h2 className="mt-4 text-3xl font-heading font-bold text-brand-900 sm:text-4xl">Subscribe with Confidence
+
             </h2>
             <p className="mt-3 text-muted-foreground">
               Buy2Flip combines property expertise with investment intelligence to deliver exceptional flipping opportunities.
@@ -39,11 +39,11 @@ export default function Benefits() {
                   <h3 className="mb-2 text-lg font-heading font-semibold text-brand-900">{b.title}</h3>
                   <p className="text-sm text-muted-foreground">{b.desc}</p>
                 </div>
-              </Reveal>
-            );
+              </Reveal>);
+
           })}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }

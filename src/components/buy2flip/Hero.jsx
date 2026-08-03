@@ -40,7 +40,7 @@ export default function Hero({ onContinue }) {
           </span>
         </h1>
 
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg">Buy2Flip is Nigeria's premier property flipping platform — connecting subscribers with verified, high-potential real estate opportunities. Browse curated listings, track project progress, and s with confidence.
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg">Buy2Flip is Nigeria's premier property flipping platform — connecting subscribers with verified, high-potential real estate opportunities. Browse curated listings, track project progress, and subscribe with confidence.
 
 
 
