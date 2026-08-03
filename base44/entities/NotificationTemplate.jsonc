@@ -1,0 +1,123 @@
+{
+  "name": "NotificationTemplate",
+  "type": "object",
+  "properties": {
+    "template_code": {
+      "type": "string",
+      "description": "Unique identifier e.g. welcome_email, inspection_reminder_sms"
+    },
+    "template_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "transactional",
+        "marketing",
+        "system",
+        "alert",
+        "reminder",
+        "verification",
+        "crm",
+        "property",
+        "project",
+        "payment",
+        "account"
+      ],
+      "default": "transactional"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "push",
+        "in_app",
+        "whatsapp",
+        "multi_channel"
+      ],
+      "default": "email"
+    },
+    "subject_template": {
+      "type": "string",
+      "description": "For email channel \u2014 supports {{variable}} placeholders"
+    },
+    "body_template": {
+      "type": "string",
+      "description": "HTML for email, plain text for SMS/WhatsApp, JSON for push/in-app"
+    },
+    "placeholder_schema": {
+      "type": "object",
+      "description": "JSON schema describing available variables and their types"
+    },
+    "language": {
+      "type": "string",
+      "default": "en"
+    },
+    "fallback_template_id": {
+      "type": "string",
+      "description": "Reference to fallback template if rendering fails"
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "trigger_event": {
+      "type": "string",
+      "description": "System event that auto-fires this template e.g. lead_created"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Lucide icon name for display"
+    },
+    "color": {
+      "type": "string",
+      "description": "Hex color for UI display"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "template_code",
+    "template_name",
+    "category",
+    "channel"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

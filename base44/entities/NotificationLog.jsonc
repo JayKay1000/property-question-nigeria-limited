@@ -1,0 +1,197 @@
+{
+  "name": "NotificationLog",
+  "type": "object",
+  "properties": {
+    "notification_reference": {
+      "type": "string",
+      "description": "Unique reference e.g. NTF-2026-000001"
+    },
+    "recipient_user_id": {
+      "type": "string",
+      "description": "Reference to User"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_phone": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Reference to NotificationTemplate"
+    },
+    "template_code": {
+      "type": "string",
+      "description": "Denormalized for audit"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "push",
+        "in_app",
+        "whatsapp"
+      ],
+      "default": "in_app"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Rendered subject"
+    },
+    "body": {
+      "type": "string",
+      "description": "Rendered body"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "sent",
+        "delivered",
+        "read",
+        "failed",
+        "bounced",
+        "suppressed",
+        "cancelled"
+      ],
+      "default": "queued"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "source_entity": {
+      "type": "string",
+      "description": "Entity that triggered the notification e.g. Lead"
+    },
+    "source_entity_id": {
+      "type": "string"
+    },
+    "source_event": {
+      "type": "string",
+      "description": "Event name e.g. created, updated, reminder"
+    },
+    "related_property_id": {
+      "type": "string"
+    },
+    "related_project_id": {
+      "type": "string"
+    },
+    "related_lead_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "scheduled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "failed_reason": {
+      "type": "string"
+    },
+    "retry_count": {
+      "type": "number",
+      "default": 0
+    },
+    "provider_message_id": {
+      "type": "string"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "action_url": {
+      "type": "string",
+      "description": "Deep-link URL for in-app notifications"
+    },
+    "action_label": {
+      "type": "string",
+      "description": "CTA button label"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Lucide icon name for in-app display"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "transactional",
+        "marketing",
+        "system",
+        "alert",
+        "reminder",
+        "verification",
+        "crm",
+        "property",
+        "project",
+        "payment",
+        "account"
+      ],
+      "default": "system"
+    }
+  },
+  "required": [
+    "recipient_user_id",
+    "channel",
+    "status"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "data.recipient_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.recipient_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

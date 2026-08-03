@@ -1,0 +1,188 @@
+{
+  "name": "CommunicationThread",
+  "type": "object",
+  "properties": {
+    "thread_reference": {
+      "type": "string",
+      "description": "Unique e.g. THR-2026-0001"
+    },
+    "thread_type": {
+      "type": "string",
+      "enum": [
+        "lead",
+        "customer",
+        "agent",
+        "property_enquiry",
+        "project_enquiry",
+        "support",
+        "general"
+      ],
+      "default": "general"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "participant_user_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User IDs in the thread"
+    },
+    "participant_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "participant_phones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_entity_type": {
+      "type": "string",
+      "description": "e.g. Lead, Property, Project"
+    },
+    "related_entity_id": {
+      "type": "string"
+    },
+    "related_entity_name": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "in_app",
+        "email",
+        "sms",
+        "whatsapp",
+        "mixed"
+      ],
+      "default": "in_app"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "awaiting_response",
+        "resolved",
+        "closed",
+        "archived"
+      ],
+      "default": "active"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Staff assigned to thread"
+    },
+    "assigned_to_name": {
+      "type": "string"
+    },
+    "last_message_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_message_direction": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound"
+      ]
+    },
+    "last_message_preview": {
+      "type": "string",
+      "description": "Truncated preview of last message"
+    },
+    "unread_count": {
+      "type": "number",
+      "default": 0
+    },
+    "total_messages": {
+      "type": "number",
+      "default": 0
+    },
+    "first_message_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_notes": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "is_pinned": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_starred": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "thread_type",
+    "subject",
+    "status"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "data.participant_user_ids": "{{user.id}}"
+        },
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.participant_user_ids": "{{user.id}}"
+        },
+        {
+          "data.assigned_to_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

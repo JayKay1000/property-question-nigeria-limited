@@ -1,0 +1,111 @@
+{
+  "name": "CampaignRecipient",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string",
+      "description": "Reference to CommunicationCampaign"
+    },
+    "campaign_reference": {
+      "type": "string"
+    },
+    "recipient_user_id": {
+      "type": "string",
+      "description": "Reference to User"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_phone": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "push",
+        "whatsapp"
+      ],
+      "default": "email"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "queued",
+        "sent",
+        "delivered",
+        "read",
+        "failed",
+        "bounced",
+        "opted_out"
+      ],
+      "default": "pending"
+    },
+    "notification_log_id": {
+      "type": "string",
+      "description": "Reference to NotificationLog"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "read_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "failed_reason": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "is_suppressed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Suppressed due to DND or opt-out"
+    }
+  },
+  "required": [
+    "campaign_id",
+    "channel",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.recipient_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
