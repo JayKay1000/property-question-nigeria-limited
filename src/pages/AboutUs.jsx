@@ -36,7 +36,7 @@ export default function AboutUs() {
   return (
     <div className="min-h-screen">
       <PageHero
-        title="About Property Question Nigeria"
+        title="PROPERTY QUESTION NIGERIA LIMITED"
         subtitle="Building Nigeria's most trusted real estate, construction, and property management enterprise — one home, one investment, one community at a time."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About Us' }]}
       />
