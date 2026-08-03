@@ -46,6 +46,23 @@ import CRMOperations from '@/pages/admin/CRMOperations';
 import MediaDocumentCenter from '@/pages/admin/MediaDocumentCenter';
 import OperationsIntelligenceCenter from '@/pages/admin/OperationsIntelligenceCenter';
 import NotificationCenterAdmin from '@/pages/admin/NotificationCenterAdmin';
+import CMSDashboard from '@/pages/admin/CMSDashboard';
+import AboutUs from '@/pages/AboutUs';
+import Services from '@/pages/Services';
+import Blog from '@/pages/Blog';
+import BlogDetail from '@/pages/BlogDetail';
+import NewsPage from '@/pages/News';
+import NewsDetail from '@/pages/NewsDetail';
+import Careers from '@/pages/Careers';
+import Contact from '@/pages/Contact';
+import FAQ from '@/pages/FAQ';
+import Testimonials from '@/pages/Testimonials';
+import CSR from '@/pages/CSR';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsConditions from '@/pages/TermsConditions';
+import CookiePolicy from '@/pages/CookiePolicy';
+import AccessibilityStatement from '@/pages/AccessibilityStatement';
+import Sitemap from '@/pages/Sitemap';
 import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
@@ -103,6 +120,22 @@ const AuthenticatedApp = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/notification-settings" element={<NotificationSettings />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/news/:slug" element={<NewsDetail />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/csr" element={<CSR />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/cookies" element={<CookiePolicy />} />
+        <Route path="/accessibility" element={<AccessibilityStatement />} />
+        <Route path="/sitemap" element={<Sitemap />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
@@ -172,6 +205,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/notifications" element={
             <RequirePermission permission="security.view">
               <NotificationCenterAdmin />
+            </RequirePermission>
+          } />
+          <Route path="/admin/cms" element={
+            <RequirePermission permission="security.view">
+              <CMSDashboard />
             </RequirePermission>
           } />
         </Route>

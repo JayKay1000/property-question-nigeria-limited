@@ -1,0 +1,52 @@
+{
+  "name": "CompanyAward",
+  "type": "object",
+  "properties": {
+    "award_name": {
+      "type": "string"
+    },
+    "awarding_body": {
+      "type": "string"
+    },
+    "year_received": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "award_name",
+    "awarding_body",
+    "year_received"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

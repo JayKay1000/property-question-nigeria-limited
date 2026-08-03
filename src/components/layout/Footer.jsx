@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import Reveal from '@/components/ui/Reveal';
+import NewsletterSignup from '@/components/marketing/NewsletterSignup';
 
 const footerLinks = {
   company: {
@@ -12,16 +11,27 @@ const footerLinks = {
       { label: 'About Us', href: '/about' },
       { label: 'Our Team', href: '/about#team' },
       { label: 'Careers', href: '/careers' },
+      { label: 'CSR', href: '/csr' },
       { label: 'Contact', href: '/contact' },
+    ],
+  },
+  resources: {
+    title: 'Resources',
+    links: [
+      { label: 'Blog & Insights', href: '/blog' },
+      { label: 'News', href: '/news' },
+      { label: 'FAQ', href: '/faq' },
+      { label: 'Testimonials', href: '/testimonials' },
+      { label: 'Sitemap', href: '/sitemap' },
     ],
   },
   services: {
     title: 'Services',
     links: [
-      { label: 'Real Estate Sales', href: '/services/sales' },
-      { label: 'Construction', href: '/services/construction' },
-      { label: 'Property Management', href: '/services/management' },
-      { label: 'Estate Development', href: '/services/development' },
+      { label: 'Real Estate Agency', href: '/services' },
+      { label: 'Construction', href: '/services' },
+      { label: 'Property Management', href: '/services' },
+      { label: 'Estate Development', href: '/services' },
       { label: 'Buy2Flip', href: '/buy2flip' },
     ],
   },
@@ -51,16 +61,13 @@ export default function Footer() {
               <h3 className="font-heading text-2xl font-bold">Stay in the loop</h3>
               <p className="mt-1 text-sm text-white/60">Get the latest property listings and market insights delivered to your inbox.</p>
             </div>
-            <form className="flex w-full max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
-              <Input type="email" placeholder="Enter your email" className="border-white/20 bg-white/5 text-white placeholder:text-white/40" />
-              <Button type="submit" className="shrink-0 bg-flame-500 hover:bg-flame-600 text-white">
-                <Send className="mr-1.5 h-4 w-4" />Subscribe
-              </Button>
-            </form>
+            <div className="w-full max-w-md">
+              <NewsletterSignup source="footer" compact={true} />
+            </div>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <Logo variant="light" />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
@@ -102,6 +109,7 @@ export default function Footer() {
             <Link to="/privacy" className="hover:text-flame-400">Privacy</Link>
             <Link to="/terms" className="hover:text-flame-400">Terms</Link>
             <Link to="/cookies" className="hover:text-flame-400">Cookies</Link>
+            <Link to="/accessibility" className="hover:text-flame-400">Accessibility</Link>
           </div>
         </div>
       </div>

@@ -97,10 +97,19 @@ export const navItems = [
         {
           title: 'Knowledge Hub',
           links: [
-            { label: 'Blog', href: '/blog' },
-            { label: 'Gallery', href: '/gallery' },
+            { label: 'Blog & Insights', href: '/blog' },
+            { label: 'News & Announcements', href: '/news' },
             { label: 'Market Reports', href: '/blog?cat=reports' },
             { label: 'FAQ', href: '/faq' },
+          ],
+        },
+        {
+          title: 'More',
+          links: [
+            { label: 'Testimonials', href: '/testimonials' },
+            { label: 'Careers', href: '/careers' },
+            { label: 'CSR', href: '/csr' },
+            { label: 'Property Tours', href: '/tours' },
           ],
         },
       ],
@@ -113,12 +122,23 @@ export const navItems = [
     mega: {
       sections: [
         {
-          title: 'About Us',
+          title: 'Company',
           links: [
-            { label: 'Our Story', href: '/about' },
-            { label: 'Contact', href: '/contact' },
+            { label: 'About Us', href: '/about' },
+            { label: 'Services', href: '/services' },
+            { label: 'Contact Us', href: '/contact' },
+            { label: 'Careers', href: '/careers' },
+            { label: 'CSR', href: '/csr' },
+          ],
+        },
+        {
+          title: 'Legal & Help',
+          links: [
             { label: 'Privacy Policy', href: '/privacy' },
-            { label: 'Terms', href: '/terms' },
+            { label: 'Terms & Conditions', href: '/terms' },
+            { label: 'Cookie Policy', href: '/cookies' },
+            { label: 'Accessibility', href: '/accessibility' },
+            { label: 'Sitemap', href: '/sitemap' },
           ],
         },
       ],
