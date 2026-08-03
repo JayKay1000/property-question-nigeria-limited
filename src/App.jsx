@@ -17,6 +17,7 @@ import ProjectDetail from '@/pages/ProjectDetail';
 import ProjectCompare from '@/pages/ProjectCompare';
 import Tours from '@/pages/Tours';
 import TourDetail from '@/pages/TourDetail';
+import GISMap from '@/pages/GISMap';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -82,6 +83,7 @@ const AuthenticatedApp = () => {
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/tours" element={<Tours />} />
         <Route path="/tours/:id" element={<TourDetail />} />
+        <Route path="/gis" element={<GISMap />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
