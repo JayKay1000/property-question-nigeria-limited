@@ -25,16 +25,6 @@ const footerLinks = {
       { label: 'Sitemap', href: '/sitemap' },
     ],
   },
-  services: {
-    title: 'Services',
-    links: [
-      { label: 'Real Estate Agency', href: '/services' },
-      { label: 'Construction', href: '/services' },
-      { label: 'Property Management', href: '/services' },
-      { label: 'Estate Development', href: '/services' },
-      { label: 'Buy2Flip', href: '/buy2flip' },
-    ],
-  },
   locations: {
     title: 'Locations',
     links: [

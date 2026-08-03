@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, MapPin } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&auto=format&fit=crop';
@@ -64,9 +64,6 @@ export default function Hero() {
             
             <Button asChild size="lg" className="bg-flame-500 hover:bg-flame-600 text-white shadow-glow-flame">
               <Link to="/properties">Explore Properties <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 bg-white/5 text-white backdrop-blur-md hover:bg-white/10 hover:text-white">
-              <Link to="/services"><Play className="mr-2 h-4 w-4" />Our Services</Link>
             </Button>
           </motion.div>
 

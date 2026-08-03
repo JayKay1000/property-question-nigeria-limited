@@ -36,24 +36,6 @@ export const navItems = [
     },
   },
   {
-    label: 'Services',
-    key: 'services',
-    href: '/services',
-    mega: {
-      sections: [
-        {
-          title: 'Core Services',
-          links: [
-            { label: 'Real Estate Sales', desc: 'Buy and sell premium properties', href: '/services/sales' },
-            { label: 'Construction', desc: 'World-class building solutions', href: '/services/construction' },
-            { label: 'Property Management', desc: 'Comprehensive property care', href: '/services/management' },
-            { label: 'Estate Development', desc: 'End-to-end development', href: '/services/development' },
-          ],
-        },
-      ],
-    },
-  },
-  {
     label: 'Projects',
     key: 'projects',
     href: '/projects',
@@ -125,7 +107,6 @@ export const navItems = [
           title: 'Company',
           links: [
             { label: 'About Us', href: '/about' },
-            { label: 'Services', href: '/services' },
             { label: 'Contact Us', href: '/contact' },
             { label: 'Careers', href: '/careers' },
             { label: 'CSR', href: '/csr' },

@@ -11,7 +11,6 @@ const sections = [
     links: [
       { label: 'Home', href: '/' },
       { label: 'About Us', href: '/about' },
-      { label: 'Services', href: '/services' },
       { label: 'Contact Us', href: '/contact' },
       { label: 'FAQ', href: '/faq' },
       { label: 'Testimonials', href: '/testimonials' },

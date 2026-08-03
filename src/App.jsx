@@ -59,7 +59,6 @@ import MediaOpsCenter from '@/pages/admin/MediaOpsCenter';
 import SecurityOpsCenter from '@/pages/admin/SecurityOpsCenter';
 import UploadCenter from '@/pages/admin/UploadCenter';
 import AboutUs from '@/pages/AboutUs';
-import Services from '@/pages/Services';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
 import NewsPage from '@/pages/News';
@@ -132,7 +131,6 @@ const AuthenticatedApp = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/notification-settings" element={<NotificationSettings />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/services" element={<Services />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/news" element={<NewsPage />} />
