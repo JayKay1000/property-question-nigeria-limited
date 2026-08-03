@@ -12,6 +12,9 @@ import Buy2Flip from '@/pages/Buy2Flip';
 import Properties from '@/pages/Properties';
 import PropertyDetail from '@/pages/PropertyDetail';
 import PropertyCompare from '@/pages/PropertyCompare';
+import Projects from '@/pages/Projects';
+import ProjectDetail from '@/pages/ProjectDetail';
+import ProjectCompare from '@/pages/ProjectCompare';
 import Layout from '@/components/layout/Layout';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
@@ -72,6 +75,9 @@ const AuthenticatedApp = () => {
         <Route path="/properties" element={<Properties />} />
         <Route path="/properties/compare" element={<PropertyCompare />} />
         <Route path="/properties/:id" element={<PropertyDetail />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/compare" element={<ProjectCompare />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
