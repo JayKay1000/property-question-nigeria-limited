@@ -363,7 +363,14 @@ export default function Register() {
         }
 
         localStorage.removeItem(DRAFT_KEY);
-        setPhase("done");
+        // Agents remain pending admin approval — show the confirmation screen.
+        // All other account types are fully verified: hard-redirect to the dashboard
+        // so the auth provider re-initializes with the new session token.
+        if (form.accountType === "agent") {
+          setPhase("done");
+        } else {
+          window.location.href = "/dashboard";
+        }
       }
     } catch (err) {
       setError(err.message || "Invalid verification code");

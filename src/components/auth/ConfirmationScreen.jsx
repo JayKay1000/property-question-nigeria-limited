@@ -33,11 +33,11 @@ export default function ConfirmationScreen({ accountType, email }) {
         </div>
       )}
       <div className="mt-6 flex gap-3">
-        <Button asChild className="flex-1 bg-flame-500 hover:bg-flame-600">
-          <Link to="/">Go Home</Link>
+        <Button className="flex-1 bg-flame-500 hover:bg-flame-600" onClick={() => { window.location.href = "/dashboard"; }}>
+          Go to Dashboard
         </Button>
         <Button asChild variant="outline" className="flex-1 border-brand-200">
-          <Link to="/login">Log in</Link>
+          <Link to="/">Go Home</Link>
         </Button>
       </div>
     </div>
