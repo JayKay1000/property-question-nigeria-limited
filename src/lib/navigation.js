@@ -54,22 +54,6 @@ export const navItems = [
   },
   { label: 'Buy2Flip', key: 'buy2flip', href: '/buy2flip' },
   {
-    label: 'Agents',
-    key: 'agents',
-    href: '/agents',
-    mega: {
-      sections: [
-        {
-          title: 'Agent Hub',
-          links: [
-            { label: 'Find an Agent', href: '/agents' },
-            { label: 'Agent Portal', href: '/agent-portal' },
-          ],
-        },
-      ],
-    },
-  },
-  {
     label: 'Resources',
     key: 'resources',
     href: '/blog',
