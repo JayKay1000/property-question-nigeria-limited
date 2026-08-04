@@ -1,15 +1,12 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import HeroTaglineRotator from '@/components/home/HeroTaglineRotator';
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&auto=format&fit=crop';
 const HERO_VIDEO = 'https://media.base44.com/videos/public/6a6f7e5cd57da090e5283ea3/f7b76c3c0_Hero_Video.mp4';
 
 export default function Hero() {
-  const [isSpecial, setIsSpecial] = useState(false);
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
       <div className="absolute inset-0">
@@ -38,14 +35,17 @@ export default function Hero() {
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-white backdrop-blur-md" translate="no">Nigeria's Premier Real Estate Platform</span>
           </motion.div>
 
-          <motion.div
+          <motion.h1
             initial={{ y: 30 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
-            <HeroTaglineRotator
-              onSpecialChange={setIsSpecial}
-              className="mt-6 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl" />
-          </motion.div>
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+            
+            The Future of
+            <span className="block bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">
+              Nigerian Real Estate
+            </span>
+          </motion.h1>
 
           <motion.p
             initial={{ y: 30 }}
@@ -62,11 +62,8 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 flex flex-wrap items-center gap-4">
             
-            <Button asChild size="lg" className={`bg-flame-500 hover:bg-flame-600 text-white shadow-glow-flame transition-all duration-700 ${isSpecial ? 'scale-105 ring-2 ring-flame-300' : ''}`}>
+            <Button asChild size="lg" className="bg-flame-500 hover:bg-flame-600 text-white shadow-glow-flame">
               <Link to="/properties">Explore Properties <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className={`border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 transition-all duration-700 ${isSpecial ? 'scale-105 ring-2 ring-ice-300' : ''}`}>
-              <Link to="/contact">Contact Us <Phone className="ml-2 h-4 w-4" /></Link>
             </Button>
           </motion.div>
 

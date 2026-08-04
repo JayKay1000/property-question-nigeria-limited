@@ -11,7 +11,6 @@ import { formatDate, truncate } from '@/lib/cms-utils';
 import ContentListTab from '@/components/admin/cms/ContentListTab';
 import PageBuilderPanel from '@/components/admin/cms/PageBuilderPanel';
 import HeroBannerManager from '@/components/admin/cms/HeroBannerManager';
-import HeroTaglineManager from '@/components/admin/cms/HeroTaglineManager';
 import MenuManager from '@/components/admin/cms/MenuManager';
 import SEOManager from '@/components/admin/cms/SEOManager';
 import VersionHistoryPanel from '@/components/admin/cms/VersionHistoryPanel';
@@ -82,7 +81,6 @@ export default function CMSDashboard() {
           <TabsTrigger value="news">News</TabsTrigger>
           <TabsTrigger value="pages">Pages</TabsTrigger>
           <TabsTrigger value="banners">Banners</TabsTrigger>
-          <TabsTrigger value="taglines">Hero Taglines</TabsTrigger>
           <TabsTrigger value="menus">Menus</TabsTrigger>
           <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
           <TabsTrigger value="faqs">FAQs</TabsTrigger>
@@ -124,7 +122,6 @@ export default function CMSDashboard() {
         <TabsContent value="news"><ContentListTab entityType="NewsArticle" title="News Articles" icon={Newspaper} searchFields={['title', 'news_type']} /></TabsContent>
         <TabsContent value="pages"><PageBuilderPanel /></TabsContent>
         <TabsContent value="banners"><HeroBannerManager /></TabsContent>
-        <TabsContent value="taglines"><HeroTaglineManager /></TabsContent>
         <TabsContent value="menus"><MenuManager /></TabsContent>
         <TabsContent value="testimonials"><ContentListTab entityType="Testimonial" title="Testimonials" icon={Star} searchFields={['client_name', 'client_company']} /></TabsContent>
         <TabsContent value="faqs"><ContentListTab entityType="FAQ" title="FAQs" icon={HelpCircle} searchFields={['question', 'category']} /></TabsContent>
