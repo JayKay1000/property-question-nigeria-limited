@@ -63,7 +63,6 @@ export const navItems = [
           title: 'Agent Hub',
           links: [
             { label: 'Find an Agent', href: '/agents' },
-            { label: 'Become an Agent', href: '/agents/register' },
             { label: 'Agent Portal', href: '/agent-portal' },
           ],
         },
