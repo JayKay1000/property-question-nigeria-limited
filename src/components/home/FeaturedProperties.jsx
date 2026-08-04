@@ -1,17 +1,33 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bed, Bath, Maximize, ArrowRight, MapPin } from 'lucide-react';
+import { Bed, Bath, Maximize, ArrowRight, MapPin, Building2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Image } from '@/components/ui/image';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Reveal from '@/components/ui/Reveal';
-
-const properties = [
-  { title: 'Modern Luxury Villa', location: 'Lekki Phase 1, Lagos', price: '₦450M', beds: 5, baths: 6, area: '450 sqm', tag: 'For Sale', image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&auto=format&fit=crop' },
-  { title: 'Waterfront Apartment', location: 'Ikoyi, Lagos', price: '₦320M', beds: 4, baths: 3, area: '280 sqm', tag: 'For Sale', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&auto=format&fit=crop' },
-  { title: 'Contemporary Family Home', location: 'Maitama, Abuja', price: '₦280M', beds: 4, baths: 5, area: '350 sqm', tag: 'New', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format&fit=crop' },
-  { title: 'Smart Townhouse', location: 'Victoria Island, Lagos', price: '₦190M', beds: 3, baths: 3, area: '220 sqm', tag: 'For Sale', image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&auto=format&fit=crop' },
-];
+import { base44 } from '@/api/base44Client';
+import { formatPrice, buildShortLocation, ACTIVE_STATUSES } from '@/lib/property-utils';
 
 export default function FeaturedProperties() {
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await base44.entities.Property.filter(
+          { status: { $in: ACTIVE_STATUSES }, visibility: 'public' },
+          '-created_date', 4
+        );
+        setProperties(Array.isArray(res) ? res : []);
+      } catch {
+        setProperties([]);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
   return (
     <section className="bg-ice-100 py-20 lg:py-28">
       <div className="container-wide section-pad">
@@ -27,35 +43,60 @@ export default function FeaturedProperties() {
             <Link to="/properties">View All <ArrowRight className="ml-2 h-4 w-4" /></Link>
           </Button>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {properties.map((prop, i) => (
-            <Reveal key={prop.title} delay={i * 0.08}>
-              <Link to="/properties" className="group block overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src={prop.image} alt={prop.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <span className="absolute left-3 top-3 rounded-full bg-flame-500 px-2.5 py-1 text-xs font-semibold text-white shadow-md">
-                    {prop.tag}
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-950/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                </div>
-                <div className="p-4">
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <MapPin className="h-3 w-3 text-flame-500" />{prop.location}
-                  </div>
-                  <h3 className="mt-1 font-heading text-base font-bold text-brand-900">{prop.title}</h3>
-                  <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1"><Bed className="h-3.5 w-3.5" />{prop.beds}</span>
-                    <span className="flex items-center gap-1"><Bath className="h-3.5 w-3.5" />{prop.baths}</span>
-                    <span className="flex items-center gap-1"><Maximize className="h-3.5 w-3.5" />{prop.area}</span>
-                  </div>
-                  <div className="mt-3 border-t border-brand-50 pt-3">
-                    <span className="font-heading text-lg font-bold text-flame-600">{prop.price}</span>
-                  </div>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="mt-12 flex items-center justify-center py-16">
+            <Loader2 className="h-8 w-8 animate-spin text-brand-700" />
+          </div>
+        ) : properties.length === 0 ? (
+          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-brand-200 bg-white py-16 text-center">
+            <Building2 className="h-12 w-12 text-muted-foreground/40" />
+            <h3 className="mt-3 font-heading text-sm font-bold text-brand-900">No properties listed yet</h3>
+            <p className="mt-1 max-w-xs text-xs text-muted-foreground">Newly uploaded properties will appear here. Check back soon.</p>
+            <Button asChild className="mt-5 bg-flame-500 hover:bg-flame-600">
+              <Link to="/properties">Browse all properties</Link>
+            </Button>
+          </div>
+        ) : (
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {properties.map((prop, i) => {
+              const img = prop.featured_image_url || prop.image_urls?.[0];
+              const location = buildShortLocation(prop);
+              const tag = prop.listing_purpose === 'rent' ? 'For Rent' : prop.is_new_listing ? 'New' : 'For Sale';
+              return (
+                <Reveal key={prop.id} delay={i * 0.08}>
+                  <Link to={`/properties/${prop.id}`} className="group block overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                      {img ? (
+                        <Image src={img} alt={prop.title} fittingType="fill" className="h-full w-full transition-transform duration-500 group-hover:scale-110" />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center"><Building2 className="h-8 w-8 text-muted-foreground/40" /></div>
+                      )}
+                      <span className="absolute left-3 top-3 rounded-full bg-flame-500 px-2.5 py-1 text-xs font-semibold text-white shadow-md">
+                        {tag}
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-t from-brand-950/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3 text-flame-500" />{location || '—'}
+                      </div>
+                      <h3 className="mt-1 font-heading text-base font-bold text-brand-900">{prop.title}</h3>
+                      <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1"><Bed className="h-3.5 w-3.5" />{prop.bedrooms ?? 0}</span>
+                        <span className="flex items-center gap-1"><Bath className="h-3.5 w-3.5" />{prop.bathrooms ?? 0}</span>
+                        <span className="flex items-center gap-1"><Maximize className="h-3.5 w-3.5" />{prop.land_size_sqm ? `${prop.land_size_sqm} sqm` : '—'}</span>
+                      </div>
+                      <div className="mt-3 border-t border-brand-50 pt-3">
+                        <span className="font-heading text-lg font-bold text-flame-600">{formatPrice(prop.price)}</span>
+                      </div>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
