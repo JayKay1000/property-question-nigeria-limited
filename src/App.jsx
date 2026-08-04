@@ -58,6 +58,7 @@ import MediaOpsCenter from '@/pages/admin/MediaOpsCenter';
 import SecurityOpsCenter from '@/pages/admin/SecurityOpsCenter';
 import UploadCenter from '@/pages/admin/UploadCenter';
 import SuperAdminDashboard from '@/pages/admin/SuperAdminDashboard';
+import AgentApprovals from '@/pages/admin/AgentApprovals';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -279,6 +280,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/super-admin" element={
             <RequirePermission permission="security.view">
               <SuperAdminDashboard />
+            </RequirePermission>
+          } />
+          <Route path="/admin/agent-approvals" element={
+            <RequirePermission permission="security.view">
+              <AgentApprovals />
             </RequirePermission>
           } />
         </Route>

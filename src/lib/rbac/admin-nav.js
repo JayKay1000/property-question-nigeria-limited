@@ -8,6 +8,7 @@
 export const adminNavItems = [
   { label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard', permission: null },
   { label: 'Super Admin', href: '/admin/super-admin', icon: 'ShieldCheck', permission: 'security.view' },
+  { label: 'Agent Approvals', href: '/admin/agent-approvals', icon: 'UserCheck', permission: 'security.view' },
   { label: 'SOC Dashboard', href: '/admin/soc', icon: 'ShieldAlert', permission: 'security.view' },
   { label: 'Identity Center', href: '/admin/identity', icon: 'IdCard', permission: 'security.view' },
   { label: 'DB Governance', href: '/admin/database', icon: 'Database', permission: 'security.view' },

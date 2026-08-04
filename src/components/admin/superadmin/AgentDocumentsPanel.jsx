@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FileText, Loader2, ShieldCheck, ShieldAlert, Eye, Download, Paperclip } from 'lucide-react';
+import { FileText, Loader2, ShieldCheck, Eye, Download, Paperclip } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
-import { Badge } from '@/components/ui/badge';
 
 const DOC_TYPE_LABELS = {
   government_id: 'Government ID',
@@ -33,23 +32,37 @@ const VERIFICATION_TONE = {
 };
 
 const IMAGE_RE = /\.(jpe?g|png|webp|gif|bmp)(\?|$)/i;
+const isImageUrl = (url) => !!url && IMAGE_RE.test(url);
 
-function isImageUrl(url) {
-  return !!url && IMAGE_RE.test(url);
-}
-
-export default function AgentDocumentsPanel({ userId }) {
+/**
+ * Displays AgentDocument records for a given agent.
+ * Pass `agentId` (the Agent entity id) for direct lookups,
+ * or `userId` to resolve the agent record first.
+ */
+export default function AgentDocumentsPanel({ agentId, userId }) {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userId) return;
-    setLoading(true);
-    base44.entities.AgentDocument.filter({ agent_id: userId }, '-created_date', 50)
-      .catch(() => [])
-      .then((list) => setDocs(Array.isArray(list) ? list : []))
-      .finally(() => setLoading(false));
-  }, [userId]);
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        let targetId = agentId;
+        if (!targetId && userId) {
+          const agents = await base44.entities.Agent.filter({ user_id: userId }, '-created_date', 1).catch(() => []);
+          if (agents && agents[0]) targetId = agents[0].id;
+        }
+        if (!targetId) { if (!cancelled) setDocs([]); return; }
+        const list = await base44.entities.AgentDocument.filter({ agent_id: targetId }, '-created_date', 50).catch(() => []);
+        if (!cancelled) setDocs(Array.isArray(list) ? list : []);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [agentId, userId]);
 
   if (loading) {
     return (
