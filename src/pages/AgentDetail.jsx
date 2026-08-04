@@ -19,6 +19,8 @@ export default function AgentDetail() {
     if (!id) return;
     setLoading(true);
     base44.entities.Agent.get(id).then(async (a) => {
+      // Only admin-approved (active) agents are publicly visible.
+      if (!a || a.status !== 'active') { setAgent(null); return; }
       setAgent(a);
       if (a?.user_id) {
         const props = await base44.entities.Property.filter({ listing_agent_id: a.user_id }, '-created_date', 20).catch(() => []);

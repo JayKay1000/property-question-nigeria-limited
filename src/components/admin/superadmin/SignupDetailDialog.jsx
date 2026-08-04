@@ -9,6 +9,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { base44 } from '@/api/base44Client';
 import { ROLE_DEFINITIONS, ALL_ROLES } from '@/lib/rbac/roles';
 import { getStatusConfig, getRoleLabel, formatDate, formatDateTime, fullName, isAgentApplicant, AGENT_VERIFICATION_CONFIG } from '@/lib/super-admin-utils';
+import AgentDocumentsPanel from '@/components/admin/superadmin/AgentDocumentsPanel';
 
 const INFO_ROWS = [
   { key: 'email', label: 'Email' },
@@ -125,6 +126,8 @@ export default function SignupDetailDialog({ user, currentUserId, onClose, onAct
               )}
             </div>
           )}
+
+          {isAgentApplicant(user) && <AgentDocumentsPanel userId={user.id} />}
         </div>
 
         <DialogFooter className="flex-wrap gap-2 sm:justify-between">

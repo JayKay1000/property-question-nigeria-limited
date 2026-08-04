@@ -23,7 +23,7 @@ export default function Agents() {
     Promise.all([
       base44.entities.Agent.list('-created_date', 200).catch(() => []),
       base44.entities.LookupState.list('sort_order', 100).catch(() => []),
-    ]).then(([a, s]) => { setAgents(a); setStates(s); }).finally(() => setLoading(false));
+    ]).then(([a, s]) => { setAgents(a.filter((ag) => ag.status === 'active')); setStates(s); }).finally(() => setLoading(false));
   }, []);
 
   const filtered = useMemo(() => {
