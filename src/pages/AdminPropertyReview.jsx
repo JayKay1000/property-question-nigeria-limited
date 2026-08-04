@@ -18,7 +18,31 @@ export default function AdminPropertyReview() {
 
   const updateStatus = async (id, status) => {
     await base44.entities.PropertyListing.update(id, { status });
+    if (status === "approved") {
+      await publishToPublic(id);
+    }
     loadListings();
+  };
+
+  const publishToPublic = async (listingId) => {
+    const existing = await base44.entities.Property.filter({
+      source_listing_id: listingId,
+    });
+    if (existing.length > 0) return;
+
+    const listing = listings.find((l) => l.id === listingId);
+    if (!listing) return;
+
+    await base44.entities.Property.create({
+      property_title: listing.property_title,
+      property_address: listing.property_address,
+      description: listing.description,
+      price: listing.preferred_price,
+      currency: listing.currency || "NGN",
+      photo_urls: listing.photo_urls || [],
+      video_urls: listing.video_urls || [],
+      source_listing_id: listingId,
+    });
   };
 
   const togglePoaSigned = async (id, current) => {
