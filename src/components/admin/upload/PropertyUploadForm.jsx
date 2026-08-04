@@ -16,7 +16,7 @@ import {
 
 export default function PropertyUploadForm() {
   const [form, setForm] = useState({
-    status: 'draft', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard',
+    status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard',
     property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN',
     is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0,
   });
@@ -60,7 +60,7 @@ export default function PropertyUploadForm() {
       setSaved(created);
       toast({ title: 'Property created successfully', description: ref });
       // reset
-      setForm({ status: 'draft', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN', is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0 });
+      setForm({ status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN', is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0 });
       setFeaturedImage(null); setGallery([]);
     } catch (e) { toast({ title: 'Error creating property', description: e.message, variant: 'destructive' }); }
     setSaving(false);
