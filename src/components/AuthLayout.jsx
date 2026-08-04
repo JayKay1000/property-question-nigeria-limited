@@ -23,7 +23,7 @@ export default function AuthLayout({ title, subtitle, footer, children }) {
         </div>
         <div className="relative z-10 p-10 xl:p-14">
           <h2 className="font-heading text-3xl font-bold leading-tight text-white xl:text-4xl">Nigeria's Premier
-Real Estate Agency
+Real Estate A
           </h2>
           <p className="mt-3 max-w-sm text-white/70">
             Buy, sell, build, and invest in real estate with confidence and transparency.
@@ -49,7 +49,7 @@ Real Estate Agency
           </div>
           <div className="mb-6 text-center">
             <h1 className="font-heading text-2xl font-bold tracking-tight text-brand-900 sm:text-3xl">{title}</h1>
-            {subtitle && <p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>}
+            {subtitle && <p className="mt-2 text-sm text-muted-foreground">Join Nigeria's premier Real Estate platform</p>}
           </div>
           <div className="rounded-2xl border border-brand-100 bg-white p-6 shadow-premium sm:p-8">
             {children}
