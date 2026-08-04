@@ -1,1 +1,55 @@
-
+{
+  "name": "PropertyListing",
+  "type": "object",
+  "title": "Property Listing Submission",
+  "properties": {
+    "property_title": { "type": "string", "maxLength": 200 },
+    "property_address": { "type": "string", "maxLength": 500 },
+    "description": { "type": "string", "maxLength": 3000 },
+    "preferred_price": { "type": "number" },
+    "currency": { "type": "string", "default": "NGN" },
+    "photo_urls": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "video_urls": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "document_urls": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "owner_phone": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["submitted", "under_review", "poa_requested", "poa_signed", "approved", "rejected"],
+      "default": "submitted"
+    },
+    "poa_signed": { "type": "boolean", "default": false },
+    "admin_notes": {
+      "type": "string",
+      "rls": {
+        "read": { "user_condition": { "role": "admin" } },
+        "write": { "user_condition": { "role": "admin" } }
+      }
+    }
+  },
+  "required": ["property_title", "property_address", "description", "preferred_price"],
+  "rls": {
+    "create": true,
+    "read": {
+      "$or": [
+        { "created_by": "{{user.email}}" },
+        { "user_condition": { "role": "admin" } }
+      ]
+    },
+    "update": {
+      "$or": [
+        { "created_by": "{{user.email}}" },
+        { "user_condition": { "role": "admin" } }
+      ]
+    },
+    "delete": { "user_condition": { "role": "admin" } }
+  }
+}
