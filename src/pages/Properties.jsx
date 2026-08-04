@@ -15,7 +15,7 @@ const SAVE_KEY = 'pq_saved_properties';
 const COMPARE_KEY = 'pq_compare_properties';
 
 const defaultFilters = {
-  keyword: '', state: '', propertyType: '', purpose: '',
+  keyword: '', state: '', lga: '', propertyType: '', purpose: '',
   priceRange: '', priceMin: undefined, priceMax: undefined,
   bedrooms: undefined, bathrooms: undefined,
   classification: undefined, amenities: [],
@@ -96,6 +96,7 @@ export default function Properties() {
       );
     }
     if (f.state) result = result.filter((p) => p.state === f.state);
+    if (f.lga) result = result.filter((p) => p.lga === f.lga);
     if (f.propertyType) result = result.filter((p) => p.property_type === f.propertyType);
     if (f.purpose) result = result.filter((p) => p.listing_purpose === f.purpose);
     if (f.priceMin != null) result = result.filter((p) => (p.price || 0) >= f.priceMin);
@@ -152,7 +153,7 @@ export default function Properties() {
   }, []);
 
   const activeFilterCount = [
-    filters.keyword, filters.state, filters.propertyType, filters.purpose,
+    filters.keyword, filters.state, filters.lga, filters.propertyType, filters.purpose,
     filters.priceRange, filters.bedrooms, filters.bathrooms, filters.classification,
     ...(filters.amenities || []),
     filters.featured && 'featured', filters.exclusive && 'exclusive', filters.verified && 'verified',

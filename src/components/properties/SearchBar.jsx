@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { PURPOSE_CONFIG } from '@/lib/property-utils';
+import { NIGERIA_STATES, getLGAsForState } from '@/lib/nigeria-locations';
 
 export default function SearchBar({ filters, setFilters, states, propertyTypes, onSearch }) {
   const purposes = Object.entries(PURPOSE_CONFIG);
+  const lgaOptions = getLGAsForState(filters.state);
 
   return (
     <div className="rounded-2xl border border-brand-100 bg-white p-4 shadow-premium-lg sm:p-6">
@@ -38,14 +40,25 @@ export default function SearchBar({ filters, setFilters, states, propertyTypes, 
           )}
         </div>
 
-        <Select value={filters.state || '__all__'} onValueChange={(v) => setFilters({ ...filters, state: v === '__all__' ? '' : v })}>
+        <Select value={filters.state || '__all__'} onValueChange={(v) => setFilters({ ...filters, state: v === '__all__' ? '' : v, lga: '' })}>
           <SelectTrigger className="h-12 w-full border-brand-200 bg-ice-50 text-base lg:w-48">
             <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
             <SelectValue placeholder="All States" />
           </SelectTrigger>
           <SelectContent className="max-h-72">
             <SelectItem value="__all__">All States</SelectItem>
-            {states.map((s) => <SelectItem key={s.id} value={s.name}>{s.name}</SelectItem>)}
+            {NIGERIA_STATES.map((s) => <SelectItem key={s.name} value={s.name}>{s.name}</SelectItem>)}
+          </SelectContent>
+        </Select>
+
+        <Select value={filters.lga || '__all__'} onValueChange={(v) => setFilters({ ...filters, lga: v === '__all__' ? '' : v })} disabled={!filters.state}>
+          <SelectTrigger className="h-12 w-full border-brand-200 bg-ice-50 text-base lg:w-48 disabled:opacity-50">
+            <MapPin className="mr-2 h-4 w-4 text-muted-foreground" />
+            <SelectValue placeholder={filters.state ? 'All LGAs' : 'Select state first'} />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            <SelectItem value="__all__">All LGAs</SelectItem>
+            {lgaOptions.map((lga) => <SelectItem key={lga} value={lga}>{lga}</SelectItem>)}
           </SelectContent>
         </Select>
 
