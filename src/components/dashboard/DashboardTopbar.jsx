@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, Search, Bell, Moon, Sun, LogOut, User, Settings } from 'lucide-react';
+import { Menu, Search, Bell, Moon, Sun, LogOut, User, Settings, Home } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,6 +67,14 @@ export default function DashboardTopbar({ onMobileMenu, onSearchClick }) {
         >
           <Search className="h-5 w-5" />
         </button>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs font-medium text-brand-800 transition hover:bg-brand-50"
+          title="Back to public site"
+        >
+          <Home className="h-4 w-4" /> Home
+        </Link>
+
         <button
           onClick={toggleTheme}
           className="rounded-lg p-2 text-brand-800 hover:bg-brand-50"

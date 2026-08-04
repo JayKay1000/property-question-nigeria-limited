@@ -6,7 +6,6 @@ const SECTIONS = [
   { key: 'saved', label: 'Saved Properties', icon: 'Heart' },
   { key: 'enquiries', label: 'My Enquiries', icon: 'MessageSquare' },
   { key: 'inspections', label: 'Inspections', icon: 'CalendarCheck' },
-  { key: 'documents', label: 'Document Centre', icon: 'FolderOpen' },
   { key: 'notifications', label: 'Notifications', icon: 'Bell' },
   { key: 'support', label: 'Support', icon: 'LifeBuoy' },
   { key: 'buy2flip', label: 'Buy2Flip', icon: 'Rocket' },

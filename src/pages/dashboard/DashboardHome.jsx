@@ -5,9 +5,17 @@ import WelcomeBanner from '@/components/dashboard/widgets/WelcomeBanner';
 import ActivityTimeline from '@/components/dashboard/widgets/ActivityTimeline';
 import QuickActions from '@/components/dashboard/widgets/QuickActions';
 import NotificationList from '@/components/dashboard/widgets/NotificationList';
+import ListerDashboard from '@/components/dashboard/ListerDashboard';
 
 export default function DashboardHome() {
   const rbac = useRBAC();
+  const accountType = rbac.user?.account_type;
+
+  // Agents, property owners and corporate clients get a personalised
+  // listing-focused dashboard. Everyone else gets the role-config view.
+  const isLister = accountType === 'agent' || accountType === 'owner' || accountType === 'corporate' || rbac.isAgent;
+  if (isLister) return <ListerDashboard />;
+
   const config = getDashboardConfig(rbac.role);
 
   const verificationStatus =

@@ -78,6 +78,7 @@ import RequirePermission from '@/lib/rbac/RequirePermission';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
+import MyProperties from '@/pages/dashboard/MyProperties';
 import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
 
 const AuthenticatedApp = () => {
@@ -151,6 +152,7 @@ const AuthenticatedApp = () => {
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardHome />} />
+          <Route path="/dashboard/properties" element={<MyProperties />} />
           <Route path="/dashboard/*" element={<ModulePlaceholder />} />
           <Route path="/admin/rbac" element={
             <RequirePermission permission="security.view">

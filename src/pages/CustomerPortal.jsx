@@ -7,7 +7,6 @@ import PortalOverview from '@/components/customer/PortalOverview';
 import SavedProperties from '@/components/customer/SavedProperties';
 import EnquiryHistory from '@/components/customer/EnquiryHistory';
 import InspectionBookings from '@/components/customer/InspectionBookings';
-import DocumentCentre from '@/components/customer/DocumentCentre';
 import NotificationCentre from '@/components/customer/NotificationCentre';
 import SupportCentre from '@/components/customer/SupportCentre';
 import Buy2FlipGateway from '@/components/customer/Buy2FlipGateway';
@@ -88,7 +87,6 @@ export default function CustomerPortal() {
           {active === 'saved' && <SavedProperties savedProps={savedProps} onRemove={(id) => setSavedProps(savedProps.filter((s) => s.id !== id))} />}
           {active === 'enquiries' && <EnquiryHistory enquiries={enquiries} userId={user?.id} userName={customer?.full_name} userEmail={customer?.email} userPhone={customer?.phone} />}
           {active === 'inspections' && <InspectionBookings inspections={inspections} userId={user?.id} onRefresh={() => loadData(user)} />}
-          {active === 'documents' && <DocumentCentre documents={documents} />}
           {active === 'notifications' && <NotificationCentre notifications={notifications} onRefresh={() => loadData(user)} />}
           {active === 'support' && <SupportCentre tickets={tickets} userId={user?.id} userName={customer?.full_name} userEmail={customer?.email} userPhone={customer?.phone} onRefresh={() => loadData(user)} />}
           {active === 'buy2flip' && <Buy2FlipGateway />}
