@@ -19,7 +19,6 @@ import Tours from '@/pages/Tours';
 import TourDetail from '@/pages/TourDetail';
 import GISMap from '@/pages/GISMap';
 import Agents from '@/pages/Agents';
-import AgentRegister from '@/pages/AgentRegister';
 import AgentDetail from '@/pages/AgentDetail';
 import PropertySubmit from '@/pages/PropertySubmit';
 import SubmissionTrack from '@/pages/SubmissionTrack';
@@ -122,7 +121,7 @@ const AuthenticatedApp = () => {
         <Route path="/tours/:id" element={<TourDetail />} />
         <Route path="/gis" element={<GISMap />} />
         <Route path="/agents" element={<Agents />} />
-        <Route path="/agents/register" element={<AgentRegister />} />
+        <Route path="/agents/register" element={<Navigate to="/register?type=agent" replace />} />
         <Route path="/agents/:id" element={<AgentDetail />} />
         <Route path="/submit" element={<PropertySubmit />} />
         <Route path="/submit/track" element={<SubmissionTrack />} />

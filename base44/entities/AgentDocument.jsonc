@@ -25,6 +25,12 @@
         "bank_verification",
         "proof_of_address",
         "employment_letter",
+        "drivers_license",
+        "national_id",
+        "international_passport",
+        "voter_card",
+        "selfie_with_id",
+        "cac_certificate",
         "other"
       ]
     },
