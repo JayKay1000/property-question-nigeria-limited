@@ -35,7 +35,26 @@ export default function Login() {
       if (rememberMe) localStorage.setItem("pq-remembered-email", email);
       else localStorage.removeItem("pq-remembered-email");
       await base44.auth.loginViaEmailPassword(email, password);
-      window.location.href = returnTo;
+      // Honour a deep-link return target when present; otherwise route users
+      // to the dashboard that matches their account type.
+      let dest = returnTo;
+      if (returnTo === "/") {
+        try {
+          const me = await base44.auth.me();
+          const at = me?.account_type;
+          const role = me?.role;
+          if (at === "agent" || at === "owner" || at === "corporate" || ["admin", "super_admin", "staff"].includes(role)) {
+            dest = "/dashboard";
+          } else if (at === "customer" || role === "user") {
+            dest = "/portal";
+          } else {
+            dest = "/dashboard";
+          }
+        } catch {
+          dest = "/dashboard";
+        }
+      }
+      window.location.href = dest;
     } catch (err) {
       setError("Invalid email or password. Please try again.");
     } finally {
