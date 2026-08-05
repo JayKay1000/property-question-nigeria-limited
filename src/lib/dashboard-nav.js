@@ -2,7 +2,7 @@ import {
   LayoutDashboard, Building2, TrendingUp, Users, HardHat,
   Briefcase, UserCog, Headphones, Scale, Wallet,
   Megaphone, BarChart3, Shield, ShieldAlert, Database, Settings, Bell, FileText,
-  Workflow, BrainCircuit, Plug, CalendarDays, LayoutGrid, Film, ShieldCheck, Upload, FileArchive,
+  Workflow, BrainCircuit, Plug, CalendarDays, LayoutGrid, Film, ShieldCheck, Upload, FileArchive, FileCheck,
 } from 'lucide-react';
 
 export const dashboardNav = [
@@ -34,6 +34,7 @@ export const dashboardNav = [
   { label: 'DMS & Signing', href: '/admin/dms', icon: FileText, permission: 'security.view' },
   { label: 'Media Ops', href: '/admin/media-ops', icon: Film, permission: 'security.view' },
   { label: 'Media Review', href: '/admin/media-review', icon: FileArchive, permission: 'security.view' },
+  { label: 'Doc Verification', href: '/admin/document-verification', icon: FileCheck, permission: 'security.view' },
   { label: 'Security Ops', href: '/admin/security-ops', icon: ShieldCheck, permission: 'security.view' },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
 ];

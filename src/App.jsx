@@ -61,6 +61,7 @@ import SuperAdminDashboard from '@/pages/admin/SuperAdminDashboard';
 import AgentApprovals from '@/pages/admin/AgentApprovals';
 import AdminPropertyReview from '@/pages/AdminPropertyReview';
 import MediaReviewCenter from '@/pages/admin/MediaReviewCenter';
+import DocumentVerificationHub from '@/pages/admin/DocumentVerificationHub';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -299,6 +300,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/media-review" element={
             <RequirePermission permission="security.view">
               <MediaReviewCenter />
+            </RequirePermission>
+          } />
+          <Route path="/admin/document-verification" element={
+            <RequirePermission permission="security.view">
+              <DocumentVerificationHub />
             </RequirePermission>
           } />
         </Route>
