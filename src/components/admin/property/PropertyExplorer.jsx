@@ -17,6 +17,30 @@ export default function PropertyExplorer() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(null);
+  const updateDisplayOrder = async () => {
+
+    if(!selected) return;
+
+    try{
+
+        await base44.entities.Property.update(
+            selected.id,
+            {
+                displayOrder:selected.displayOrder
+            }
+        );
+
+        alert("Display Order Updated");
+
+        loadProperties();
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+};
   const deleteProperty = async (propertyId) => {
   const confirmed = window.confirm(
     "Are you sure you want to permanently delete this property?"
