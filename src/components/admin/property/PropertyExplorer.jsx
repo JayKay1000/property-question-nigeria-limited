@@ -194,14 +194,16 @@ useEffect(() => {
 Save Display Order
 
 </button>
-          <div className="pt-4">
-    <button
-        onClick={() => deleteProperty(selected.id)}
-        className="rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700"
-    >
-        Delete Property
-    </button>
-</div>
+         {selected && (
+    <div className="pt-4">
+        <button
+            onClick={() => deleteProperty(selected.id)}
+            className="rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700"
+        >
+            Delete Property
+        </button>
+    </div>
+)}
         </CardContent>
       </Card>
     </div>
