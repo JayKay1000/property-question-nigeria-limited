@@ -59,6 +59,7 @@ import SecurityOpsCenter from '@/pages/admin/SecurityOpsCenter';
 import UploadCenter from '@/pages/admin/UploadCenter';
 import SuperAdminDashboard from '@/pages/admin/SuperAdminDashboard';
 import AgentApprovals from '@/pages/admin/AgentApprovals';
+import AdminPropertyReview from '@/pages/AdminPropertyReview';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -287,6 +288,11 @@ const AuthenticatedApp = () => {
           <Route path="/admin/agent-approvals" element={
             <RequirePermission permission="security.view">
               <AgentApprovals />
+            </RequirePermission>
+          } />
+          <Route path="/admin/property-review" element={
+            <RequirePermission permission="security.view">
+              <AdminPropertyReview />
             </RequirePermission>
           } />
         </Route>

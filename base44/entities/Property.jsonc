@@ -3,19 +3,214 @@
   "type": "object",
   "title": "Public Property Listing",
   "properties": {
-    "property_title": { "type": "string" },
-    "property_address": { "type": "string" },
-    "description": { "type": "string" },
-    "price": { "type": "number" },
-    "currency": { "type": "string", "default": "NGN" },
-    "photo_urls": { "type": "array", "items": { "type": "string" } },
-    "video_urls": { "type": "array", "items": { "type": "string" } },
-    "source_listing_id": { "type": "string" }
+    "title": {
+      "type": "string"
+    },
+    "property_title": {
+      "type": "string"
+    },
+    "short_description": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "property_address": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "listing_purpose": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "rent",
+        "lease"
+      ],
+      "default": "sale"
+    },
+    "property_type": {
+      "type": "string"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "parking_spaces": {
+      "type": "number"
+    },
+    "land_size_sqm": {
+      "type": "number"
+    },
+    "built_up_area_sqm": {
+      "type": "number"
+    },
+    "year_built": {
+      "type": "number"
+    },
+    "property_classification": {
+      "type": "string"
+    },
+    "property_condition": {
+      "type": "string"
+    },
+    "furnishing_status": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "lga": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "estate": {
+      "type": "string"
+    },
+    "address_line": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "featured_image_url": {
+      "type": "string"
+    },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "video_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reference_number": {
+      "type": "string"
+    },
+    "property_code": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_approval",
+        "under_review",
+        "verified",
+        "approved",
+        "published",
+        "active",
+        "inactive"
+      ],
+      "default": "published"
+    },
+    "availability_status": {
+      "type": "string",
+      "default": "available"
+    },
+    "visibility": {
+      "type": "string",
+      "default": "public"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_premium": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_new_listing": {
+      "type": "boolean",
+      "default": true
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "listing_agent_id": {
+      "type": "string"
+    },
+    "listing_agent_name": {
+      "type": "string"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "view_count": {
+      "type": "number",
+      "default": 0
+    },
+    "favorite_count": {
+      "type": "number",
+      "default": 0
+    },
+    "source_listing_id": {
+      "type": "string"
+    }
   },
+  "required": [
+    "title"
+  ],
   "rls": {
-    "create": { "user_condition": { "role": "admin" } },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "read": true,
-    "update": { "user_condition": { "role": "admin" } },
-    "delete": { "user_condition": { "role": "admin" } }
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
   }
 }

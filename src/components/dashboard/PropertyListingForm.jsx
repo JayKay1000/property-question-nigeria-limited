@@ -36,13 +36,27 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
     if (editing) {
       setForm({
         ...blank,
-        ...editing,
-        highlights: Array.isArray(editing.highlights) ? editing.highlights.join(', ') : editing.highlights || '',
-        amenities: editing.amenities || [],
-        price: editing.price ?? '',
+        title: editing.property_title || editing.title || '',
+        short_description: editing.short_description || '',
+        description: editing.description || '',
+        price: editing.preferred_price ?? editing.price ?? '',
+        property_type: editing.property_type || 'house',
+        listing_purpose: editing.listing_purpose || 'sale',
         bedrooms: editing.bedrooms ?? '',
         bathrooms: editing.bathrooms ?? '',
         parking_spaces: editing.parking_spaces ?? '',
+        land_size_sqm: editing.land_size_sqm ?? '',
+        built_up_area_sqm: editing.built_up_area_sqm ?? '',
+        year_built: editing.year_built ?? '',
+        property_classification: editing.property_classification || 'standard',
+        property_condition: editing.property_condition || 'good',
+        furnishing_status: editing.furnishing_status || 'unfurnished',
+        state: editing.state || '',
+        city: editing.city || '',
+        district: editing.district || '',
+        address_line: editing.address_line || '',
+        amenities: editing.amenities || [],
+        highlights: Array.isArray(editing.highlights) ? editing.highlights.join(', ') : (editing.highlights || ''),
       });
     } else {
       setForm(blank);
@@ -69,6 +83,7 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
     if (!form.title?.trim()) { toast({ title: 'Title is required', variant: 'destructive' }); return; }
     if (!form.property_type) { toast({ title: 'Property type is required', variant: 'destructive' }); return; }
     if (!form.state) { toast({ title: 'Please select a state', variant: 'destructive' }); return; }
+    if (!form.price) { toast({ title: 'Price is required', variant: 'destructive' }); return; }
     setBusy(true);
     try {
       let featured_image_url = editing?.featured_image_url || null;
@@ -80,39 +95,46 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
       const ref = editing?.reference_number || `PQ-PROP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
       const slug = (form.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       const payload = {
-        ...form,
-        price: form.price === '' ? null : Number(form.price),
+        property_title: form.title,
+        short_description: form.short_description || '',
+        description: form.description || '',
+        property_address: [form.address_line, form.district, form.city, form.state].filter(Boolean).join(', '),
+        preferred_price: form.price === '' ? null : Number(form.price),
+        currency: 'NGN',
+        property_type: form.property_type,
+        listing_purpose: form.listing_purpose,
         bedrooms: form.bedrooms === '' ? null : Number(form.bedrooms),
         bathrooms: form.bathrooms === '' ? null : Number(form.bathrooms),
         parking_spaces: form.parking_spaces === '' ? null : Number(form.parking_spaces),
         land_size_sqm: form.land_size_sqm === '' ? null : Number(form.land_size_sqm),
         built_up_area_sqm: form.built_up_area_sqm === '' ? null : Number(form.built_up_area_sqm),
         year_built: form.year_built === '' ? null : Number(form.year_built),
+        property_classification: form.property_classification,
+        property_condition: form.property_condition,
+        furnishing_status: form.furnishing_status,
+        state: form.state,
+        city: form.city,
+        district: form.district,
+        address_line: form.address_line,
+        amenities: form.amenities || [],
         highlights: (form.highlights || '').split(',').map((s) => s.trim()).filter(Boolean),
         featured_image_url,
         image_urls,
         reference_number: ref,
-        property_code: ref,
         slug,
-        status: 'published',
-        availability_status: 'available',
-        visibility: 'public',
-        currency: 'NGN',
-        is_new_listing: !editing,
-        published_at: new Date().toISOString(),
+        submitter_type: isAgent ? 'agent' : 'homeowner',
         owner_id: user.id,
         owner_name: user.full_name || user.email,
+        owner_email: user.email,
+        status: editing?.status || 'submitted',
+        visibility: 'public',
       };
-      if (isAgent) {
-        payload.listing_agent_id = user.id;
-        payload.listing_agent_name = user.full_name || user.email;
-      }
       if (editing) {
-        await base44.entities.Property.update(editing.id, payload);
-        toast({ title: 'Listing updated', description: 'Your property has been updated and is live.' });
+        await base44.entities.PropertyListing.update(editing.id, payload);
+        toast({ title: 'Submission updated', description: 'Your listing has been updated and will be reviewed by admin.' });
       } else {
-        await base44.entities.Property.create(payload);
-        toast({ title: 'Listing published', description: 'Your property is now live on the public site.' });
+        await base44.entities.PropertyListing.create(payload);
+        toast({ title: 'Submitted for approval', description: 'Your property is pending admin approval before going live.' });
       }
       onSaved();
       onOpenChange(false);
@@ -288,7 +310,7 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={busy}>Cancel</Button>
           <Button onClick={submit} disabled={busy} className="bg-flame-500 hover:bg-flame-600">
             {busy ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Save className="mr-1 h-4 w-4" />}
-            {editing ? 'Update & Publish' : 'Publish Listing'}
+            {editing ? 'Update Submission' : 'Submit for Approval'}
           </Button>
         </DialogFooter>
       </DialogContent>
