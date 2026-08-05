@@ -201,6 +201,11 @@
         "role": "admin"
       }
     },
+    "displayOrder": {
+      "type": "number",
+      "title": "Display Order",
+      "default": 9999
+    },
     "read": true,
     "update": {
       "user_condition": {
