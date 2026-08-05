@@ -1,0 +1,228 @@
+{
+  "name": "PropertyListing",
+  "type": "object",
+  "title": "Property Listing Submission",
+  "properties": {
+    "property_title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "short_description": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "property_address": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "preferred_price": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "NGN"
+    },
+    "property_type": {
+      "type": "string"
+    },
+    "listing_purpose": {
+      "type": "string",
+      "enum": [
+        "sale",
+        "rent",
+        "lease"
+      ],
+      "default": "sale"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "parking_spaces": {
+      "type": "number"
+    },
+    "land_size_sqm": {
+      "type": "number"
+    },
+    "built_up_area_sqm": {
+      "type": "number"
+    },
+    "year_built": {
+      "type": "number"
+    },
+    "property_classification": {
+      "type": "string"
+    },
+    "property_condition": {
+      "type": "string"
+    },
+    "furnishing_status": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "lga": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "estate": {
+      "type": "string"
+    },
+    "address_line": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "amenities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "highlights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "photo_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "featured_image_url": {
+      "type": "string"
+    },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "video_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "document_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reference_number": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "submitter_type": {
+      "type": "string",
+      "enum": [
+        "homeowner",
+        "agent",
+        "corporate"
+      ],
+      "default": "homeowner"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "owner_phone": {
+      "type": "string"
+    },
+    "visibility": {
+      "type": "string",
+      "default": "public"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "under_review",
+        "poa_requested",
+        "poa_signed",
+        "approved",
+        "rejected"
+      ],
+      "default": "submitted"
+    },
+    "poa_signed": {
+      "type": "boolean",
+      "default": false
+    },
+    "approved_property_id": {
+      "type": "string"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_title",
+    "description",
+    "preferred_price"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
