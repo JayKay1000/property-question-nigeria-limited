@@ -150,50 +150,52 @@ useEffect(() => {
               </div>
               {selected.description && <div className="rounded-lg border p-3"><p className="mb-1 text-xs text-muted-foreground">Description</p><p className="text-sm leading-relaxed">{selected.description}</p></div>}
               {selected.tags && selected.tags.length > 0 && <div className="flex flex-wrap gap-1.5">{selected.tags.map((t) => <Badge key={t} variant="outline" className="text-xs">{t}</Badge>)}</div>}
-            </div>
-          )}
-          <div className="mt-6">
+              <div className="mt-6">
 
-    <label className="block mb-2 font-medium">
+<label className="block mb-2 font-medium">
 
-        Display Order
+Display Order
 
-    </label>
+</label>
 
-    <input
+<input
 
-        type="number"
+type="number"
 
-        value={selected.displayOrder ?? 9999}
+value={selected.displayOrder ?? 9999}
 
-        onChange={(e)=>
+onChange={(e)=>
 
-            setSelected({
+setSelected({
 
-                ...selected,
+...selected,
 
-                displayOrder:Number(e.target.value)
+displayOrder:Number(e.target.value)
 
-            })
+})
 
-        }
+}
 
-        className="w-40 rounded border px-3 py-2"
+className="w-40 rounded border px-3 py-2"
 
-    />
+/>
 
-</div>
 <button
 
-    onClick={updateDisplayOrder}
+onClick={updateDisplayOrder}
 
-    className="mt-4 rounded bg-blue-600 px-5 py-2 text-white"
+className="mt-4 rounded bg-blue-600 px-5 py-2 text-white"
 
 >
 
 Save Display Order
 
 </button>
+
+</div>
+            </div>
+          )}
+          
          {selected && (
     <div className="pt-4">
         <button
