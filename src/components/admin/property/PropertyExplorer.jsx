@@ -38,12 +38,23 @@ export default function PropertyExplorer() {
   }
 };
 
-  useEffect(() => {
-    base44.entities.Property.list('-created_date', 100)
-      .then(setProperties)
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
+  const loadProperties = () => {
+
+    setLoading(true);
+
+    base44.entities.Property
+        .list("displayOrder",100)
+        .then(setProperties)
+        .catch(console.error)
+        .finally(() => setLoading(false));
+
+};
+
+useEffect(() => {
+
+    loadProperties();
+
+}, []);
 
   const filtered = properties.filter((p) => {
     if (!search) return true;
