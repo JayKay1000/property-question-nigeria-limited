@@ -22,8 +22,8 @@ export default function AuthLayout({ title, subtitle, footer, children }) {
           <Link to="/"><Logo variant="light" /></Link>
         </div>
         <div className="relative z-10 p-10 xl:p-14">
-          <h2 className="font-heading text-3xl font-bold leading-tight text-white xl:text-4xl">Nigeria's Premier
-Real Estate A
+          <h2 className="font-heading font-bold leading-tight text-white text-2xl xl:text-2xl">Nigeria's Premier Real Estate Company
+
           </h2>
           <p className="mt-3 max-w-sm text-white/70">
             Buy, sell, build, and invest in real estate with confidence and transparency.
