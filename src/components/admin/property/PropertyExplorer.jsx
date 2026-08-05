@@ -17,6 +17,26 @@ export default function PropertyExplorer() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(null);
+  const deleteProperty = async (propertyId) => {
+  const confirmed = window.confirm(
+    "Are you sure you want to permanently delete this property?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    await base44.entities.Property.delete(propertyId);
+
+    setProperties(properties.filter((p) => p.id !== propertyId));
+
+    setSelected(null);
+
+    alert("Property deleted successfully.");
+  } catch (error) {
+    console.error(error);
+    alert("Unable to delete property.");
+  }
+};
 
   useEffect(() => {
     base44.entities.Property.list('-created_date', 100)
@@ -97,6 +117,14 @@ export default function PropertyExplorer() {
               {selected.tags && selected.tags.length > 0 && <div className="flex flex-wrap gap-1.5">{selected.tags.map((t) => <Badge key={t} variant="outline" className="text-xs">{t}</Badge>)}</div>}
             </div>
           )}
+          <div className="pt-4">
+    <button
+        onClick={() => deleteProperty(selected.id)}
+        className="rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700"
+    >
+        Delete Property
+    </button>
+</div>
         </CardContent>
       </Card>
     </div>
