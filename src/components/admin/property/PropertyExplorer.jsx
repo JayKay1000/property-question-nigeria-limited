@@ -152,6 +152,37 @@ useEffect(() => {
               {selected.tags && selected.tags.length > 0 && <div className="flex flex-wrap gap-1.5">{selected.tags.map((t) => <Badge key={t} variant="outline" className="text-xs">{t}</Badge>)}</div>}
             </div>
           )}
+          <div className="mt-6">
+
+    <label className="block mb-2 font-medium">
+
+        Display Order
+
+    </label>
+
+    <input
+
+        type="number"
+
+        value={selected.displayOrder ?? 9999}
+
+        onChange={(e)=>
+
+            setSelected({
+
+                ...selected,
+
+                displayOrder:Number(e.target.value)
+
+            })
+
+        }
+
+        className="w-40 rounded border px-3 py-2"
+
+    />
+
+</div>
           <div className="pt-4">
     <button
         onClick={() => deleteProperty(selected.id)}
