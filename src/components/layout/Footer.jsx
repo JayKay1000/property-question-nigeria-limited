@@ -49,46 +49,7 @@ const footerLinks = {
   }
 };
 
-<div className="flex items-center gap-3">
 
-    {socialLinks.map((social) => {
-
-        const Icon = social.icon;
-
-        return (
-
-            <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.name}
-                title={social.name}
-                className="
-                    flex
-                    h-10
-                    w-10
-                    items-center
-                    justify-center
-                    rounded-full
-                    bg-white/10
-                    text-white
-                    transition-all
-                    duration-300
-                    hover:bg-orange-500
-                    hover:scale-110
-                "
-            >
-
-                <Icon size={18} />
-
-            </a>
-
-        );
-
-    })}
-
-</div>
 
 export default function Footer() {
   const socialLinks = [
