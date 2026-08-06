@@ -70,7 +70,7 @@ export default function Footer() {
     },
     {
     name: "X",
-    url: "https://x.com/propertyquestion",
+    url: "https://x.com/pqnl_x",
     icon: FaTwitter,
 },
     {
