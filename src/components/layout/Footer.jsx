@@ -10,8 +10,8 @@ import {
 } from "react-icons/fa";
 
 import {
-    FaXTwitter
-} from "react-icons/fa6";
+    FaTwitter
+} from "react-icons/fa";
 import Logo from '@/components/ui/Logo';
 import Reveal from '@/components/ui/Reveal';
 import NewsletterSignup from '@/components/marketing/NewsletterSignup';
