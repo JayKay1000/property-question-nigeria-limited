@@ -132,13 +132,40 @@ export default function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row">
           <p className="text-xs text-white/50">© 2026 Property Question Nigeria Limited. All rights reserved.</p>
-          <div className="flex items-center gap-2">
-            {socials.map((s) =>
-            <a key={s} href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-white transition-colors hover:bg-flame-500">
-                {s}
-              </a>
-            )}
-          </div>
+          <div className="flex items-center gap-3">
+
+  {socialLinks.map((social) => {
+
+    const Icon = social.icon;
+
+    return (
+      <a
+        key={social.name}
+        href={social.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={social.name}
+        title={social.name}
+        className="
+          flex
+          h-8
+          w-8
+          items-center
+          justify-center
+          rounded-full
+          bg-white/10
+          text-white
+          transition-colors
+          hover:bg-flame-500
+        "
+      >
+        <Icon size={16} />
+      </a>
+    );
+
+  })}
+
+</div>
           <div className="flex items-center gap-4 text-xs text-white/50">
             <Link to="/privacy" className="hover:text-flame-400">Privacy</Link>
             <Link to="/terms" className="hover:text-flame-400">Terms</Link>
