@@ -75,7 +75,7 @@ export default function Footer() {
 },
     {
         name: "TikTok",
-        url: "https://www.tiktok.com/@pqnl_x",
+        url: "https://www.tiktok.com/@propertyquestion",
         icon: FaTiktok,
     },
     {
