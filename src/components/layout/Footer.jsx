@@ -69,10 +69,10 @@ export default function Footer() {
         icon: FaLinkedinIn,
     },
     {
-        name: "X",
-        url: "https://x.com/propertyquestion",
-        icon: FaXTwitter,
-    },
+    name: "X",
+    url: "https://x.com/propertyquestion",
+    icon: FaTwitter,
+},
     {
         name: "TikTok",
         url: "https://www.tiktok.com/@pqnl_x",
