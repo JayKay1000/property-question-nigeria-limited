@@ -7,15 +7,14 @@ projectId
 }){
 
 
-const [file,setFile]=useState(null);
+const [files,setFiles]=useState([]);
 
 
 
 const upload=async()=>{
 
 
-if(!file || !projectId)
-return;
+for(const file of files){
 
 
 const uploaded =
@@ -35,14 +34,19 @@ uploaded.file_url,
 media_type:
 file.type.includes("video")
 ?
-"marketing_video"
+"video"
 :
-"image"
+"image",
+
+title:file.name
 
 });
 
 
-alert("Uploaded successfully");
+}
+
+
+alert("Upload complete");
 
 
 };
@@ -51,35 +55,49 @@ alert("Uploaded successfully");
 
 return(
 
-<div className="border rounded p-4">
+<div className="border p-5 rounded mt-5">
 
 
-<h3 className="font-bold mb-3">
-Upload Project Media
+<h3 className="font-bold">
+Upload Images / Videos
 </h3>
 
 
+
 <input
+
 type="file"
+
 multiple
+
+accept="image/*,video/*"
+
 onChange={
-e=>setFile(e.target.files[0])
+e=>setFiles(
+Array.from(e.target.files)
+)
 }
+
 />
 
 
+
 <button
-className="mt-3 bg-orange-600 text-white px-4 py-2 rounded"
+
+className="bg-orange-600 text-white px-4 py-2 mt-3 rounded"
+
 onClick={upload}
+
 >
+
 Upload
+
 </button>
 
 
 </div>
 
-
-);
+)
 
 
 }
