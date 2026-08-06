@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from "lucide-react";
+
+import {
+    FaFacebookF,
+    FaInstagram,
+    FaLinkedinIn,
+    FaYoutube,
+    FaTiktok,
+    FaXTwitter
+} from "react-icons/fa6";
 import Logo from '@/components/ui/Logo';
 import Reveal from '@/components/ui/Reveal';
 import NewsletterSignup from '@/components/marketing/NewsletterSignup';
@@ -37,9 +46,80 @@ const footerLinks = {
   }
 };
 
-const socials = ['FB', 'IG', 'in', 'X'];
+<div className="flex items-center gap-3">
+
+    {socialLinks.map((social) => {
+
+        const Icon = social.icon;
+
+        return (
+
+            <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                title={social.name}
+                className="
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-full
+                    bg-white/10
+                    text-white
+                    transition-all
+                    duration-300
+                    hover:bg-orange-500
+                    hover:scale-110
+                "
+            >
+
+                <Icon size={18} />
+
+            </a>
+
+        );
+
+    })}
+
+</div>
 
 export default function Footer() {
+  const socialLinks = [
+    {
+        name: "Facebook",
+        url: "https://facebook.com/PropertyQuestionNigeriaLtd",
+        icon: FaFacebookF,
+    },
+    {
+        name: "Instagram",
+        url: "https://instagram.com/propertyquestionnigeria",
+        icon: FaInstagram,
+    },
+    {
+        name: "LinkedIn",
+        url: "https://linkedin.com/company/property-question-nigeria-limited",
+        icon: FaLinkedinIn,
+    },
+    {
+        name: "X",
+        url: "https://x.com/propertyquestion",
+        icon: FaXTwitter,
+    },
+    {
+        name: "TikTok",
+        url: "https://www.tiktok.com/@pqnl_x",
+        icon: FaTiktok,
+    },
+    {
+        name: "YouTube",
+        url: "https://www.youtube.com/@propertyquestionnigeria",
+        icon: FaYoutube,
+    },
+];
   return (
     <footer className="relative overflow-hidden bg-brand-900 text-white">
       <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-flame-500/10 blur-3xl" />
