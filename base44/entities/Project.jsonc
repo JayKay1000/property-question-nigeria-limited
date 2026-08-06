@@ -70,8 +70,7 @@
     },
     "is_featured": {
       "type": "boolean",
-      "default": false,
-      "description": "Featured project flag"
+      "default": false
     },
     "visibility": {
       "type": "string",
@@ -119,6 +118,21 @@
       "type": "string"
     },
     "location_address": {
+      "type": "string"
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "string"
+    },
+    "meta_keywords": {
+      "type": "string"
+    },
+    "featured_video_url": {
+      "type": "string"
+    },
+    "brochure_url": {
       "type": "string"
     },
     "latitude": {
