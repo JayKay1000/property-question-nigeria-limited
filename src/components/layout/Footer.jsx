@@ -6,7 +6,10 @@ import {
     FaInstagram,
     FaLinkedinIn,
     FaYoutube,
-    FaTiktok,
+    FaTiktok
+} from "react-icons/fa";
+
+import {
     FaXTwitter
 } from "react-icons/fa6";
 import Logo from '@/components/ui/Logo';
