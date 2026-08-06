@@ -1,18 +1,24 @@
 import {useState} from "react";
 import {base44} from "@/api/base44Client";
 import ProjectMediaUploader from "./ProjectMediaUploader";
+import ProjectMediaManager from "./ProjectMediaManager";
+import ProjectDocumentUploader from "./ProjectDocumentUploader";
 
 
 export default function ProjectForm({
 project,
-onClose,
-onSaved
+close,
+saved
 }){
+
+
+const [currentProject,setCurrentProject]=useState(project);
+
 
 
 const [form,setForm]=useState({
 
-name: project?.name || "",
+name:project?.name || "",
 
 short_description:
 project?.short_description || "",
@@ -30,62 +36,90 @@ location_address:
 project?.location_address || "",
 
 status:
-project?.status || "draft",
+project?.status || "planning",
 
-featured_image_url:
-project?.featured_image_url || ""
+visibility:
+project?.visibility || "private",
+
+seo_title:
+project?.seo_title || "",
+
+seo_description:
+project?.seo_description || ""
 
 });
 
 
 
-const saveProject = async()=>{
+const saveProject=async()=>{
 
 
-let saved;
+try{
+
+
+let result;
 
 
 if(project){
 
-saved =
+
+result =
 await base44.entities.Project.update(
 project.id,
 form
 );
+
 
 }
 
 else{
 
 
-saved =
+result =
 await base44.entities.Project.create(
-{
-...form,
-visibility:"draft"
-}
+form
 );
 
 
 }
 
 
-onSaved(saved);
+
+setCurrentProject(result);
+
+
+alert("Project saved successfully");
+
+
+saved();
+
+
+}
+
+
+catch(error){
+
+alert(error.message);
+
+}
 
 
 };
 
 
 
+return(
 
-return (
-
-<div className="bg-white shadow-xl rounded-xl p-6 mb-8">
+<div className="bg-white p-6 rounded-xl shadow mb-8">
 
 
 <h2 className="text-2xl font-bold mb-5">
 
-{project ? "Edit Project":"Create Project"}
+{
+project?
+"Modify Project":
+"Create Project"
+}
 
 </h2>
 
@@ -105,57 +139,35 @@ name:e.target.value
 
 
 
-<input
-className="border p-3 w-full mb-3"
-placeholder="Short Description"
-value={form.short_description}
-onChange={
-e=>setForm({
-...form,
-short_description:e.target.value
-})
-}
-/>
-
-
-
 <textarea
+
 className="border p-3 w-full mb-3"
-rows="6"
+
 placeholder="Detailed Description"
+
+rows="8"
+
 value={form.description}
+
 onChange={
 e=>setForm({
 ...form,
 description:e.target.value
 })
 }
+
 />
 
 
 
 <input
 className="border p-3 w-full mb-3"
-placeholder="State"
-value={form.location_state}
+placeholder="Location"
+value={form.location_address}
 onChange={
 e=>setForm({
 ...form,
-location_state:e.target.value
-})
-}
-/>
-
-
-
-<input
-className="border p-3 w-full mb-3"
-placeholder="City"
-value={form.location_city}
-onChange={
-e=>setForm({
-...form,
-location_city:e.target.value
+location_address:e.target.value
 })
 }
 />
@@ -163,34 +175,28 @@ location_city:e.target.value
 
 
 <select
+
 className="border p-3 w-full mb-3"
-value={form.status}
+
+value={form.visibility}
+
 onChange={
 e=>setForm({
 ...form,
-status:e.target.value
+visibility:e.target.value
 })
 }
+
 >
 
-<option value="draft">
-Draft
+
+<option value="private">
+Private
 </option>
 
-<option value="planning">
-Planning
-</option>
 
-<option value="construction">
-Construction
-</option>
-
-<option value="selling">
-Selling
-</option>
-
-<option value="completed">
-Completed
+<option value="public">
+Publish
 </option>
 
 
@@ -198,38 +204,50 @@ Completed
 
 
 
+<button
+
+onClick={saveProject}
+
+className="bg-green-600 text-white px-6 py-3 rounded"
+
+>
+
+Save Project
+
+</button>
+
+
+
+{
+currentProject &&
+
+<>
+
 <ProjectMediaUploader
-projectId={project?.id}
+projectId={currentProject.id}
 />
 
 
-
-<div className="flex gap-4 mt-5">
-
-
-<button
-className="bg-green-600 text-white px-6 py-3 rounded"
-onClick={saveProject}
->
-Save Project
-</button>
+<ProjectMediaManager
+projectId={currentProject.id}
+/>
 
 
+<ProjectDocumentUploader
+projectId={currentProject.id}
+/>
 
-<button
-className="bg-gray-400 px-6 py-3 rounded"
-onClick={onClose}
->
-Cancel
-</button>
+
+</>
+
+}
+
 
 
 </div>
 
 
-</div>
-
-);
+)
 
 
 }
