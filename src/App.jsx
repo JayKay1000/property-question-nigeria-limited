@@ -83,7 +83,7 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
 import MyProperties from '@/pages/dashboard/MyProperties';
 import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
-
+import AdminProjects from "@/pages/AdminProjects";
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
@@ -110,6 +110,10 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
+      <Route
+path="/admin/projects"
+element={<AdminProjects />}
+/>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
