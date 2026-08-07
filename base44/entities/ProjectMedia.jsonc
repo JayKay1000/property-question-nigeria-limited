@@ -15,6 +15,7 @@
     "media_type": {
       "type": "string",
       "enum": [
+        "video",
         "image",
         "drone_video",
         "progress_video",
