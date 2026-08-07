@@ -17,7 +17,6 @@ const [currentProject,setCurrentProject]=useState(project);
 
 
 const [form,setForm]=useState({
-    
 
 name:project?.name || "",
 
@@ -37,33 +36,42 @@ location_address:
 project?.location_address || "",
 
 status:
-project?.status || "planning",
+project?.status || "draft",
 
 visibility:
-project?.visibility || "private",
-
-seo_title:
-project?.seo_title || "",
-
-seo_description:
-project?.seo_description || "",
+project?.visibility || "public",
 
 
-category:"",
+project_category:
+project?.project_category || "",
 
-property_type:"",
 
-land_size:"",
+project_type:
+project?.project_type || "",
 
-number_of_units:"",
 
-price_range:"",
+land_size:
+project?.land_size || "",
 
-amenities:"",
 
-payment_plan:"",
+number_of_units:
+project?.number_of_units || "",
 
-completion_date:""
+
+price_range:
+project?.price_range || "",
+
+
+amenities:
+project?.amenities || "",
+
+
+payment_plan:
+project?.payment_plan || "",
+
+
+completion_date:
+project?.completion_date || ""
 
 });
 
@@ -181,7 +189,7 @@ description:e.target.value
 <input
 className="border p-3 w-full mb-3"
 placeholder="Project Category"
-value={form.category}
+value={form.project_category}
 onChange={
 e=>setForm({
 ...form,
@@ -194,7 +202,7 @@ category:e.target.value
 <input
 className="border p-3 w-full mb-3"
 placeholder="Property Type"
-value={form.property_type}
+value={form.project_type}
 onChange={
 e=>setForm({
 ...form,
