@@ -11,6 +11,22 @@ const TABS = [
   { key: 'approved', label: 'Approved', filter: (a) => a.status === 'active' },
   { key: 'rejected', label: 'Rejected', filter: (a) => a.verification_status === 'rejected' },
   { key: 'all', label: 'All', filter: () => true },
+  await base44.entities.Agent.update(
+
+agent.id,
+
+{
+
+verification_status:"verified",
+
+status:"active",
+
+verified_at:
+new Date().toISOString()
+
+}
+
+)
 ];
 
 function StatCard({ icon: Icon, label, value, tone }) {
