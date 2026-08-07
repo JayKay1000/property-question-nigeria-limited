@@ -146,7 +146,7 @@ export default function AgentRegister() {
             {step === 1 && (
               <div className="space-y-4">
                 <h2 className="flex items-center gap-2 font-heading text-lg font-bold text-brand-900"><MapPin className="h-5 w-5 text-flame-500" /> Contact & Address</h2>
-                <Field label="Residential Address *" value={form.address} onChange={(v) => set('address', v)} placeholder="House number, street name" />
+                <Field label="Official Address *" value={form.address} onChange={(v) => set('address', v)} placeholder="House number, street name" />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <Field label="State *" value={form.state} onChange={(v) => set('state', v)} placeholder="e.g. Lagos" />
                   <Field label="LGA" value={form.lga} onChange={(v) => set('lga', v)} placeholder="e.g. Ikeja" />
@@ -170,7 +170,6 @@ export default function AgentRegister() {
               <div className="space-y-4">
                 <h2 className="flex items-center gap-2 font-heading text-lg font-bold text-brand-900"><Briefcase className="h-5 w-5 text-flame-500" /> Professional Profile</h2>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <Field label="Current Occupation *" value={form.occupation} onChange={(v) => set('occupation', v)} placeholder="e.g. Real Estate Agent" />
                   <div>
                     <Label className="mb-1.5 block text-sm text-brand-900">Years of Experience</Label>
                     <Input type="number" value={form.years_experience} onChange={(e) => set('years_experience', e.target.value)} placeholder="e.g. 5" className="bg-ice-50" />
