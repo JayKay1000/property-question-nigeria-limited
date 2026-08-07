@@ -9,9 +9,27 @@ projectId
 
 const [files,setFiles]=useState([]);
 
+const [uploading,setUploading]=useState(false);
+
 
 
 const upload=async()=>{
+
+
+if(!files.length){
+
+alert("Please select files");
+
+return;
+
+}
+
+
+try{
+
+
+setUploading(true);
+
 
 
 for(const file of files){
@@ -19,26 +37,49 @@ for(const file of files){
 
 const uploaded =
 await base44.integrations.Core.UploadFile({
-file
+file:file
 });
+
+
+
+if(!uploaded?.file_url){
+
+throw new Error(
+"Upload failed for "+file.name
+);
+
+}
 
 
 
 await base44.entities.ProjectMedia.create({
 
+
 project_id:projectId,
+
 
 media_url:
 uploaded.file_url,
 
+
 media_type:
+
 file.type.includes("video")
+
 ?
-"video"
+
+"marketing_video"
+
 :
+
 "image",
 
-title:file.name
+
+title:file.name,
+
+
+visibility:"public"
+
 
 });
 
@@ -46,7 +87,32 @@ title:file.name
 }
 
 
-alert("Upload complete");
+
+alert(
+"Images/videos uploaded successfully"
+);
+
+
+
+setFiles([]);
+
+
+
+}
+
+catch(error){
+
+alert(error.message);
+
+}
+
+
+finally{
+
+setUploading(false);
+
+}
+
 
 
 };
@@ -58,10 +124,11 @@ return(
 <div className="border p-5 rounded mt-5">
 
 
-<h3 className="font-bold">
-Upload Images / Videos
-</h3>
+<h3 className="font-bold mb-3">
 
+Upload Project Images / Videos
+
+</h3>
 
 
 <input
@@ -73,7 +140,8 @@ multiple
 accept="image/*,video/*"
 
 onChange={
-e=>setFiles(
+e=>
+setFiles(
 Array.from(e.target.files)
 )
 }
@@ -84,13 +152,21 @@ Array.from(e.target.files)
 
 <button
 
-className="bg-orange-600 text-white px-4 py-2 mt-3 rounded"
+disabled={uploading}
 
 onClick={upload}
 
+className="bg-orange-600 text-white px-4 py-2 mt-3 rounded"
+
 >
 
-Upload
+{
+uploading?
+"Uploading..."
+:
+"Upload Files"
+}
+
 
 </button>
 
