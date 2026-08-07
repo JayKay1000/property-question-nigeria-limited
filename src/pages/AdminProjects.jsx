@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import ProjectForm from "@/components/admin/ProjectForm";
+import ProjectMediaUploader 
+from "@/components/admin/ProjectMediaUploader";
+
+import ProjectMediaManager
+from "@/components/admin/ProjectMediaManager";
 
 export default function AdminProjects() {
 
