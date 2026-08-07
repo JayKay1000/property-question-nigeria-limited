@@ -16,24 +16,16 @@ import ConfirmationScreen from "@/components/auth/ConfirmationScreen";
 import CredentialsStep from "@/components/auth/steps/CredentialsStep";
 import PersonalStep from "@/components/auth/steps/PersonalStep";
 import OwnerPropertyStep from "@/components/auth/steps/OwnerPropertyStep";
-import CorporateStep from "@/components/auth/steps/CorporateStep";
 import ConsentStep from "@/components/auth/steps/ConsentStep";
 import AgentPersonalStep from "@/components/auth/steps/AgentPersonalStep";
 import AgentProfessionalStep from "@/components/auth/steps/AgentProfessionalStep";
 import AgentIdentityStep from "@/components/auth/steps/AgentIdentityStep";
-import AgentBankingStep from "@/components/auth/steps/AgentBankingStep";
 import AgentDeclarationStep from "@/components/auth/steps/AgentDeclarationStep";
 import ReviewStep from "@/components/auth/steps/ReviewStep";
 
 const DRAFT_KEY = "pq_register_draft_v1";
 
 const STEP_CONFIGS = {
-  customer: [
-    { key: "credentials", label: "Account" },
-    { key: "personal", label: "Personal" },
-    { key: "consent", label: "Consent" },
-    { key: "review", label: "Review" },
-  ],
   owner: [
     { key: "credentials", label: "Account" },
     { key: "personal", label: "Personal" },
@@ -41,28 +33,18 @@ const STEP_CONFIGS = {
     { key: "consent", label: "Consent" },
     { key: "review", label: "Review" },
   ],
-  corporate: [
-    { key: "credentials", label: "Account" },
-    { key: "personal", label: "Personal" },
-    { key: "corporate", label: "Company" },
-    { key: "consent", label: "Consent" },
-    { key: "review", label: "Review" },
-  ],
   agent: [
     { key: "personal", label: "Personal" },
     { key: "professional", label: "Professional" },
     { key: "identity", label: "Identity" },
-    { key: "banking", label: "Banking" },
     { key: "declaration", label: "Declaration" },
     { key: "review", label: "Review" },
   ],
 };
 
 const TITLE_MAP = {
-  customer: "Create a Customer Account",
   owner: "Register as a Property Owner",
   agent: "Become a Verified Agent",
-  corporate: "Register a Corporate Account",
 };
 
 const REQUIRED_AGENT_DOCS = ["passport_photograph", "government_id", "utility_bill", "proof_of_address", "selfie_with_id"];
@@ -74,11 +56,9 @@ function blankForm() {
     firstName: "", middleName: "", lastName: "", phone: "",
     country: "Nigeria", state: "", city: "", address: "",
     propertyType: "", propertyLocation: "", reasonForListing: "", preferredContact: "",
-    companyName: "", companyRegNumber: "", companyAddress: "", contactRole: "",
     gender: "", dateOfBirth: "", nationality: "Nigeria", lga: "",
     occupation: "", yearsExperience: "", realEstateExperience: "", company: "", linkedin: "",
     certifications: "", areasOfOperation: "", preferredStates: "", languages: "", bio: "",
-    bankAccountName: "", bankAccountNumber: "", bankName: "",
     emergencyName: "", emergencyRelationship: "", emergencyPhone: "", emergencyEmail: "",
     decCertCorrect: false, decAgreeTerms: false, decUnderstandVerify: false,
     electronicSignature: "", declarationDate: "",
@@ -181,11 +161,6 @@ export default function Register() {
       if (req(f.reasonForListing, "Reason for listing is required")) return req(f.reasonForListing, "Reason for listing is required");
       return null;
     }
-    if (stepKey === "corporate") {
-      if (req(f.companyName, "Company name is required")) return req(f.companyName, "Company name is required");
-      if (req(f.contactRole, "Your role is required")) return req(f.contactRole, "Your role is required");
-      return null;
-    }
     if (stepKey === "consent") {
       if (!f.termsAccepted || !f.privacyAccepted || !f.cookieAccepted || !f.dataProcessingAccepted)
         return "Please accept all required terms to continue";
@@ -202,15 +177,9 @@ export default function Register() {
       if (missing.length) return "Please upload all required documents";
       return null;
     }
-    if (stepKey === "banking") {
-      if (req(f.bankAccountName, "Account name is required")) return req(f.bankAccountName, "Account name is required");
-      if (req(f.bankAccountNumber, "Account number is required")) return req(f.bankAccountNumber, "Account number is required");
-      if (req(f.bankName, "Bank name is required")) return req(f.bankName, "Bank name is required");
+    if (stepKey === "declaration") {
       if (req(f.emergencyName, "Emergency contact name is required")) return req(f.emergencyName, "Emergency contact name is required");
       if (req(f.emergencyPhone, "Emergency contact phone is required")) return req(f.emergencyPhone, "Emergency contact phone is required");
-      return null;
-    }
-    if (stepKey === "declaration") {
       if (!f.decCertCorrect || !f.decAgreeTerms || !f.decUnderstandVerify)
         return "Please confirm all declarations to continue";
       if (req(f.electronicSignature, "Electronic signature is required")) return req(f.electronicSignature, "Electronic signature is required");
@@ -290,13 +259,6 @@ export default function Register() {
           profile.reason_for_listing = form.reasonForListing;
           profile.preferred_contact = form.preferredContact;
         }
-        if (form.accountType === "corporate") {
-          profile.company_name = form.companyName;
-          profile.company_reg_number = form.companyRegNumber;
-          profile.company_address = form.companyAddress;
-          profile.contact_role = form.contactRole;
-        }
-
         try {
           await base44.auth.updateMe(profile);
         } catch (profileErr) {
@@ -332,9 +294,6 @@ export default function Register() {
                 certifications: form.certifications,
                 preferred_states: form.preferredStates,
                 bio: form.bio,
-                bank_account_name: form.bankAccountName,
-                bank_account_number: form.bankAccountNumber,
-                bank_name: form.bankName,
                 emergency_name: form.emergencyName,
                 emergency_relationship: form.emergencyRelationship,
                 emergency_phone: form.emergencyPhone,
@@ -455,11 +414,9 @@ export default function Register() {
       case "credentials": return <CredentialsStep form={form} set={set} />;
       case "personal": return form.accountType === "agent" ? <AgentPersonalStep form={form} set={set} /> : <PersonalStep form={form} set={set} />;
       case "property": return <OwnerPropertyStep form={form} set={set} />;
-      case "corporate": return <CorporateStep form={form} set={set} />;
       case "consent": return <ConsentStep form={form} set={set} />;
       case "professional": return <AgentProfessionalStep form={form} set={set} />;
       case "identity": return <AgentIdentityStep docs={docs} setDoc={setDoc} />;
-      case "banking": return <AgentBankingStep form={form} set={set} />;
       case "declaration": return <AgentDeclarationStep form={form} set={set} />;
       case "review": return <ReviewStep form={form} docs={docs} />;
       default: return null;

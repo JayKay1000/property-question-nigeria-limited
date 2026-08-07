@@ -1,12 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Home, Building2, Briefcase, Landmark, ArrowRight } from "lucide-react";
+import { Building2, Briefcase, ArrowRight } from "lucide-react";
 
 const TYPES = [
-  { key: "customer", icon: Home, title: "Customer", desc: "I want to browse properties, save favourites, request inspections, and purchase properties." },
   { key: "owner", icon: Building2, title: "Property Owner", desc: "I want to submit my property to Property Question Nigeria Limited for marketing." },
   { key: "agent", icon: Briefcase, title: "Agent", desc: "I want to become a verified marketing partner of Property Question Nigeria Limited." },
-  { key: "corporate", icon: Landmark, title: "Corporate Client", desc: "I represent a company or organisation." },
 ];
 
 export default function AccountTypeSelector({ value, onSelect }) {

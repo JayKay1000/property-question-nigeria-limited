@@ -89,10 +89,17 @@ export default function MyProperties() {
           <h1 className="font-heading text-2xl font-bold text-foreground">My Property Listings</h1>
           <p className="mt-1 text-sm text-muted-foreground">Submit properties for review. Approved listings appear live on the public site.</p>
         </div>
-        <Button onClick={() => { setEditing(null); setFormOpen(true); }} className="bg-flame-500 hover:bg-flame-600">
-          <Plus className="mr-1 h-4 w-4" /> List a Property
-        </Button>
+        {!isAgent && (
+          <Button onClick={() => { setEditing(null); setFormOpen(true); }} className="bg-flame-500 hover:bg-flame-600">
+            <Plus className="mr-1 h-4 w-4" /> List a Property
+          </Button>
+        )}
       </div>
+      {isAgent && (
+        <div className="rounded-xl border border-info/20 bg-info/5 p-4 text-sm text-info">
+          Property submissions are handled by property owners. As an agent, you market and sell verified listings — uploading is not available.
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatCard icon={Building2} label="Total Submissions" value={stats.total} tone="text-brand-700" />
@@ -111,9 +118,11 @@ export default function MyProperties() {
           <Building2 className="h-12 w-12 text-muted-foreground/40" />
           <h3 className="mt-3 text-sm font-semibold text-foreground">No submissions yet</h3>
           <p className="mt-1 max-w-xs text-xs text-muted-foreground">Submit your first property for review. It goes live once approved by our team.</p>
-          <Button onClick={() => { setEditing(null); setFormOpen(true); }} className="mt-5 bg-flame-500 hover:bg-flame-600">
-            <Plus className="mr-1 h-4 w-4" /> List a Property
-          </Button>
+          {!isAgent && (
+            <Button onClick={() => { setEditing(null); setFormOpen(true); }} className="mt-5 bg-flame-500 hover:bg-flame-600">
+              <Plus className="mr-1 h-4 w-4" /> List a Property
+            </Button>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
