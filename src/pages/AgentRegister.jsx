@@ -22,9 +22,7 @@ export default function AgentRegister() {
   const [form, setForm] = useState({
     full_name: '', email: '', phone: '', date_of_birth: '', gender: '',
     address: '', state: '', lga: '', city: '',
-    resident_state:"",
-
-resident_lga:"",
+    
      years_experience: '', bio: '', specialization: 'residential',
     service_areas: [], languages: [],
     emergency_contact_name: '', emergency_contact_phone: '',
@@ -34,7 +32,7 @@ resident_lga:"",
   const set = (key, value) => setForm((p) => ({ ...p, [key]: value }));
 
   const requiredDocs = ['government_id', 'passport_photograph', 'utility_bill'];
-  const optionalDocs = ['professional_certificate', 'signed_agreement', 'agency_license', 'tax_identification', 'bank_verification', 'proof_of_address'];
+  const optionalDocs = ['professional_certificate', 'signed_agreement', 'agency_license', 'tax_identification', 'proof_of_address'];
 
   const handleDoc = (type, url) => {
     setDocs((p) => ({ ...p, [type]: url }));
@@ -57,57 +55,75 @@ resident_lga:"",
         verification_status: 'unverified',
         years_experience: form.years_experience ? Number(form.years_experience) : undefined,
       });
+
+
 <div className="mb-4">
 
+
 <label className="font-semibold">
-State of Residence
+
+Local Government Area
+
 </label>
+
 
 
 <select
 
 className="border p-3 rounded w-full"
 
-value={form.resident_state}
+disabled={!form.resident_state}
 
-onChange={(e)=>{
+
+value={form.resident_lga}
+
+
+onChange={(e)=>
 
 setForm({
 
 ...form,
 
-resident_state:e.target.value,
-
-resident_lga:""
+resident_lga:e.target.value
 
 })
 
-}}
+}
+
 
 >
 
 
 <option value="">
-Select State
+
+Select LGA
+
 </option>
+
 
 
 {
-Object.keys(nigeriaStates).map(state=>(
+
+form.resident_state &&
+
+nigeriaStates[form.resident_state].map(lga=>(
+
 
 <option
 
-key={state}
+key={lga}
 
-value={state}
+value={lga}
 
 >
 
-{state}
+{lga}
 
 </option>
 
+
 ))
+
 
 }
 
@@ -116,7 +132,6 @@ value={state}
 
 
 </div>
-
 
       // Create agent document records
       const docEntries = Object.entries(docs).filter(([, url]) => url);
@@ -211,11 +226,106 @@ value={state}
               <div className="space-y-4">
                 <h2 className="flex items-center gap-2 font-heading text-lg font-bold text-brand-900"><MapPin className="h-5 w-5 text-flame-500" /> Contact & Address</h2>
                 <Field label="Official Address *" value={form.address} onChange={(v) => set('address', v)} placeholder="House number, street name" />
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  <Field label="State *" value={form.state} onChange={(v) => set('state', v)} placeholder="e.g. Lagos" />
-                  <Field label="LGA" value={form.lga} onChange={(v) => set('lga', v)} placeholder="e.g. Ikeja" />
-                  <Field label="City *" value={form.city} onChange={(v) => set('city', v)} placeholder="e.g. Ikeja" />
-                </div>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+<div>
+
+<Label className="mb-1.5 block text-sm text-brand-900">
+State of Residence *
+</Label>
+
+
+<select
+
+className="h-10 w-full rounded-md border bg-ice-50 px-3"
+
+value={form.resident_state}
+
+onChange={(e)=>{
+
+set('resident_state', e.target.value);
+
+set('resident_lga','');
+
+}}
+
+>
+
+<option value="">
+Select State
+</option>
+
+
+{
+Object.keys(nigeriaStates).map((state)=>(
+
+<option key={state} value={state}>
+
+{state}
+
+</option>
+
+))
+
+}
+
+</select>
+
+</div>
+
+
+
+<div>
+
+<Label className="mb-1.5 block text-sm text-brand-900">
+Local Government Area *
+</Label>
+
+
+<select
+
+className="h-10 w-full rounded-md border bg-ice-50 px-3"
+
+disabled={!form.resident_state}
+
+value={form.resident_lga}
+
+onChange={(e)=>
+
+set('resident_lga',e.target.value)
+
+}
+
+>
+
+<option value="">
+Select LGA
+</option>
+
+
+{
+
+form.resident_state &&
+
+nigeriaStates[form.resident_state]?.map((lga)=>(
+
+<option key={lga} value={lga}>
+
+{lga}
+
+</option>
+
+))
+
+}
+
+
+</select>
+
+</div>
+
+
+</div>
                 <div>
                   <Label className="mb-1.5 block text-sm text-brand-900">Preferred Operating Areas</Label>
                   <Input value={form.service_areas.join(', ')} onChange={(e) => set('service_areas', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
@@ -294,7 +404,14 @@ value={state}
                 <p className="text-sm text-muted-foreground">Please review your information before submitting.</p>
                 <ReviewSection title="Personal" data={{ Name: form.full_name, Email: form.email, Phone: form.phone, 'Date of Birth': form.date_of_birth }} />
                 <ReviewSection title="Address" data={{ Address: form.address, State: form.state, LGA: form.lga, City: form.city }} />
-                <ReviewSection title="Professional" data={{ Occupation: form.occupation, Experience: `${form.years_experience || 0} years`, Specialization: form.specialization, Bio: form.bio }} />
+                <ReviewSection 
+title="Professional" 
+data={{ 
+Experience: `${form.years_experience || 0} years`,
+Specialization: form.specialization,
+Bio: form.bio 
+}} 
+/>
                 <ReviewSection title="Documents" data={Object.fromEntries(Object.entries(docs).filter(([, u]) => u).map(([t, u]) => [DOCUMENT_TYPE_CONFIG[t]?.label || t, '✓ Uploaded']))} />
               </div>
             )}
