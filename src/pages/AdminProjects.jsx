@@ -4,6 +4,7 @@ import ProjectForm from "@/components/admin/ProjectForm";
 
 export default function AdminProjects() {
 
+const [mediaProject,setMediaProject]=useState(null);
     const [projects, setProjects] = useState([]);
     const [editingProject, setEditingProject] = useState(null);
     const [showForm, setShowForm] = useState(false);
