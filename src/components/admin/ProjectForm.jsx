@@ -85,7 +85,9 @@ form
 
 
 
-setCurrentProject(result);
+setCurrentProject({
+...result
+});
 
 
 alert("Project saved successfully");
