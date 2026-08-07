@@ -210,7 +210,61 @@ Delete
 
 </div>
 
+{
+mediaProject &&
 
+<div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+
+
+<div className="bg-white p-6 rounded-xl w-[90%] max-w-3xl">
+
+
+<h2 className="text-2xl font-bold mb-5">
+
+Manage Media
+
+-
+{mediaProject.name}
+
+</h2>
+
+
+
+<ProjectMediaUploader
+
+projectId={mediaProject.id}
+
+/>
+
+
+
+<ProjectMediaManager
+
+projectId={mediaProject.id}
+
+/>
+
+
+
+<button
+
+className="mt-5 bg-red-600 text-white px-5 py-2 rounded"
+
+onClick={()=>setMediaProject(null)}
+
+>
+
+Close
+
+</button>
+
+
+
+</div>
+
+</div>
+
+}
 </div>
 
 
