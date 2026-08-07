@@ -81,15 +81,24 @@ setShowForm(true);
 
 project={editingProject}
 
-onClose={()=>{
+
+close={()=>{
+
 setShowForm(false);
+
 setEditingProject(null);
+
 }}
 
-onSaved={()=>{
+
+saved={()=>{
+
 setShowForm(false);
+
 setEditingProject(null);
+
 loadProjects();
+
 }}
 
 />
