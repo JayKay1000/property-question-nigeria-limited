@@ -17,6 +17,7 @@ const [currentProject,setCurrentProject]=useState(project);
 
 
 const [form,setForm]=useState({
+    
 
 name:project?.name || "",
 
@@ -177,7 +178,43 @@ description:e.target.value
 
 />
 
+<input
+className="border p-3 w-full mb-3"
+placeholder="Project Category"
+value={form.category}
+onChange={
+e=>setForm({
+...form,
+category:e.target.value
+})
+}
+/>
 
+
+<input
+className="border p-3 w-full mb-3"
+placeholder="Property Type"
+value={form.property_type}
+onChange={
+e=>setForm({
+...form,
+property_type:e.target.value
+})
+}
+/>
+
+
+<input
+className="border p-3 w-full mb-3"
+placeholder="Land Size"
+value={form.land_size}
+onChange={
+e=>setForm({
+...form,
+land_size:e.target.value
+})
+}
+/>
 
 <input
 className="border p-3 w-full mb-3"
