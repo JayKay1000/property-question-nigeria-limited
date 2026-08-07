@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Field, SelectField } from "@/components/auth/RegControls";
 import PasswordStrengthMeter from "@/components/auth/PasswordStrengthMeter";
+import { nigeriaStates } from "@/data/nigeriaLocations";
 
 const COUNTRIES = ["Nigeria", "Ghana", "United Kingdom", "United States", "Canada", "South Africa", "UAE", "Other"];
 const GENDERS = [{ value: "male", label: "Male" }, { value: "female", label: "Female" }, { value: "other", label: "Prefer not to say" }];
+const STATE_OPTIONS = Object.keys(nigeriaStates).map((s) => ({ value: s, label: s }));
 
 export default function AgentPersonalStep({ form, set }) {
   const [show, setShow] = useState(false);
@@ -25,8 +27,22 @@ export default function AgentPersonalStep({ form, set }) {
       <Field label="Residential address" value={form.address} onChange={(v) => set("address", v)} placeholder="House no, street" required icon={MapPin} />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Field label="City" value={form.city} onChange={(v) => set("city", v)} required />
-        <Field label="State" value={form.state} onChange={(v) => set("state", v)} required />
-        <Field label="LGA" value={form.lga} onChange={(v) => set("lga", v)} placeholder="Ikeja" />
+        <SelectField
+          label="State"
+          value={form.state}
+          onValueChange={(v) => { set("state", v); set("lga", ""); }}
+          options={STATE_OPTIONS}
+          placeholder="Select state"
+          required
+        />
+        <SelectField
+          label="LGA"
+          value={form.lga}
+          onValueChange={(v) => set("lga", v)}
+          options={(nigeriaStates[form.state] || []).map((lga) => ({ value: lga, label: lga }))}
+          placeholder={form.state ? "Select LGA" : "Select state first"}
+          required
+        />
       </div>
       <Field label="Phone number" value={form.phone} onChange={(v) => set("phone", v)} placeholder="+234 800 000 0000" required icon={Phone} type="tel" />
       <div className="space-y-2">
