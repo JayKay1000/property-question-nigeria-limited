@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { CheckCircle2, XCircle, Clock, ExternalLink } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, ExternalLink, Tag, RotateCcw } from "lucide-react";
 
 const STATUS_TONE = {
   submitted: "bg-amber-100 text-amber-700",
@@ -15,6 +15,7 @@ export default function AdminPropertyReview() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState(null);
+  const [soldMap, setSoldMap] = useState({});
 
   useEffect(() => { loadListings(); }, []);
 
@@ -22,9 +23,36 @@ export default function AdminPropertyReview() {
     setLoading(true);
     try {
       const data = await base44.entities.PropertyListing.list("-created_date");
-      setListings(Array.isArray(data) ? data : []);
+      const arr = Array.isArray(data) ? data : [];
+      setListings(arr);
+      const approvedIds = arr.filter((l) => l.approved_property_id).map((l) => l.approved_property_id);
+      if (approvedIds.length) {
+        const props = await base44.entities.Property.filter({ id: { $in: approvedIds } }).catch(() => []);
+        const map = {};
+        (Array.isArray(props) ? props : []).forEach((p) => {
+          const listing = arr.find((l) => l.approved_property_id === p.id);
+          if (listing) map[listing.id] = p.availability_status;
+        });
+        setSoldMap(map);
+      } else {
+        setSoldMap({});
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const toggleSold = async (listing) => {
+    if (!listing.approved_property_id) return;
+    const nextSold = soldMap[listing.id] !== "sold";
+    setBusyId(listing.id);
+    try {
+      await base44.entities.Property.update(listing.approved_property_id, {
+        availability_status: nextSold ? "sold" : "available",
+      });
+      setSoldMap((prev) => ({ ...prev, [listing.id]: nextSold ? "sold" : "available" }));
+    } finally {
+      setBusyId(null);
     }
   };
 
@@ -178,14 +206,25 @@ export default function AdminPropertyReview() {
               <Clock className="h-3.5 w-3.5" /> Mark Under Review
             </button>
             {item.status === "approved" && item.approved_property_id && (
-              <a
-                href={`/properties/${item.approved_property_id}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-medium text-brand-700 hover:bg-muted"
-              >
-                <ExternalLink className="h-3.5 w-3.5" /> View Live
-              </a>
+              <>
+                <button
+                  onClick={() => toggleSold(item)}
+                  disabled={busyId === item.id}
+                  className={`inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium disabled:opacity-50 ${soldMap[item.id] === "sold" ? "bg-rose-600 text-white hover:bg-rose-700" : "border border-amber-300 text-amber-700 hover:bg-amber-50"}`}
+                >
+                  {soldMap[item.id] === "sold"
+                    ? (<><RotateCcw className="h-3.5 w-3.5" /> Mark Available</>)
+                    : (<><Tag className="h-3.5 w-3.5" /> Mark as Sold</>)}
+                </button>
+                <a
+                  href={`/properties/${item.approved_property_id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs font-medium text-brand-700 hover:bg-muted"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" /> View Live
+                </a>
+              </>
             )}
           </div>
         </div>

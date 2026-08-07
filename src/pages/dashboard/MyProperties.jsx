@@ -48,6 +48,7 @@ export default function MyProperties() {
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [soldMap, setSoldMap] = useState({});
 
   const load = useCallback(async () => {
     if (!user) return;
@@ -57,7 +58,20 @@ export default function MyProperties() {
         { $or: [{ owner_id: user.id }, { created_by_id: user.id }] },
         '-created_date', 200
       ).catch(() => []);
-      setListings(Array.isArray(res) ? res : []);
+      const arr = Array.isArray(res) ? res : [];
+      setListings(arr);
+      const approvedIds = arr.filter((l) => l.approved_property_id).map((l) => l.approved_property_id);
+      if (approvedIds.length) {
+        const props = await base44.entities.Property.filter({ id: { $in: approvedIds } }).catch(() => []);
+        const map = {};
+        (Array.isArray(props) ? props : []).forEach((p) => {
+          const listing = arr.find((l) => l.approved_property_id === p.id);
+          if (listing) map[listing.id] = p.availability_status;
+        });
+        setSoldMap(map);
+      } else {
+        setSoldMap({});
+      }
     } finally {
       setLoading(false);
     }
@@ -140,6 +154,11 @@ export default function MyProperties() {
                   <span className={`absolute left-2 top-2 inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${STATUS_TONE[p.status] || 'bg-slate-100 text-slate-600'}`}>
                     {STATUS_LABEL[p.status] || p.status}
                   </span>
+                  {soldMap[p.id] === "sold" && (
+                    <span className="absolute right-2 top-2 inline-flex items-center rounded-full bg-rose-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow">
+                      Sold
+                    </span>
+                  )}
                 </div>
                 <div className="p-4">
                   <h3 className="truncate font-heading text-sm font-bold text-foreground">{p.property_title}</h3>
