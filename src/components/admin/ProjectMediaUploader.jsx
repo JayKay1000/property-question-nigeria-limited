@@ -68,7 +68,7 @@ file.type.includes("video")
 
 ?
 
-"marketing_video"
+"video"
 
 :
 
