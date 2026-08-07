@@ -24,7 +24,7 @@ export default function AgentPersonalStep({ form, set }) {
         <Field label="Date of birth" value={form.dateOfBirth} onChange={(v) => set("dateOfBirth", v)} type="date" required />
       </div>
       <SelectField label="Nationality" value={form.nationality} onValueChange={(v) => set("nationality", v)} options={COUNTRIES.map((c) => ({ value: c, label: c }))} required />
-      <Field label="Residential address" value={form.address} onChange={(v) => set("address", v)} placeholder="House no, street" required icon={MapPin} />
+      <Field label="Official address" value={form.address} onChange={(v) => set("address", v)} placeholder="House no, street" required icon={MapPin} />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Field label="City" value={form.city} onChange={(v) => set("city", v)} required />
         <SelectField
