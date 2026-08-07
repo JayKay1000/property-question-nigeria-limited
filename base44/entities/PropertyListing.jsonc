@@ -120,7 +120,15 @@
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "YouTube or direct video URLs"
+    },
+    "tour_360_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Equirectangular 360\u00b0 panorama image URLs"
     },
     "document_urls": {
       "type": "array",

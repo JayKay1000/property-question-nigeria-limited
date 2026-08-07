@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { PROJECT_STATUS_CONFIG, INFRASTRUCTURE_LABELS, FACILITY_LABELS, formatPrice, formatNumber, buildProjectLocation, getProjectGallery, getProjectImage } from '@/lib/project-utils';
 import { Image } from '@/components/ui/image';
 import ProjectGallery from '@/components/projects/ProjectGallery';
+import MediaShowcase from '@/components/media/MediaShowcase';
 import EstateLayoutViewer from '@/components/projects/EstateLayoutViewer';
 import ConstructionTimeline from '@/components/projects/ConstructionTimeline';
 import ProjectEnquiryForm from '@/components/projects/ProjectEnquiryForm';
@@ -159,6 +160,9 @@ export default function ProjectDetail() {
               <TabsList className="mb-6 flex flex-wrap bg-ice-100">
                 <TabsTrigger value="overview" className="data-[state=active]:bg-white">Overview</TabsTrigger>
                 <TabsTrigger value="gallery" className="data-[state=active]:bg-white">Gallery</TabsTrigger>
+                {(project.tour_360_urls?.length || project.video_urls?.length) > 0 && (
+                  <TabsTrigger value="media360" className="data-[state=active]:bg-white">360° &amp; Videos</TabsTrigger>
+                )}
                 <TabsTrigger value="layout" className="data-[state=active]:bg-white">Plot Layout</TabsTrigger>
                 <TabsTrigger value="construction" className="data-[state=active]:bg-white">Construction</TabsTrigger>
                 {infrastructure.length > 0 && <TabsTrigger value="infrastructure" className="data-[state=active]:bg-white">Infrastructure</TabsTrigger>}
@@ -198,6 +202,12 @@ export default function ProjectDetail() {
               <TabsContent value="gallery">
                 <ProjectGallery project={project} mediaItems={media} />
               </TabsContent>
+
+              {(project.tour_360_urls?.length || project.video_urls?.length) > 0 && (
+                <TabsContent value="media360">
+                  <MediaShowcase tour360Urls={project.tour_360_urls} videoUrls={project.video_urls} />
+                </TabsContent>
+              )}
 
               <TabsContent value="layout">
                 <Card className="border-brand-100 bg-white"><CardContent className="p-6">

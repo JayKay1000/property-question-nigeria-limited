@@ -13,6 +13,8 @@ import {
   propertyConditionOptions, furnishingOptions, nigerianStates,
 } from '@/lib/upload-utils';
 import { COMMON_AMENITIES, formatPrice } from '@/lib/property-utils';
+import YoutubeLinksInput from '@/components/media/YoutubeLinksInput';
+import PanoramaUploader from '@/components/media/PanoramaUploader';
 
 const blank = {
   title: '', short_description: '', description: '', price: '',
@@ -28,6 +30,8 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
   const [form, setForm] = useState(blank);
   const [featured, setFeatured] = useState(null);
   const [gallery, setGallery] = useState([]);
+  const [tour360, setTour360] = useState([]);
+  const [youtubeLinks, setYoutubeLinks] = useState([]);
   const [busy, setBusy] = useState(false);
   const { toast } = useToast();
 
@@ -61,6 +65,8 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
     } else {
       setForm(blank);
     }
+    setTour360(editing?.tour_360_urls || []);
+    setYoutubeLinks(editing?.video_urls || []);
     setFeatured(null);
     setGallery([]);
   }, [open, editing]);
@@ -120,6 +126,8 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
         highlights: (form.highlights || '').split(',').map((s) => s.trim()).filter(Boolean),
         featured_image_url,
         image_urls,
+        video_urls: (youtubeLinks || []).map((u) => u.trim()).filter(Boolean),
+        tour_360_urls: tour360 || [],
         reference_number: ref,
         slug,
         submitter_type: isAgent ? 'agent' : 'homeowner',
@@ -304,6 +312,18 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
           {editing?.image_urls?.length > 0 && (
             <p className="text-xs text-muted-foreground">Existing gallery images are kept. New uploads will be added.</p>
           )}
+
+          {/* 360° Tour */}
+          <div>
+            <Label>360° Virtual Tour</Label>
+            <PanoramaUploader value={tour360} onChange={setTour360} />
+          </div>
+
+          {/* YouTube links */}
+          <div>
+            <Label>YouTube Video Links</Label>
+            <YoutubeLinksInput value={youtubeLinks} onChange={setYoutubeLinks} />
+          </div>
         </div>
 
         <DialogFooter>

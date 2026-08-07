@@ -2,6 +2,8 @@ import { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import ProjectMediaManager from "./ProjectMediaManager";
 import ProjectDocumentUploader from "./ProjectDocumentUploader";
+import YoutubeLinksInput from "@/components/media/YoutubeLinksInput";
+import PanoramaUploader from "@/components/media/PanoramaUploader";
 
 const STATUS_OPTIONS = [
   "draft",
@@ -73,6 +75,8 @@ const emptyForm = {
   meta_keywords: "",
   project_manager_name: "",
   developer_name: "",
+  video_urls: [],
+  tour_360_urls: [],
 };
 
 function buildFormFromProject(project) {
@@ -543,6 +547,30 @@ export default function ProjectForm({ project, close, saved }) {
             ))}
           </div>
         )}
+      </div>
+
+      {/* ---------- 360° Tour & YouTube links ---------- */}
+      <h3 className="font-semibold text-gray-700 mb-2">360° Tour &amp; YouTube Links</h3>
+
+      <div className="border border-dashed rounded p-5 mb-5 space-y-5">
+        <div>
+          <label className="text-sm font-medium text-gray-700 block mb-2">
+            360° Virtual Tour (equirectangular panoramas)
+          </label>
+          <PanoramaUploader
+            value={form.tour_360_urls || []}
+            onChange={(v) => updateField("tour_360_urls", v)}
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-gray-700 block mb-2">
+            YouTube Video Links
+          </label>
+          <YoutubeLinksInput
+            value={form.video_urls || []}
+            onChange={(v) => updateField("video_urls", v)}
+          />
+        </div>
       </div>
 
       <button

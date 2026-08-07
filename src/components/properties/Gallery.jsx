@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Expand, Play, Video, Box } from 'lucide-react';
 import { Image } from '@/components/ui/image';
 import { getAllImages } from '@/lib/property-utils';
+import { isYoutubeUrl } from '@/components/media/youtubeUtils';
 
 export default function Gallery({ property }) {
   const images = getAllImages(property);
-  const videos = property.video_urls || [];
+  const videos = (property.video_urls || []).filter((u) => !isYoutubeUrl(u));
   const [activeIndex, setActiveIndex] = useState(0);
   const [showFullscreen, setShowFullscreen] = useState(false);
 

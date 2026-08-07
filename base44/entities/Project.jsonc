@@ -132,6 +132,20 @@
     "featured_video_url": {
       "type": "string"
     },
+    "video_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "YouTube or direct video URLs"
+    },
+    "tour_360_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Equirectangular 360\u00b0 panorama image URLs"
+    },
     "brochure_url": {
       "type": "string"
     },

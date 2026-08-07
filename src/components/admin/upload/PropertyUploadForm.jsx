@@ -6,8 +6,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
-import { Upload, X, ImagePlus, Save, Loader2, CheckCircle2 } from 'lucide-react';
+import { Upload, X, ImagePlus, Save, Loader2, CheckCircle2, Box, Youtube } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import YoutubeLinksInput from '@/components/media/YoutubeLinksInput';
+import PanoramaUploader from '@/components/media/PanoramaUploader';
 import { useToast } from '@/components/ui/use-toast';
 import {
   propertyTypeOptions, listingPurposeOptions, propertyStatusOptions, propertyClassificationOptions,
@@ -19,6 +21,7 @@ export default function PropertyUploadForm() {
     status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard',
     property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN',
     is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0,
+    video_urls: [], tour_360_urls: [],
   });
   const [featuredImage, setFeaturedImage] = useState(null);
   const [gallery, setGallery] = useState([]);
@@ -54,13 +57,15 @@ export default function PropertyUploadForm() {
         slug,
         featured_image_url,
         image_urls,
+        video_urls: (form.video_urls || []).map((u) => (typeof u === 'string' ? u.trim() : '')).filter(Boolean),
+        tour_360_urls: form.tour_360_urls || [],
         published_at: form.status === 'published' || form.status === 'active' ? new Date().toISOString() : undefined,
       };
       const created = await base44.entities.Property.create(payload);
       setSaved(created);
       toast({ title: 'Property created successfully', description: ref });
       // reset
-      setForm({ status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN', is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0 });
+      setForm({ status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN', is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0, video_urls: [], tour_360_urls: [] });
       setFeaturedImage(null); setGallery([]);
     } catch (e) { toast({ title: 'Error creating property', description: e.message, variant: 'destructive' }); }
     setSaving(false);
@@ -147,6 +152,20 @@ export default function PropertyUploadForm() {
                 <input type="file" accept="image/*" multiple className="hidden" onChange={e => { const fs = Array.from(e.target.files || []); if (fs.length) setGallery(g => [...g, ...fs]); }} />
               </label>
             </div>
+          </div>
+        </div>
+      </Card>
+
+      <Card className="p-5">
+        <h3 className="font-heading font-bold mb-4">360° Tour &amp; Videos</h3>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label className="flex items-center gap-1.5"><Box className="h-4 w-4 text-flame-500" /> 360° Virtual Tour</Label>
+            <PanoramaUploader value={form.tour_360_urls || []} onChange={(v) => set('tour_360_urls', v)} />
+          </div>
+          <div className="space-y-2">
+            <Label className="flex items-center gap-1.5"><Youtube className="h-4 w-4 text-flame-500" /> YouTube Video Links</Label>
+            <YoutubeLinksInput value={form.video_urls || []} onChange={(v) => set('video_urls', v)} />
           </div>
         </div>
       </Card>

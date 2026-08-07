@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { formatPrice, buildLocation, buildShortLocation, getPrimaryImage, AVAILABILITY_CONFIG, PURPOSE_CONFIG, CLASSIFICATION_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
 import Gallery from '@/components/properties/Gallery';
+import MediaShowcase from '@/components/media/MediaShowcase';
+import { isYoutubeUrl } from '@/components/media/youtubeUtils';
 import DetailSidebar from '@/components/properties/DetailSidebar';
 import PropertyTabs from '@/components/properties/PropertyTabs';
 import ListingCard from '@/components/properties/ListingCard';
@@ -121,6 +123,18 @@ export default function PropertyDetail() {
       <div className="container-wide section-pad">
         <Gallery property={property} />
       </div>
+
+      {/* 360° Tour & Videos */}
+      {(property.tour_360_urls?.length || (property.video_urls || []).some((u) => isYoutubeUrl(u))) ? (
+        <div className="container-wide section-pad mt-6">
+          <div className="rounded-2xl border border-border bg-white p-5 shadow-card sm:p-8">
+            <MediaShowcase
+              tour360Urls={property.tour_360_urls}
+              videoUrls={(property.video_urls || []).filter((u) => isYoutubeUrl(u))}
+            />
+          </div>
+        </div>
+      ) : null}
 
       {/* Title section */}
       <div className="container-wide section-pad mt-6">
