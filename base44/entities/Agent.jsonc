@@ -22,12 +22,39 @@
     "photo_url": {
       "type": "string"
     },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "male",
+        "female",
+        "other"
+      ]
+    },
+    "address": {
+      "type": "string",
+      "description": "Official/residential address"
+    },
+    "resident_state": {
+      "type": "string",
+      "description": "Nigerian state of residence"
+    },
+    "resident_lga": {
+      "type": "string",
+      "description": "Local Government Area of residence"
+    },
     "bio": {
       "type": "string"
     },
     "specialization": {
       "type": "string",
       "description": "e.g. Residential, Commercial, Land"
+    },
+    "years_experience": {
+      "type": "number"
     },
     "service_areas": {
       "type": "array",
@@ -40,6 +67,12 @@
       "items": {
         "type": "string"
       }
+    },
+    "emergency_contact_name": {
+      "type": "string"
+    },
+    "emergency_contact_phone": {
+      "type": "string"
     },
     "status": {
       "type": "string",

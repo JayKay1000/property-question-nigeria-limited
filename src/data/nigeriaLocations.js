@@ -322,7 +322,7 @@ export const nigeriaStates = {
     "Kuje",
     "Kwali",
     "Municipal Area Council"
-  ]
+  ],
   "Gombe": [
   "Akko",
   "Balanga",

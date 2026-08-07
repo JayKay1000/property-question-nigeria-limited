@@ -1,7 +1,7 @@
-import {nigeriaStates} from "@/data/nigeriaLocations";
+import { nigeriaStates } from "@/data/nigeriaLocations";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, User, MapPin, Briefcase, Upload, Check, Mail, Phone, FileText } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, User, MapPin, Briefcase, Upload, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,9 +21,8 @@ export default function AgentRegister() {
   const [submitted, setSubmitted] = useState(null);
   const [form, setForm] = useState({
     full_name: '', email: '', phone: '', date_of_birth: '', gender: '',
-    address: '', state: '', lga: '', city: '',
-    
-     years_experience: '', bio: '', specialization: 'residential',
+    address: '', resident_state: '', resident_lga: '',
+    years_experience: '', bio: '', specialization: 'residential',
     service_areas: [], languages: [],
     emergency_contact_name: '', emergency_contact_phone: '',
   });
@@ -40,8 +39,8 @@ export default function AgentRegister() {
 
   const validateStep = () => {
     if (step === 0) return form.full_name && form.email && form.phone && form.date_of_birth;
-    if (step === 1) return form.address && form.state && form.city;
-    if (step === 2) return form.occupation && form.bio;
+    if (step === 1) return form.address && form.resident_state && form.resident_lga;
+    if (step === 2) return form.bio;
     if (step === 3) return requiredDocs.every((d) => docs[d]);
     return true;
   };
@@ -51,87 +50,10 @@ export default function AgentRegister() {
     try {
       const agent = await base44.entities.Agent.create({
         ...form,
+        years_experience: form.years_experience ? Number(form.years_experience) : undefined,
         status: 'pending',
         verification_status: 'unverified',
-        years_experience: form.years_experience ? Number(form.years_experience) : undefined,
       });
-
-
-<div className="mb-4">
-
-
-<label className="font-semibold">
-
-Local Government Area
-
-</label>
-
-
-
-<select
-
-className="border p-3 rounded w-full"
-
-disabled={!form.resident_state}
-
-
-value={form.resident_lga}
-
-
-onChange={(e)=>
-
-setForm({
-
-...form,
-
-resident_lga:e.target.value
-
-})
-
-}
-
-
->
-
-
-<option value="">
-
-Select LGA
-
-</option>
-
-
-
-{
-
-form.resident_state &&
-
-nigeriaStates[form.resident_state].map(lga=>(
-
-
-<option
-
-key={lga}
-
-value={lga}
-
->
-
-{lga}
-
-</option>
-
-
-))
-
-
-}
-
-
-</select>
-
-
-</div>
 
       // Create agent document records
       const docEntries = Object.entries(docs).filter(([, url]) => url);
@@ -180,8 +102,6 @@ value={lga}
     );
   }
 
-  const stepIcons = [User, MapPin, Briefcase, Upload, CheckCircle2];
-
   return (
     <div className="min-h-screen bg-ice-50 pt-20 lg:pt-24">
       <div className="container-wide section-pad py-8">
@@ -192,7 +112,7 @@ value={lga}
 
           <div className="mb-8 rounded-2xl border border-brand-100 bg-white p-6 shadow-card">
             <h1 className="mb-1 font-heading text-2xl font-bold text-brand-900">Agent Registration</h1>
-            <p className="mb-6 text-sm text-muted-foreground">Complete all steps to join our network of verified real estate professionals.</p>
+            <p className="mb-6 text-sm text-muted-foreground">Complete all steps to join our nationwide network of verified real estate professionals.</p>
             <RegistrationSteps currentStep={step} />
           </div>
 
@@ -227,105 +147,34 @@ value={lga}
                 <h2 className="flex items-center gap-2 font-heading text-lg font-bold text-brand-900"><MapPin className="h-5 w-5 text-flame-500" /> Contact & Address</h2>
                 <Field label="Official Address *" value={form.address} onChange={(v) => set('address', v)} placeholder="House number, street name" />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-
-<div>
-
-<Label className="mb-1.5 block text-sm text-brand-900">
-State of Residence *
-</Label>
-
-
-<select
-
-className="h-10 w-full rounded-md border bg-ice-50 px-3"
-
-value={form.resident_state}
-
-onChange={(e)=>{
-
-set('resident_state', e.target.value);
-
-set('resident_lga','');
-
-}}
-
->
-
-<option value="">
-Select State
-</option>
-
-
-{
-Object.keys(nigeriaStates).map((state)=>(
-
-<option key={state} value={state}>
-
-{state}
-
-</option>
-
-))
-
-}
-
-</select>
-
-</div>
-
-
-
-<div>
-
-<Label className="mb-1.5 block text-sm text-brand-900">
-Local Government Area *
-</Label>
-
-
-<select
-
-className="h-10 w-full rounded-md border bg-ice-50 px-3"
-
-disabled={!form.resident_state}
-
-value={form.resident_lga}
-
-onChange={(e)=>
-
-set('resident_lga',e.target.value)
-
-}
-
->
-
-<option value="">
-Select LGA
-</option>
-
-
-{
-
-form.resident_state &&
-
-nigeriaStates[form.resident_state]?.map((lga)=>(
-
-<option key={lga} value={lga}>
-
-{lga}
-
-</option>
-
-))
-
-}
-
-
-</select>
-
-</div>
-
-
-</div>
+                  <div>
+                    <Label className="mb-1.5 block text-sm text-brand-900">State of Residence *</Label>
+                    <select
+                      className="h-10 w-full rounded-md border bg-ice-50 px-3"
+                      value={form.resident_state}
+                      onChange={(e) => { set('resident_state', e.target.value); set('resident_lga', ''); }}
+                    >
+                      <option value="">Select State</option>
+                      {Object.keys(nigeriaStates).map((state) => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <Label className="mb-1.5 block text-sm text-brand-900">Local Government Area *</Label>
+                    <select
+                      className="h-10 w-full rounded-md border bg-ice-50 px-3 disabled:opacity-50"
+                      disabled={!form.resident_state}
+                      value={form.resident_lga}
+                      onChange={(e) => set('resident_lga', e.target.value)}
+                    >
+                      <option value="">Select LGA</option>
+                      {form.resident_state && nigeriaStates[form.resident_state]?.map((lga) => (
+                        <option key={lga} value={lga}>{lga}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
                 <div>
                   <Label className="mb-1.5 block text-sm text-brand-900">Preferred Operating Areas</Label>
                   <Input value={form.service_areas.join(', ')} onChange={(e) => set('service_areas', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))}
@@ -348,28 +197,25 @@ nigeriaStates[form.resident_state]?.map((lga)=>(
                     <Label className="mb-1.5 block text-sm text-brand-900">Years of Experience</Label>
                     <Input type="number" value={form.years_experience} onChange={(e) => set('years_experience', e.target.value)} placeholder="e.g. 5" className="bg-ice-50" />
                   </div>
-                </div>
-                <div>
-                  <Label className="mb-1.5 block text-sm text-brand-900">Specialization</Label>
-                  <Select value={form.specialization} onValueChange={(v) => set('specialization', v)}>
-                    <SelectTrigger className="h-10 bg-ice-50"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="residential">Residential</SelectItem>
-                      <SelectItem value="commercial">Commercial</SelectItem>
-                      <SelectItem value="land">Land</SelectItem>
-                      <SelectItem value="industrial">Industrial</SelectItem>
-                      <SelectItem value="mixed_use">Mixed Use</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div>
+                    <Label className="mb-1.5 block text-sm text-brand-900">Specialization</Label>
+                    <Select value={form.specialization} onValueChange={(v) => set('specialization', v)}>
+                      <SelectTrigger className="h-10 bg-ice-50"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="residential">Residential</SelectItem>
+                        <SelectItem value="commercial">Commercial</SelectItem>
+                        <SelectItem value="land">Land</SelectItem>
+                        <SelectItem value="industrial">Industrial</SelectItem>
+                        <SelectItem value="mixed_use">Mixed Use</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div>
                   <Label className="mb-1.5 block text-sm text-brand-900">Professional Biography *</Label>
                   <Textarea value={form.bio} onChange={(e) => set('bio', e.target.value)} placeholder="Tell us about your experience and why you want to join..." rows={4} className="bg-ice-50" />
                 </div>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t border-border pt-4">
-                  
-                </div>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 border-t border-border pt-4">
                   <Field label="Emergency Contact Name" value={form.emergency_contact_name} onChange={(v) => set('emergency_contact_name', v)} placeholder="Contact person" />
                   <Field label="Emergency Contact Phone" value={form.emergency_contact_phone} onChange={(v) => set('emergency_contact_phone', v)} placeholder="+234..." />
                 </div>
@@ -402,17 +248,10 @@ nigeriaStates[form.resident_state]?.map((lga)=>(
               <div className="space-y-4">
                 <h2 className="flex items-center gap-2 font-heading text-lg font-bold text-brand-900"><CheckCircle2 className="h-5 w-5 text-flame-500" /> Review & Submit</h2>
                 <p className="text-sm text-muted-foreground">Please review your information before submitting.</p>
-                <ReviewSection title="Personal" data={{ Name: form.full_name, Email: form.email, Phone: form.phone, 'Date of Birth': form.date_of_birth }} />
-                <ReviewSection title="Address" data={{ Address: form.address, State: form.state, LGA: form.lga, City: form.city }} />
-                <ReviewSection 
-title="Professional" 
-data={{ 
-Experience: `${form.years_experience || 0} years`,
-Specialization: form.specialization,
-Bio: form.bio 
-}} 
-/>
-                <ReviewSection title="Documents" data={Object.fromEntries(Object.entries(docs).filter(([, u]) => u).map(([t, u]) => [DOCUMENT_TYPE_CONFIG[t]?.label || t, '✓ Uploaded']))} />
+                <ReviewSection title="Personal" data={{ Name: form.full_name, Email: form.email, Phone: form.phone, 'Date of Birth': form.date_of_birth, Gender: form.gender || '—' }} />
+                <ReviewSection title="Address" data={{ Address: form.address, 'State of Residence': form.resident_state, LGA: form.resident_lga }} />
+                <ReviewSection title="Professional" data={{ Experience: `${form.years_experience || 0} years`, Specialization: form.specialization, Bio: form.bio }} />
+                <ReviewSection title="Documents" data={Object.fromEntries(Object.entries(docs).filter(([, u]) => u).map(([t]) => [DOCUMENT_TYPE_CONFIG[t]?.label || t, '✓ Uploaded']))} />
               </div>
             )}
 
