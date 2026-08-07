@@ -23,7 +23,6 @@ export default function AgentRegister() {
     address: '', state: '', lga: '', city: '',
     occupation: '', years_experience: '', bio: '', specialization: 'residential',
     service_areas: [], languages: [],
-    bank_name: '', bank_account_number: '', bank_account_name: '',
     emergency_contact_name: '', emergency_contact_phone: '',
   });
   const [docs, setDocs] = useState({});
@@ -195,9 +194,7 @@ export default function AgentRegister() {
                   <Textarea value={form.bio} onChange={(e) => set('bio', e.target.value)} placeholder="Tell us about your experience and why you want to join..." rows={4} className="bg-ice-50" />
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 border-t border-border pt-4">
-                  <Field label="Bank Name" value={form.bank_name} onChange={(v) => set('bank_name', v)} placeholder="e.g. GTBank" />
-                  <Field label="Account Number" value={form.bank_account_number} onChange={(v) => set('bank_account_number', v)} placeholder="0123456789" />
-                  <Field label="Account Name" value={form.bank_account_name} onChange={(v) => set('bank_account_name', v)} placeholder="John Doe" />
+                  
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Emergency Contact Name" value={form.emergency_contact_name} onChange={(v) => set('emergency_contact_name', v)} placeholder="Contact person" />
