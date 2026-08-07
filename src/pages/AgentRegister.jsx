@@ -22,7 +22,10 @@ export default function AgentRegister() {
   const [form, setForm] = useState({
     full_name: '', email: '', phone: '', date_of_birth: '', gender: '',
     address: '', state: '', lga: '', city: '',
-    occupation: '', years_experience: '', bio: '', specialization: 'residential',
+    resident_state:"",
+
+resident_lga:"",
+     years_experience: '', bio: '', specialization: 'residential',
     service_areas: [], languages: [],
     emergency_contact_name: '', emergency_contact_phone: '',
   });
@@ -54,6 +57,66 @@ export default function AgentRegister() {
         verification_status: 'unverified',
         years_experience: form.years_experience ? Number(form.years_experience) : undefined,
       });
+<div className="mb-4">
+
+<label className="font-semibold">
+State of Residence
+</label>
+
+
+<select
+
+className="border p-3 rounded w-full"
+
+value={form.resident_state}
+
+onChange={(e)=>{
+
+setForm({
+
+...form,
+
+resident_state:e.target.value,
+
+resident_lga:""
+
+})
+
+}}
+
+>
+
+
+<option value="">
+Select State
+</option>
+
+
+{
+Object.keys(nigeriaStates).map(state=>(
+
+<option
+
+key={state}
+
+value={state}
+
+>
+
+{state}
+
+</option>
+
+))
+
+}
+
+
+</select>
+
+
+</div>
+
 
       // Create agent document records
       const docEntries = Object.entries(docs).filter(([, url]) => url);
