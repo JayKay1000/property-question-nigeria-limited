@@ -45,7 +45,24 @@ seo_title:
 project?.seo_title || "",
 
 seo_description:
-project?.seo_description || ""
+project?.seo_description || "",
+
+
+category:"",
+
+property_type:"",
+
+land_size:"",
+
+number_of_units:"",
+
+price_range:"",
+
+amenities:"",
+
+payment_plan:"",
+
+completion_date:""
 
 });
 
