@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { CheckCircle2, XCircle, Clock, ExternalLink, Tag, RotateCcw } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, ExternalLink, Tag, RotateCcw, Eye } from "lucide-react";
+import SubmissionDetailSheet from "@/components/admin/SubmissionDetailSheet";
 
 const STATUS_TONE = {
   submitted: "bg-amber-100 text-amber-700",
@@ -16,6 +17,7 @@ export default function AdminPropertyReview() {
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState(null);
   const [soldMap, setSoldMap] = useState({});
+  const [detail, setDetail] = useState(null);
 
   useEffect(() => { loadListings(); }, []);
 
@@ -185,6 +187,12 @@ export default function AdminPropertyReview() {
 
           <div className="flex flex-wrap gap-2 pt-2 border-t">
             <button
+              onClick={() => setDetail(item)}
+              className="inline-flex items-center gap-1 rounded-md bg-brand-800 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-900"
+            >
+              <Eye className="h-3.5 w-3.5" /> View Details
+            </button>
+            <button
               onClick={() => updateStatus(item.id, "approved")}
               disabled={busyId === item.id || item.status === "approved"}
               className="inline-flex items-center gap-1 rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
@@ -229,6 +237,12 @@ export default function AdminPropertyReview() {
           </div>
         </div>
       ))}
+
+      <SubmissionDetailSheet
+        listing={detail}
+        open={!!detail}
+        onOpenChange={(o) => { if (!o) setDetail(null); }}
+      />
     </div>
   );
 }
