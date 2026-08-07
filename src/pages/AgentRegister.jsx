@@ -1,3 +1,4 @@
+import {nigeriaStates} from "@/data/nigeriaLocations";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Loader2, CheckCircle2, User, MapPin, Briefcase, Upload, Check, Mail, Phone, FileText } from 'lucide-react';
