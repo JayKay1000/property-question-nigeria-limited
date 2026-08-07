@@ -4,6 +4,7 @@ import ProjectMediaManager from "./ProjectMediaManager";
 import ProjectDocumentUploader from "./ProjectDocumentUploader";
 import YoutubeLinksInput from "@/components/media/YoutubeLinksInput";
 import PanoramaUploader from "@/components/media/PanoramaUploader";
+import ProjectLocationMap from "./projects/ProjectLocationMap";
 
 const STATUS_OPTIONS = [
   "draft",
@@ -364,13 +365,14 @@ export default function ProjectForm({ project, close, saved }) {
         />
       </div>
 
-      <div className="grid md:grid-cols-3 gap-3 mb-5">
-        <input
-          className="border p-3 w-full"
-          placeholder="Google Maps Link"
-          value={form.google_maps_link}
-          onChange={(e) => updateField("google_maps_link", e.target.value)}
-        />
+      <input
+        className="border p-3 w-full mb-3"
+        placeholder="Google Maps Link"
+        value={form.google_maps_link}
+        onChange={(e) => updateField("google_maps_link", e.target.value)}
+      />
+
+      <div className="grid md:grid-cols-2 gap-3 mb-3">
         <input
           type="number"
           step="any"
@@ -386,6 +388,17 @@ export default function ProjectForm({ project, close, saved }) {
           placeholder="Longitude"
           value={form.longitude}
           onChange={(e) => updateField("longitude", e.target.value)}
+        />
+      </div>
+
+      <div className="mb-5">
+        <ProjectLocationMap
+          latitude={form.latitude}
+          longitude={form.longitude}
+          onChange={(lat, lng) => {
+            updateField("latitude", Number(lat.toFixed(6)));
+            updateField("longitude", Number(lng.toFixed(6)));
+          }}
         />
       </div>
 
