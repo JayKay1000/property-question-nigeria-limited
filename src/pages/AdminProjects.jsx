@@ -82,7 +82,6 @@ setShowForm(true);
 
 project={editingProject}
 
-
 close={()=>{
 
 setShowForm(false);
@@ -90,7 +89,6 @@ setShowForm(false);
 setEditingProject(null);
 
 }}
-
 
 saved={()=>{
 
