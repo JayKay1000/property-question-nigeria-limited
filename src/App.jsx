@@ -84,6 +84,7 @@ import DashboardHome from '@/pages/dashboard/DashboardHome';
 import MyProperties from '@/pages/dashboard/MyProperties';
 import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
 import AdminProjects from "@/pages/ProjectManager";
+import AgentPortal from "@/pages/AgentPortal";
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
@@ -155,6 +156,13 @@ element={<AdminProjects />}
         <Route path="/cookies" element={<CookiePolicy />} />
         <Route path="/accessibility" element={<AccessibilityStatement />} />
         <Route path="/sitemap" element={<Sitemap />} />
+        <Route
+
+path="/agent-portal"
+
+element={<AgentPortal/>}
+
+/>
         <Route path="/access-denied" element={<AccessDenied />} />
       </Route>
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
