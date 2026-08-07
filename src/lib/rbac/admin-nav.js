@@ -14,13 +14,23 @@ export const adminNavItems = [
   { label: 'DB Governance', href: '/admin/database', icon: 'Database', permission: 'security.view' },
   { label: 'Property Center', href: '/admin/property-center', icon: 'Building2', permission: 'properties.view' },
   { label: 'GIS Command', href: '/admin/gis', icon: 'Map', permission: 'properties.view' },
-  { label: 'Project Ops', href: '/admin/projects', icon: 'HardHat', permission: 'properties.view' },
+  {
+label: 'Projects',
+href: '/admin/projects',
+icon: 'FolderOpen',
+permission: 'projects.view'
+},
   { label: 'RBAC Overview', href: '/admin/rbac', icon: 'Shield', permission: 'security.view' },
   { label: 'Audit Logs', href: '/admin/audit-logs', icon: 'ScrollText', permission: 'security.audit_logs' },
   { label: 'Feature Flags', href: '/admin/feature-flags', icon: 'Flag', permission: 'security.feature_flags' },
   { label: 'Users', href: '/admin/users', icon: 'Users', permission: 'users.view' },
   { label: 'Properties', href: '/admin/properties', icon: 'Building2', permission: 'properties.view' },
-  { label: 'Projects', href: '/admin/projects', icon: 'HardHat', permission: 'projects.view' },
+  {
+label: 'Project Operations',
+href: '/admin/project-operations',
+icon: 'HardHat',
+permission: 'properties.view'
+},
   { label: 'Buy2Flip', href: '/admin/buy2flip', icon: 'TrendingUp', permission: 'buy2flip.view' },
   { label: 'CRM Center', href: '/admin/crm', icon: 'Contact', permission: 'properties.view' },
   { label: 'Media & Docs', href: '/admin/media-docs', icon: 'FolderOpen', permission: 'properties.view' },
