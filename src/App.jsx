@@ -114,15 +114,7 @@ const AuthenticatedApp = () => {
 path="/admin/projects"
 element={<AdminProjects />}
 />
-      <Route
-
-path="/admin/projects/:id"
-
-element={
-<ProjectDashboard/>
-}
-
-/>
+      
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
