@@ -201,11 +201,12 @@ element={<AdminProjects />}
               <GISCommandCenter />
             </RequirePermission>
           } />
-          <Route path="/admin/projects" element={
-            <RequirePermission permission="properties.view">
-              <ProjectOperations />
-            </RequirePermission>
-          } />
+          <Route 
+path="/admin/project-operations" 
+element={
+    <ProjectOperations />
+}
+/>
           <Route path="/admin/crm" element={
             <RequirePermission permission="properties.view">
               <CRMOperations />
