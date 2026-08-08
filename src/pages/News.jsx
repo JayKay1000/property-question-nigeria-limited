@@ -40,7 +40,7 @@ export default function News() {
     <div className="min-h-screen">
       <PageHero
         title="News & Announcements"
-        subtitle="Company updates, project launches, events, and press releases from Property Question Nigeria."
+        subtitle="Company updates, project launches, events, and press releases from Property Question Nigeria Limited."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'News' }]}
       />
 

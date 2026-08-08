@@ -8,7 +8,7 @@ export default function Logo({ className = '', variant = 'dark' }) {
     <Link to="/" className={`flex items-center group ${className}`}>
       <img
         src={LOGO_URL}
-        alt="Property Question Nigeria"
+        alt="Property Question Nigeria Limited"
         className={`h-11 w-auto object-contain transition-transform group-hover:scale-105 ${onLightSurface ? '[filter:invert(1)]' : ''}`}
       />
     </Link>

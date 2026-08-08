@@ -26,7 +26,7 @@ export default function Buy2FlipGateway() {
           </span>
           <h2 className="mt-4 font-heading text-3xl font-bold text-white">Buy2Flip</h2>
           <p className="mt-3 text-white/70">
-            Access Property Question Nigeria's dedicated investment platform. Find verified properties, flip for profit, and grow your real estate portfolio with expert guidance.
+            Access Property Question Nigeria Limited's dedicated investment platform. Find verified properties, flip for profit, and grow your real estate portfolio with expert guidance.
           </p>
           <a href="/buy2flip" target="_blank" rel="noopener noreferrer"
             onClick={() => base44.analytics?.track?.({ eventName: 'buy2flip_launch_click', properties: { source: 'customer_portal' } })}

@@ -13,7 +13,7 @@ export default function DatabaseGovernance() {
     <div>
       <PageHeader
         title="Database Governance Center"
-        subtitle="Schema explorer, data dictionary, and integrity monitoring for the Property Question Nigeria platform"
+        subtitle="Schema explorer, data dictionary, and integrity monitoring for the Property Question Nigeria Limited platform"
         icon={Database}
       />
 

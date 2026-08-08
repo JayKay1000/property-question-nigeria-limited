@@ -136,7 +136,7 @@ export default function PropertySubmit() {
                 Submit Your <span className="text-flame-500">Property</span>
               </h1>
               <p className="mt-4 text-lg text-white/70">
-                List your property for sale, lease, management, or valuation with Property Question Nigeria. Our team handles verification, legal review, and professional marketing.
+                List your property for sale, lease, management, or valuation with Property Question Nigeria Limited. Our team handles verification, legal review, and professional marketing.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button size="lg" onClick={() => setStep(0)} className="bg-flame-500 hover:bg-flame-600">

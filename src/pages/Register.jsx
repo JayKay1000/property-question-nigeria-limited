@@ -351,7 +351,7 @@ export default function Register() {
   /* ── Confirmation ── */
   if (phase === "done") {
     return (
-      <AuthLayout title="Welcome to Property Question Nigeria">
+      <AuthLayout title="Welcome to Property Question Nigeria Limited">
         <ConfirmationScreen accountType={form.accountType} email={form.email} />
       </AuthLayout>
     );

@@ -26,7 +26,7 @@ export default function Testimonials() {
     <div className="min-h-screen">
       <PageHero
         title="Client Testimonials"
-        subtitle="Don't just take our word for it. Hear what our clients say about their experience with Property Question Nigeria."
+        subtitle="Don't just take our word for it. Hear what our clients say about their experience with Property Question Nigeria Limited."
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Testimonials' }]}
       />
 

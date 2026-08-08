@@ -19,7 +19,6 @@ export const dashboardNav = [
   { label: 'Marketing', href: '/dashboard/marketing', icon: Megaphone, permission: 'marketing.view' },
   { label: 'Reports', href: '/dashboard/reports', icon: BarChart3, permission: 'reports.view' },
   { label: 'Administration', href: '/admin/rbac', icon: Shield, permission: 'security.view' },
-  { label: 'Upload Center', href: '/admin/upload', icon: Upload, permission: 'properties.view' },
   { label: 'SOC Dashboard', href: '/admin/soc', icon: ShieldAlert, permission: 'security.view' },
   { label: 'DB Governance', href: '/admin/database', icon: Database, permission: 'security.view' },
   { label: 'Notifications', href: '/admin/notifications', icon: Bell, permission: 'security.view' },

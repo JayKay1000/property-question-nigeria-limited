@@ -14,7 +14,7 @@ export default function SOCDashboard() {
     <div>
       <PageHeader
         title="Security Operations Center"
-        subtitle="Real-time monitoring, governance, and compliance for the Property Question Nigeria platform"
+        subtitle="Real-time monitoring, governance, and compliance for the Property Question Nigeria Limited platform"
         icon={ShieldAlert}
       />
 

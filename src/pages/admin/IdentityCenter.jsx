@@ -15,7 +15,7 @@ export default function IdentityCenter() {
     <div>
       <PageHeader
         title="Identity Management Center"
-        subtitle="Enterprise identity, access, verification, and security management for the Property Question Nigeria platform"
+        subtitle="Enterprise identity, access, verification, and security management for the Property Question Nigeria Limited platform"
         icon={IdCard}
       />
 

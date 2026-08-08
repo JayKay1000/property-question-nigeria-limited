@@ -86,7 +86,7 @@ export default function NotificationSettings() {
       <div className="container-wide section-pad max-w-4xl">
         <PageHeader
           title="Notification Settings"
-          subtitle="Control how and when you receive communications from Property Question Nigeria"
+          subtitle="Control how and when you receive communications from Property Question Nigeria Limited"
           icon={Settings}
         />
         {loading ? (

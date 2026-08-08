@@ -64,7 +64,7 @@ export default function Agents() {
                 Become a <span className="text-flame-500">Verified Agent</span>
               </h1>
               <p className="mt-4 text-lg text-white/70">
-                Join Property Question Nigeria's elite network of real estate professionals. Get verified, certified, and start earning competitive commissions nationwide.
+                Join Property Question Nigeria Limited's elite network of real estate professionals. Get verified, certified, and start earning competitive commissions nationwide.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button asChild size="lg" className="bg-flame-500 hover:bg-flame-600">
