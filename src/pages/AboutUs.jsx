@@ -54,7 +54,7 @@ export default function AboutUs() {
 - Ensuring customer satisfaction
 - Operating with the highest standards of corporate governance
 - Minimising property-related risks
-- 
+- Becoming a globally recognized R
 
  </p>
           </Card>
