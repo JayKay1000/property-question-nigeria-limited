@@ -4,7 +4,6 @@ import Footer from './Footer';
 import ScrollToTopButton from './ScrollToTopButton';
 import CookieConsent from './CookieConsent';
 import FloatingActions from './FloatingActions';
-import BottomTabBar from './BottomTabBar';
 
 export default function Layout() {
   return (
@@ -14,11 +13,9 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <div className="h-16 md:hidden" aria-hidden="true" />
       <FloatingActions />
       <ScrollToTopButton />
       <CookieConsent />
-      <BottomTabBar />
     </div>
   );
 }

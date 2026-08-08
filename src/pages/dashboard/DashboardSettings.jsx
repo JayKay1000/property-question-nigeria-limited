@@ -8,17 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { UserCircle, Save, Loader2, Lock, Bell, Shield, ShieldCheck, AlertTriangle, Trash2 } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
-  AlertDialogCancel,
-} from '@/components/ui/alert-dialog';
+import { UserCircle, Save, Loader2, Lock, Bell, Shield, ShieldCheck } from 'lucide-react';
 
 const NIGERIAN_STATES = [
   'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue',
@@ -32,9 +22,6 @@ export default function DashboardSettings() {
   const { user, checkUserAuth } = useAuth();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [deleteStep, setDeleteStep] = useState(1);
-  const [deleting, setDeleting] = useState(false);
   const [form, setForm] = useState({
     phone: user?.phone || '',
     address: user?.address || '',
@@ -49,25 +36,6 @@ export default function DashboardSettings() {
   });
 
   const set = (key, value) => setForm((p) => ({ ...p, [key]: value }));
-
-  const handleDeleteAccount = async () => {
-    setDeleting(true);
-    try {
-      await base44.auth.updateMe({
-        phone: '', address: '', state: '', lga: '', city: '', occupation: '',
-        preferred_contact_method: 'email',
-        consent_marketing: false, consent_data_processing: false, consent_third_party: false,
-        account_deletion_requested: true,
-      });
-      toast({ title: 'Account data deleted', description: 'Your profile data has been removed. You will be signed out shortly.' });
-      setDeleteOpen(false);
-      setTimeout(() => base44.auth.logout('/login'), 1500);
-    } catch (err) {
-      toast({ title: 'Failed to delete', description: err.message || 'Please try again.', variant: 'destructive' });
-    } finally {
-      setDeleting(false);
-    }
-  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -206,42 +174,6 @@ export default function DashboardSettings() {
         </div>
         <p className="mt-2 text-xs text-muted-foreground">Multi-factor authentication and password changes are managed through your account provider.</p>
       </div>
-
-      {/* Danger Zone */}
-      <div className="rounded-2xl border border-error/30 bg-error/5 p-5 shadow-card">
-        <h3 className="mb-2 flex items-center gap-2 font-heading text-base font-bold text-error"><AlertTriangle className="h-4 w-4" /> Danger Zone</h3>
-        <p className="mb-4 text-sm text-muted-foreground">Permanently delete your account data. This action cannot be undone — your profile, contact details, and preferences will be removed and you will be signed out.</p>
-        <Button variant="destructive" onClick={() => { setDeleteStep(1); setDeleteOpen(true); }}>
-          <Trash2 className="mr-1.5 h-4 w-4" /> Delete My Account
-        </Button>
-      </div>
-
-      <AlertDialog open={deleteOpen} onOpenChange={(o) => { setDeleteOpen(o); if (!o) setDeleteStep(1); }}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{deleteStep === 1 ? 'Delete account data?' : 'Final confirmation'}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {deleteStep === 1
-                ? 'This will permanently remove your profile data, contact details, and communication preferences. You will be signed out immediately after. This action cannot be undone.'
-                : 'Are you absolutely sure? This is your last chance to cancel. Clicking "Delete My Account" below will immediately erase your data and sign you out.'}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            {deleteStep === 1 ? (
-              <AlertDialogAction onClick={() => setDeleteStep(2)}>Continue</AlertDialogAction>
-            ) : (
-              <AlertDialogAction
-                onClick={handleDeleteAccount}
-                disabled={deleting}
-                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              >
-                {deleting ? <><Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> Deleting...</> : 'Delete My Account'}
-              </AlertDialogAction>
-            )}
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
 
       {/* Save */}
       <div className="flex items-center justify-between rounded-2xl border border-brand-100 bg-white p-4 shadow-card">

@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`pt-safe fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           transparent ? 'bg-transparent py-4' : 'bg-white/90 backdrop-blur-xl shadow-premium py-2.5'
         }`}
         onMouseLeave={() => setActiveMenu(null)}

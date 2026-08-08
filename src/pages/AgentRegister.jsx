@@ -149,25 +149,30 @@ export default function AgentRegister() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <Label className="mb-1.5 block text-sm text-brand-900">State of Residence *</Label>
-                    <Select value={form.resident_state} onValueChange={(v) => { set('resident_state', v); set('resident_lga', ''); }}>
-                      <SelectTrigger className="h-10 bg-ice-50"><SelectValue placeholder="Select State" /></SelectTrigger>
-                      <SelectContent>
-                        {Object.keys(nigeriaStates).map((state) => (
-                          <SelectItem key={state} value={state}>{state}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <select
+                      className="h-10 w-full rounded-md border bg-ice-50 px-3"
+                      value={form.resident_state}
+                      onChange={(e) => { set('resident_state', e.target.value); set('resident_lga', ''); }}
+                    >
+                      <option value="">Select State</option>
+                      {Object.keys(nigeriaStates).map((state) => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <Label className="mb-1.5 block text-sm text-brand-900">Local Government Area *</Label>
-                    <Select disabled={!form.resident_state} value={form.resident_lga} onValueChange={(v) => set('resident_lga', v)}>
-                      <SelectTrigger className="h-10 bg-ice-50 disabled:opacity-50"><SelectValue placeholder="Select LGA" /></SelectTrigger>
-                      <SelectContent>
-                        {form.resident_state && nigeriaStates[form.resident_state]?.map((lga) => (
-                          <SelectItem key={lga} value={lga}>{lga}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <select
+                      className="h-10 w-full rounded-md border bg-ice-50 px-3 disabled:opacity-50"
+                      disabled={!form.resident_state}
+                      value={form.resident_lga}
+                      onChange={(e) => set('resident_lga', e.target.value)}
+                    >
+                      <option value="">Select LGA</option>
+                      {form.resident_state && nigeriaStates[form.resident_state]?.map((lga) => (
+                        <option key={lga} value={lga}>{lga}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div>

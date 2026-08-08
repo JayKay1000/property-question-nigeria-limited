@@ -35,7 +35,7 @@ export default function DashboardTopbar({ onMobileMenu, onSearchClick }) {
   const initials = userName.charAt(0).toUpperCase();
 
   return (
-    <header className="pt-safe sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-white/90 px-4 backdrop-blur-xl sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-white/90 px-4 backdrop-blur-xl sm:px-6">
       <button
         onClick={onMobileMenu}
         className="rounded-lg p-2 text-brand-800 hover:bg-brand-50 lg:hidden"
