@@ -85,6 +85,7 @@ import ProtectedRoute from '@/components/ProtectedRoute';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
 import MyProperties from '@/pages/dashboard/MyProperties';
+import DashboardSettings from '@/pages/dashboard/DashboardSettings';
 import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
 import AdminProjects from "@/pages/ProjectManager";
 import AgentPortal from "@/pages/AgentPortal";
@@ -172,6 +173,7 @@ element={<AgentPortal/>}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/properties" element={<MyProperties />} />
+          <Route path="/dashboard/settings" element={<DashboardSettings />} />
           <Route path="/dashboard/*" element={<ModulePlaceholder />} />
           <Route path="/admin/rbac" element={
             <RequirePermission permission="security.view">
