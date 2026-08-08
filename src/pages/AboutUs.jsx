@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import PageHero from '@/components/marketing/PageHero';
 import CTASection from '@/components/marketing/CTASection';
+import LeadershipTeam from '@/components/about/LeadershipTeam';
 import { Card } from '@/components/ui/card';
 import { Target, Eye, Heart, Award, MapPin, TrendingUp, Users, Building2 } from 'lucide-react';
 import { formatDate } from '@/lib/marketing-utils';
@@ -112,33 +113,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Leadership Team */}
-      <section className="bg-ice-50 section-pad py-16 lg:py-24">
-        <div className="container-wide">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-3">Leadership Team</h2>
-          <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">Meet the experienced professionals guiding our vision.</p>
-          {loading ? (
-            <div className="flex justify-center"><div className="w-8 h-8 border-4 border-flame-200 border-t-flame-500 rounded-full animate-spin" /></div>
-          ) : team.length === 0 ? (
-            <p className="text-center text-muted-foreground">Leadership profiles coming soon.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {team.map((member) => (
-                <Card key={member.id} className="overflow-hidden group hover:shadow-card-hover transition-shadow">
-                  <div className="aspect-square bg-gradient-to-br from-brand-100 to-ice-100 overflow-hidden">
-                    {member.photo_url && <img src={member.photo_url} alt={member.full_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
-                  </div>
-                  <div className="p-5 text-center">
-                    <h3 className="font-heading font-semibold">{member.full_name}</h3>
-                    <p className="text-sm text-flame-600 font-medium mb-2">{member.position}</p>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{member.bio}</p>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <LeadershipTeam />
 
       {/* Awards */}
       {awards.length > 0 && (
