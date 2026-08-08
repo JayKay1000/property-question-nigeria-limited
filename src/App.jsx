@@ -64,6 +64,7 @@ import MediaReviewCenter from '@/pages/admin/MediaReviewCenter';
 import DocumentVerificationHub from '@/pages/admin/DocumentVerificationHub';
 import JobPostings from '@/pages/admin/JobPostings';
 import CSRProjects from '@/pages/admin/CSRProjects';
+import ContactSubmissions from '@/pages/admin/ContactSubmissions';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -331,6 +332,11 @@ element={
           <Route path="/admin/csr-projects" element={
             <RequirePermission permission="security.view">
               <CSRProjects />
+            </RequirePermission>
+          } />
+          <Route path="/admin/contact-submissions" element={
+            <RequirePermission permission="security.view">
+              <ContactSubmissions />
             </RequirePermission>
           } />
         </Route>

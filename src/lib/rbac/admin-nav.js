@@ -41,6 +41,7 @@ permission: 'properties.view'
   { label: 'Blog', href: '/admin/blog', icon: 'FileText', permission: 'blog.view' },
   { label: 'Careers', href: '/admin/job-postings', icon: 'Briefcase', permission: 'security.view' },
   { label: 'CSR Initiatives', href: '/admin/csr-projects', icon: 'HeartHandshake', permission: 'security.view' },
+  { label: 'Contact Inbox', href: '/admin/contact-submissions', icon: 'Inbox', permission: 'security.view' },
   { label: 'Reports', href: '/admin/reports', icon: 'BarChart3', permission: 'reports.view' },
   { label: 'Settings', href: '/admin/settings', icon: 'Settings', permission: 'settings.view' },
 ];
