@@ -48,7 +48,7 @@ export default function AboutUs() {
           <Card className="p-8 lg:p-10 border-l-4 border-l-flame-500">
             <Target className="w-10 h-10 text-flame-500 mb-4" />
             <h2 className="text-2xl font-heading font-bold mb-3">Our Mission</h2>
-            <p className="text-muted-foreground leading-relaxed">To become a pillar o
+            <p className="text-muted-foreground leading-relaxed">To become a pillar of success and unparallel 
 
 
             </p>
