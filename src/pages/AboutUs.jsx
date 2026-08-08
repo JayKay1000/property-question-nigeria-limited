@@ -52,7 +52,8 @@ export default function AboutUs() {
 
 - Reaching a minimum of 100,000 potential clients daily.
 - Ensuring customer satisfaction
-- Operating with the h
+- Operating with the highest standards of corporate governance
+-M
 
  </p>
           </Card>
@@ -90,8 +91,7 @@ export default function AboutUs() {
       <section className="section-pad py-16 lg:py-24">
         <div className="container-wide">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">Our Journey</h2>
-          {loading ? <div className="flex justify-center"><div className="w-8 h-8 border-4 border-flame-200 border-t-flame-500 rounded-full animate-spin" /></div> :
-          milestones.length === 0 ?
+          {loading ? <div className="flex justify-center"><div className="w-8 h-8 border-4 border-flame-200 border-t-flame-500 rounded-full animate-spin" /></div> : milestones.length === 0 ?
           <p className="text-center text-muted-foreground">Milestones will be displayed here.</p> :
 
           <div className="relative max-w-4xl mx-auto">
