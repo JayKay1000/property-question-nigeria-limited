@@ -39,6 +39,7 @@ permission: 'properties.view'
   { label: 'AI Center', href: '/admin/ai', icon: 'Sparkles', permission: 'security.view' },
   { label: 'Finance', href: '/admin/finance', icon: 'Wallet', permission: 'security.view' },
   { label: 'Blog', href: '/admin/blog', icon: 'FileText', permission: 'blog.view' },
+  { label: 'Careers', href: '/admin/job-postings', icon: 'Briefcase', permission: 'security.view' },
   { label: 'Reports', href: '/admin/reports', icon: 'BarChart3', permission: 'reports.view' },
   { label: 'Settings', href: '/admin/settings', icon: 'Settings', permission: 'settings.view' },
 ];

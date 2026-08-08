@@ -62,6 +62,7 @@ import AgentApprovals from '@/pages/admin/AgentApprovals';
 import AdminPropertyReview from '@/pages/AdminPropertyReview';
 import MediaReviewCenter from '@/pages/admin/MediaReviewCenter';
 import DocumentVerificationHub from '@/pages/admin/DocumentVerificationHub';
+import JobPostings from '@/pages/admin/JobPostings';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -319,6 +320,11 @@ element={
           <Route path="/admin/document-verification" element={
             <RequirePermission permission="security.view">
               <DocumentVerificationHub />
+            </RequirePermission>
+          } />
+          <Route path="/admin/job-postings" element={
+            <RequirePermission permission="security.view">
+              <JobPostings />
             </RequirePermission>
           } />
         </Route>
