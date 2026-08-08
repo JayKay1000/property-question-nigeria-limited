@@ -3,7 +3,7 @@ import { MessageCircle } from 'lucide-react';
 export default function FloatingActions() {
   return (
     <a
-      href="https://wa.me/2348000000000"
+      href="https://wa.me/2349033393000"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 left-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white shadow-premium-lg transition-transform hover:scale-110"
