@@ -50,7 +50,8 @@ export default function AboutUs() {
             <h2 className="text-2xl font-heading font-bold mb-3">Our Mission</h2>
             <p className="text-muted-foreground leading-relaxed">To become a pillar of success and unparalleled authority by: 
 
-- Reaching a minimum of 100,000 p daily
+- Reaching a minimum of 100,000 potential clients daily.
+- 
 
  </p>
           </Card>
@@ -79,8 +80,7 @@ export default function AboutUs() {
                 </div>
                 <h3 className="text-lg font-heading font-semibold mb-2">{v.title}</h3>
                 <p className="text-sm text-muted-foreground">{v.description}</p>
-              </Card>
-            )}
+              </Card>)}
           </div>
         </div>
       </section>
