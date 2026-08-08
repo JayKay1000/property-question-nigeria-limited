@@ -86,6 +86,16 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import DashboardHome from '@/pages/dashboard/DashboardHome';
 import MyProperties from '@/pages/dashboard/MyProperties';
 import DashboardSettings from '@/pages/dashboard/DashboardSettings';
+import Buy2FlipManager from '@/pages/dashboard/Buy2FlipManager';
+import LeadsManager from '@/pages/dashboard/LeadsManager';
+import ConstructionManager from '@/pages/dashboard/ConstructionManager';
+import PropertyManagement from '@/pages/dashboard/PropertyManagement';
+import CustomersManager from '@/pages/dashboard/CustomersManager';
+import SupportCenter from '@/pages/dashboard/SupportCenter';
+import LegalCenter from '@/pages/dashboard/LegalCenter';
+import FinanceManager from '@/pages/dashboard/FinanceManager';
+import MarketingManager from '@/pages/dashboard/MarketingManager';
+import ReportsCenter from '@/pages/dashboard/ReportsCenter';
 import ModulePlaceholder from '@/pages/dashboard/ModulePlaceholder';
 import AdminProjects from "@/pages/ProjectManager";
 import AgentPortal from "@/pages/AgentPortal";
@@ -174,6 +184,16 @@ element={<AgentPortal/>}
           <Route path="/dashboard" element={<DashboardHome />} />
           <Route path="/dashboard/properties" element={<MyProperties />} />
           <Route path="/dashboard/settings" element={<DashboardSettings />} />
+          <Route path="/dashboard/buy2flip" element={<Buy2FlipManager />} />
+          <Route path="/dashboard/leads" element={<LeadsManager />} />
+          <Route path="/dashboard/construction" element={<ConstructionManager />} />
+          <Route path="/dashboard/management" element={<PropertyManagement />} />
+          <Route path="/dashboard/customers" element={<CustomersManager />} />
+          <Route path="/dashboard/support" element={<SupportCenter />} />
+          <Route path="/dashboard/legal" element={<LegalCenter />} />
+          <Route path="/dashboard/finance" element={<FinanceManager />} />
+          <Route path="/dashboard/marketing" element={<MarketingManager />} />
+          <Route path="/dashboard/reports" element={<ReportsCenter />} />
           <Route path="/dashboard/*" element={<ModulePlaceholder />} />
           <Route path="/admin/rbac" element={
             <RequirePermission permission="security.view">
