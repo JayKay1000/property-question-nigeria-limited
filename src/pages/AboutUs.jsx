@@ -50,8 +50,9 @@ export default function AboutUs() {
             <h2 className="text-2xl font-heading font-bold mb-3">Our Mission</h2>
             <p className="text-muted-foreground leading-relaxed">To become a pillar of success and unparalleled authority by: 
 
- 
-            </p>
+- Reaching a minimum of 100,000 p daily
+
+ </p>
           </Card>
           <Card className="p-8 lg:p-10 border-l-4 border-l-ice-500">
             <Eye className="w-10 h-10 text-ice-500 mb-4" />
@@ -72,8 +73,7 @@ export default function AboutUs() {
             <p className="text-muted-foreground max-w-2xl mx-auto">The principles that guide every decision and every relationship.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreValues.map((v) =>
-            <Card key={v.title} className="p-6 text-center hover:shadow-card-hover transition-shadow">
+            {coreValues.map((v) => <Card key={v.title} className="p-6 text-center hover:shadow-card-hover transition-shadow">
                 <div className="w-14 h-14 mx-auto rounded-2xl bg-flame-50 flex items-center justify-center mb-4">
                   <v.icon className="w-7 h-7 text-flame-600" />
                 </div>
