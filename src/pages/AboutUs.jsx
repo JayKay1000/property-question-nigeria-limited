@@ -56,7 +56,7 @@ export default function AboutUs() {
           <Card className="p-8 lg:p-10 border-l-4 border-l-ice-500">
             <Eye className="w-10 h-10 text-ice-500 mb-4" />
             <h2 className="text-2xl font-heading font-bold mb-3">Our Vision</h2>
-            <p className="text-muted-foreground leading-relaxed">To become a household name i
+            <p className="text-muted-foreground leading-relaxed">To become a household name in the Nigerian Real Estate industry.
 
 
             </p>
