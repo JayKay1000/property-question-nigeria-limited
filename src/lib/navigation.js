@@ -16,15 +16,6 @@ export const navItems = [
           ],
         },
         {
-          title: 'By Location',
-          links: [
-            { label: 'Lekki', href: '/properties?loc=lekki' },
-            { label: 'Ikoyi', href: '/properties?loc=ikoyi' },
-            { label: 'Victoria Island', href: '/properties?loc=vi' },
-            { label: 'Abuja', href: '/properties?loc=abuja' },
-          ],
-        },
-        {
           title: 'Special',
           links: [
             { label: 'Luxury Homes', href: '/properties?tag=luxury' },
@@ -52,60 +43,5 @@ export const navItems = [
       ],
     },
   },
-  { label: 'Buy2Flip', key: 'buy2flip', href: '/buy2flip' },
-  {
-    label: 'Resources',
-    key: 'resources',
-    href: '/blog',
-    mega: {
-      sections: [
-        {
-          title: 'Knowledge Hub',
-          links: [
-            { label: 'Blog & Insights', href: '/blog' },
-            { label: 'News & Announcements', href: '/news' },
-            { label: 'Market Reports', href: '/blog?cat=reports' },
-            { label: 'FAQ', href: '/faq' },
-          ],
-        },
-        {
-          title: 'More',
-          links: [
-            { label: 'Testimonials', href: '/testimonials' },
-            { label: 'Careers', href: '/careers' },
-            { label: 'CSR', href: '/csr' },
-            { label: 'Property Tours', href: '/tours' },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    label: 'Company',
-    key: 'company',
-    href: '/about',
-    mega: {
-      sections: [
-        {
-          title: 'Company',
-          links: [
-            { label: 'About Us', href: '/about' },
-            { label: 'Contact Us', href: '/contact' },
-            { label: 'Careers', href: '/careers' },
-            { label: 'CSR', href: '/csr' },
-          ],
-        },
-        {
-          title: 'Legal & Help',
-          links: [
-            { label: 'Privacy Policy', href: '/privacy' },
-            { label: 'Terms & Conditions', href: '/terms' },
-            { label: 'Cookie Policy', href: '/cookies' },
-            { label: 'Accessibility', href: '/accessibility' },
-            { label: 'Sitemap', href: '/sitemap' },
-          ],
-        },
-      ],
-    },
-  },
+  { label: 'Landbanking', key: 'buy2flip', href: '/buy2flip' },
 ];

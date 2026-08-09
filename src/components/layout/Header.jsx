@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { Search, Menu, ChevronDown, Phone, Shield } from 'lucide-react';
+import { Search, Menu, ChevronDown, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/ui/Logo';
 import { navItems } from '@/lib/navigation';
@@ -9,7 +9,6 @@ import { useRBAC } from '@/lib/rbac/useRBAC';
 import MegaMenu from './MegaMenu';
 import MobileNav from './MobileNav';
 import GlobalSearch from './GlobalSearch';
-import NotificationBell from '@/components/notifications/NotificationBell';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
 import { useNotifications } from '@/hooks/useNotifications';
 
@@ -22,7 +21,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
-  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+  const { notifications, markAsRead, markAllAsRead } = useNotifications();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 24);
@@ -76,17 +75,6 @@ export default function Header() {
             >
               <Search className="h-5 w-5" />
             </button>
-            <div className="relative">
-              <NotificationBell unreadCount={unreadCount} onClick={() => setNotifOpen((v) => !v)} />
-            </div>
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className={`hidden md:inline-flex ${transparent ? 'text-white hover:bg-white/10 hover:text-white' : 'text-brand-800'}`}
-            >
-              <Link to="/contact"><Phone className="mr-1.5 h-4 w-4" />Contact</Link>
-            </Button>
             <div className="hidden items-center gap-1.5 md:flex">
               {rbac.isAdmin && (
                 <Button asChild variant="ghost" size="sm" className={transparent ? 'text-white hover:bg-white/10 hover:text-white' : 'text-brand-800'}>
