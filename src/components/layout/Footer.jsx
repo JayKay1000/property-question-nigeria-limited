@@ -37,16 +37,6 @@ const footerLinks = {
     { label: 'Sitemap', href: '/sitemap' }]
 
   },
-  locations: {
-    title: 'Locations',
-    links: [
-    { label: 'Lekki', href: '/properties?loc=lekki' },
-    { label: 'Ikoyi', href: '/properties?loc=ikoyi' },
-    { label: 'Victoria Island', href: '/properties?loc=vi' },
-    { label: 'Abuja', href: '/properties?loc=abuja' },
-    { label: 'Port Harcourt', href: '/properties?loc=ph' }]
-
-  }
 };
 
 
