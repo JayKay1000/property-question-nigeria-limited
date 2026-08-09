@@ -52,7 +52,7 @@ export default function AboutUs() {
 - Reaching a minimum of 100,000 potential clients daily. 
 - Ensuring customer satisfaction 
 - Operating with the highest standards of corporate governance - Minimising property-related risks 
-- Becoming a globally recognized R
+- Becoming a globally recognized Real Estate brand.
 
 
 
