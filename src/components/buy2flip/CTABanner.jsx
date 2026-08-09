@@ -19,7 +19,7 @@ export default function CTABanner({ onContinue }) {
                 onClick={onContinue}
                 className="group inline-flex items-center gap-3 rounded-xl bg-flame-500 px-8 py-4 text-base font-heading font-semibold text-white shadow-glow-flame transition-all hover:bg-flame-600 hover:shadow-lg active:scale-[0.98] sm:text-lg"
               >
-                Continue to the Official Buy2Flip Platform
+                Continue to Buy2Flip
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
               <p className="mx-auto mt-4 flex max-w-lg items-center justify-center gap-1.5 text-xs text-brand-300">
