@@ -47,31 +47,37 @@ export default function Footer() {
         name: "Facebook",
         url: "https://facebook.com/PropertyQuestionNigeriaLtd",
         icon: FaFacebookF,
+        color: "#1877F2",
     },
     {
         name: "Instagram",
         url: "https://instagram.com/propertyquestionnigeria",
         icon: FaInstagram,
+        color: "linear-gradient(45deg, #F58529, #DD2A7B, #8134AF)",
     },
     {
         name: "LinkedIn",
         url: "https://linkedin.com/company/property-question-nigeria-limited",
         icon: FaLinkedinIn,
+        color: "#0A66C2",
     },
     {
     name: "X",
     url: "https://x.com/pqnl_x",
     icon: FaTwitter,
+    color: "#000000",
 },
     {
         name: "TikTok",
         url: "https://www.tiktok.com/@propertyquestion",
         icon: FaTiktok,
+        color: "#010101",
     },
     {
         name: "YouTube",
         url: "https://www.youtube.com/@propertyquestionnigeria",
         icon: FaYoutube,
+        color: "#FF0000",
     },
 ];
   return (
@@ -136,18 +142,8 @@ export default function Footer() {
         rel="noopener noreferrer"
         aria-label={social.name}
         title={social.name}
-        className="
-          flex
-          h-8
-          w-8
-          items-center
-          justify-center
-          rounded-full
-          bg-white/10
-          text-white
-          transition-colors
-          hover:bg-flame-500
-        "
+        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white transition-opacity hover:opacity-90"
+        style={{ background: social.color }}
       >
         <Icon size={16} />
       </a>
