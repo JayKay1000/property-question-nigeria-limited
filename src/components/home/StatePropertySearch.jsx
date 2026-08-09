@@ -111,7 +111,7 @@ export default function StatePropertySearch() {
               </div>
               <div>
                 <h2 className="font-heading text-xl font-bold text-brand-900 sm:text-2xl">Find Properties by State</h2>
-                <p className="text-sm text-muted-foreground">Select a state to explore verifie listings </p>
+                <p className="text-sm text-muted-foreground">Select a state to explore verified listings </p>
               </div>
             </div>
 
