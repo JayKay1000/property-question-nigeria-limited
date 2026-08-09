@@ -35,9 +35,9 @@ export const navItems = [
         {
           title: 'Estate Projects',
           links: [
-            { label: 'Ongoing', href: '/projects?status=ongoing' },
-            { label: 'Completed', href: '/projects?status=completed' },
-            { label: 'Upcoming', href: '/projects?status=upcoming' },
+            { label: 'Colony', href: '/projects?loc=Colony' },
+            { label: 'Otunba Heritage Gardens', href: '/projects?loc=Otunba Heritage Gardens' },
+            { label: 'Hillcrest Oaks Gardens', href: '/projects?loc=Hillcrest Oaks Gardens' },
           ],
         },
       ],

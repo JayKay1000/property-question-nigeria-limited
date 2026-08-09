@@ -41,9 +41,9 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
             
-            The Future of
+            Buying Or Selling
             <span className="block bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">
-              Nigerian Real Estate
+              A Property?
             </span>
           </motion.h1>
 
@@ -63,7 +63,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center gap-4">
             
             <Button asChild size="lg" className="bg-flame-500 hover:bg-flame-600 text-white shadow-glow-flame">
-              <Link to="/properties">Explore Properties <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              <Link to="/properties">Search Properties <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </motion.div>
 
