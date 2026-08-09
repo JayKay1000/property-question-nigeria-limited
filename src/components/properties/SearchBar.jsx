@@ -83,6 +83,12 @@ export default function SearchBar({ filters, setFilters, states, propertyTypes, 
         <span className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
           <Tag className="h-3.5 w-3.5" /> Popular:
         </span>
+        <button onClick={() => setFilters({ ...filters, jointVenture: !filters.jointVenture })}
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+            filters.jointVenture ? 'bg-flame-500 text-white shadow-md' : 'border border-brand-200 bg-ice-50 text-brand-700 hover:bg-flame-50 hover:text-flame-600 hover:border-flame-300'
+          }`}>
+          Joint Venture
+        </button>
         {['Luxury', 'Lekki', 'Abuja', 'Land', 'New Developments'].map((tag) => (
           <button key={tag} onClick={() => setFilters({ ...filters, keyword: tag })}
             className="rounded-full border border-brand-200 bg-ice-50 px-3 py-1 text-xs font-medium text-brand-700 transition-colors hover:bg-flame-50 hover:text-flame-600 hover:border-flame-300">

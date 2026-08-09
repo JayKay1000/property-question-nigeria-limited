@@ -183,6 +183,10 @@
       "type": "boolean",
       "default": false
     },
+    "is_joint_venture": {
+      "type": "boolean",
+      "default": false
+    },
     "approved_property_id": {
       "type": "string"
     },

@@ -128,6 +128,7 @@ export default function FilterPanel({ filters, setFilters, propertyTypes, onClea
             { key: 'featured', label: 'Featured Only' },
             { key: 'exclusive', label: 'Exclusive Listings' },
             { key: 'verified', label: 'Verified Properties' },
+            { key: 'jointVenture', label: 'Joint Venture' },
           ].map((f) => (
             <label key={f.key} className="flex cursor-pointer items-center gap-2 text-sm text-brand-700">
               <Checkbox checked={!!filters[f.key]} onCheckedChange={() => toggleFlag(f.key)} />

@@ -15,6 +15,7 @@ import {
 import { COMMON_AMENITIES, formatPrice } from '@/lib/property-utils';
 import YoutubeLinksInput from '@/components/media/YoutubeLinksInput';
 import PanoramaUploader from '@/components/media/PanoramaUploader';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const blank = {
   title: '', short_description: '', description: '', price: '',
@@ -24,6 +25,7 @@ const blank = {
   property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished',
   state: '', city: '', district: '', address_line: '',
   amenities: [], highlights: '',
+  is_joint_venture: false,
 };
 
 export default function PropertyListingForm({ open, onOpenChange, onSaved, editing, user, isAgent }) {
@@ -61,6 +63,7 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
         address_line: editing.address_line || '',
         amenities: editing.amenities || [],
         highlights: Array.isArray(editing.highlights) ? editing.highlights.join(', ') : (editing.highlights || ''),
+        is_joint_venture: editing.is_joint_venture || false,
       });
     } else {
       setForm(blank);
@@ -124,6 +127,7 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
         address_line: form.address_line,
         amenities: form.amenities || [],
         highlights: (form.highlights || '').split(',').map((s) => s.trim()).filter(Boolean),
+        is_joint_venture: !!form.is_joint_venture,
         featured_image_url,
         image_urls,
         video_urls: (youtubeLinks || []).map((u) => u.trim()).filter(Boolean),
@@ -265,6 +269,11 @@ export default function PropertyListingForm({ open, onOpenChange, onSaved, editi
             <Label>Highlights (comma separated)</Label>
             <Input value={form.highlights} onChange={(e) => set('highlights', e.target.value)} placeholder="e.g. Borehole, Solar power, C of O" />
           </div>
+
+          <label className="flex cursor-pointer items-center gap-2.5">
+            <Checkbox checked={!!form.is_joint_venture} onCheckedChange={(c) => set('is_joint_venture', c)} />
+            <span className="text-sm text-brand-900">This is a Joint Venture property</span>
+          </label>
 
           <div>
             <Label>Amenities</Label>

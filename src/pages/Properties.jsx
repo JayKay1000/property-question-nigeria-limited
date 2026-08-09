@@ -19,7 +19,7 @@ const defaultFilters = {
   priceRange: '', priceMin: undefined, priceMax: undefined,
   bedrooms: undefined, bathrooms: undefined,
   classification: undefined, amenities: [],
-  featured: false, exclusive: false, verified: false,
+  featured: false, exclusive: false, verified: false, jointVenture: false,
 };
 
 export default function Properties() {
@@ -108,6 +108,7 @@ export default function Properties() {
     if (f.featured) result = result.filter((p) => p.is_featured);
     if (f.exclusive) result = result.filter((p) => p.is_exclusive);
     if (f.verified) result = result.filter((p) => p.verified);
+    if (f.jointVenture) result = result.filter((p) => p.is_joint_venture);
 
     switch (sort) {
       case 'newest': result.sort((a, b) => new Date(b.created_date) - new Date(a.created_date)); break;
@@ -156,7 +157,7 @@ export default function Properties() {
     filters.keyword, filters.state, filters.lga, filters.propertyType, filters.purpose,
     filters.priceRange, filters.bedrooms, filters.bathrooms, filters.classification,
     ...(filters.amenities || []),
-    filters.featured && 'featured', filters.exclusive && 'exclusive', filters.verified && 'verified',
+    filters.featured && 'featured', filters.exclusive && 'exclusive', filters.verified && 'verified', filters.jointVenture && 'jointVenture',
   ].filter(Boolean).length;
 
   return (
