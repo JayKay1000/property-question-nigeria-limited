@@ -2,16 +2,16 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin } from "lucide-react";
 
 import {
-    FaFacebookF,
-    FaInstagram,
-    FaLinkedinIn,
-    FaYoutube,
-    FaTiktok
-} from "react-icons/fa";
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+  FaTiktok } from
+"react-icons/fa";
 
 import {
-    FaTwitter
-} from "react-icons/fa";
+  FaTwitter } from
+"react-icons/fa";
 import Logo from '@/components/ui/Logo';
 import Reveal from '@/components/ui/Reveal';
 import NewsletterSignup from '@/components/marketing/NewsletterSignup';
@@ -36,50 +36,50 @@ const footerLinks = {
     { label: 'Testimonials', href: '/testimonials' },
     { label: 'Sitemap', href: '/sitemap' }]
 
-  },
+  }
 };
 
 
 
 export default function Footer() {
   const socialLinks = [
-    {
-        name: "Facebook",
-        url: "https://facebook.com/PropertyQuestionNigeriaLtd",
-        icon: FaFacebookF,
-        color: "#1877F2",
-    },
-    {
-        name: "Instagram",
-        url: "https://instagram.com/propertyquestionnigeria",
-        icon: FaInstagram,
-        color: "linear-gradient(45deg, #F58529, #DD2A7B, #8134AF)",
-    },
-    {
-        name: "LinkedIn",
-        url: "https://linkedin.com/company/property-question-nigeria-limited",
-        icon: FaLinkedinIn,
-        color: "#0A66C2",
-    },
-    {
+  {
+    name: "Facebook",
+    url: "https://facebook.com/PropertyQuestionNigeriaLtd",
+    icon: FaFacebookF,
+    color: "#1877F2"
+  },
+  {
+    name: "Instagram",
+    url: "https://instagram.com/propertyquestionnigeria",
+    icon: FaInstagram,
+    color: "linear-gradient(45deg, #F58529, #DD2A7B, #8134AF)"
+  },
+  {
+    name: "LinkedIn",
+    url: "https://linkedin.com/company/property-question-nigeria-limited",
+    icon: FaLinkedinIn,
+    color: "#0A66C2"
+  },
+  {
     name: "X",
     url: "https://x.com/pqnl_x",
     icon: FaTwitter,
-    color: "#000000",
-},
-    {
-        name: "TikTok",
-        url: "https://www.tiktok.com/@propertyquestion",
-        icon: FaTiktok,
-        color: "#010101",
-    },
-    {
-        name: "YouTube",
-        url: "https://www.youtube.com/@propertyquestionnigeria",
-        icon: FaYoutube,
-        color: "#FF0000",
-    },
-];
+    color: "#000000"
+  },
+  {
+    name: "TikTok",
+    url: "https://www.tiktok.com/@propertyquestion",
+    icon: FaTiktok,
+    color: "#010101"
+  },
+  {
+    name: "YouTube",
+    url: "https://www.youtube.com/@propertyquestionnigeria",
+    icon: FaYoutube,
+    color: "#FF0000"
+  }];
+
   return (
     <footer className="relative overflow-hidden bg-brand-900 text-white">
       <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-flame-500/10 blur-3xl" />
@@ -100,7 +100,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 py-12 md:grid-cols-2 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <Logo variant="light" />
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">Property Question Nigeria Limited is a premier property company transforming Nigeria's real estate landscape through technology, transparency, and trust.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
 
             </p>
             <div className="mt-6 space-y-2 text-sm text-white/70">
@@ -132,24 +132,24 @@ export default function Footer() {
 
   {socialLinks.map((social) => {
 
-    const Icon = social.icon;
+              const Icon = social.icon;
 
-    return (
-      <a
-        key={social.name}
-        href={social.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={social.name}
-        title={social.name}
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white transition-opacity hover:opacity-90"
-        style={{ background: social.color }}
-      >
+              return (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                  title={social.name}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white transition-opacity hover:opacity-90"
+                  style={{ background: social.color }}>
+                  
         <Icon size={16} />
-      </a>
-    );
+      </a>);
 
-  })}
+
+            })}
 
 </div>
           <div className="flex items-center gap-4 text-xs text-white/50">
