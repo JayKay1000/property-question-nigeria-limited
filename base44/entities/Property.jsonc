@@ -172,6 +172,10 @@
       "type": "boolean",
       "default": true
     },
+    "is_joint_venture": {
+      "type": "boolean",
+      "default": false
+    },
     "owner_id": {
       "type": "string"
     },
@@ -208,11 +212,6 @@
       "user_condition": {
         "role": "admin"
       }
-    },
-    "displayOrder": {
-      "type": "number",
-      "title": "Display Order",
-      "default": 9999
     },
     "read": true,
     "update": {
