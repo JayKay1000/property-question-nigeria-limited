@@ -110,8 +110,8 @@ export default function StatePropertySearch() {
                 <MapPin className="h-6 w-6 text-brand-700" />
               </div>
               <div>
-                <h2 className="font-heading text-xl font-bold text-brand-900 sm:text-2xl">Find Properties In Nigeria</h2>
-                <p className="text-sm text-muted-foreground">Select a state to explore available listings from our company and verified agents</p>
+                <h2 className="font-heading text-xl font-bold text-brand-900 sm:text-2xl">Find Properties by State</h2>
+                <p className="text-sm text-muted-foreground">Select a state to explore verifie listings </p>
               </div>
             </div>
 
