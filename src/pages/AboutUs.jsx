@@ -49,14 +49,14 @@ export default function AboutUs() {
             <Target className="w-10 h-10 text-flame-500 mb-4" />
             <h2 className="text-2xl font-heading font-bold mb-3">Our Mission</h2>
             <p className="text-muted-foreground leading-relaxed">To become a pillar of success and unparalleled authority by: 
-
-- Reaching a minimum of 100,000 potential clients daily.
-- Ensuring customer satisfaction
-- Operating with the highest standards of corporate governance
-- Minimising property-related risks
+- Reaching a minimum of 100,000 potential clients daily. 
+- Ensuring customer satisfaction 
+- Operating with the highest standards of corporate governance - Minimising property-related risks 
 - Becoming a globally recognized R
 
- </p>
+
+
+            </p>
           </Card>
           <Card className="p-8 lg:p-10 border-l-4 border-l-ice-500">
             <Eye className="w-10 h-10 text-ice-500 mb-4" />
