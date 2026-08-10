@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Image } from '@/components/ui/image';
 import ProjectContentUpload from '@/components/admin/projects/ProjectContentUpload';
 import ProjectContentList from '@/components/admin/projects/ProjectContentList';
+import ProjectDescriptionEditor from '@/components/admin/projects/ProjectDescriptionEditor';
 
 const QUICK_PROJECTS = ['Colony Enclave', 'Otunba Heritage Gardens', 'Hillcrest Oaks Gardens'];
 
@@ -98,6 +99,9 @@ export default function ProjectContentManager() {
               </div>
             </div>
 
+            <div className="lg:col-span-3">
+              <ProjectDescriptionEditor project={selected} onSaved={refresh} />
+            </div>
             <div className="lg:col-span-1">
               <ProjectContentUpload projectId={selected.id} projectName={selected.name} onUploaded={refresh} />
             </div>
