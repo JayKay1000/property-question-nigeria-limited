@@ -53,7 +53,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
             
-            From property sales and construction to estate development and Buy2Flip investments — we're redefining how Nigerians buy, sell, and invest in real estate.
+            We make Buying, Selling, Developing, and Managing property simpler, clearer, and more secure. Our goal is to give you confidence from the moment you make an enquiry to the moment you take possession.
           </motion.p>
 
           <motion.div
