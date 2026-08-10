@@ -126,7 +126,7 @@ export default function Footer() {
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row md:pl-16 md:pr-16">
           <p className="text-xs text-white/50">© 2026 Property Question Nigeria Limited. All rights reserved.</p>
           <div className="flex items-center gap-3">
 
