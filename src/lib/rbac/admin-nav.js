@@ -26,11 +26,12 @@ permission: 'projects.view'
   { label: 'Users', href: '/admin/users', icon: 'Users', permission: 'users.view' },
   { label: 'Properties', href: '/admin/properties', icon: 'Building2', permission: 'properties.view' },
   {
-label: 'Project Operations',
-href: '/admin/project-operations',
-icon: 'HardHat',
-permission: 'properties.view'
-},
+  label: 'Project Operations',
+  href: '/admin/project-operations',
+  icon: 'HardHat',
+  permission: 'properties.view'
+  },
+  { label: 'Project Content', href: '/admin/project-content', icon: 'Upload', permission: 'properties.view' },
   { label: 'Buy2Flip', href: '/admin/buy2flip', icon: 'TrendingUp', permission: 'buy2flip.view' },
   { label: 'CRM Center', href: '/admin/crm', icon: 'Contact', permission: 'properties.view' },
   { label: 'Media & Docs', href: '/admin/media-docs', icon: 'FolderOpen', permission: 'properties.view' },

@@ -41,6 +41,7 @@ import IdentityCenter from '@/pages/admin/IdentityCenter';
 import PropertyIntelligence from '@/pages/admin/PropertyIntelligence';
 import GISCommandCenter from '@/pages/admin/GISCommandCenter';
 import ProjectOperations from '@/pages/admin/ProjectOperations';
+import ProjectContentManager from '@/pages/admin/ProjectContentManager';
 import CRMOperations from '@/pages/admin/CRMOperations';
 import MediaDocumentCenter from '@/pages/admin/MediaDocumentCenter';
 import OperationsIntelligenceCenter from '@/pages/admin/OperationsIntelligenceCenter';
@@ -241,6 +242,11 @@ element={
     <ProjectOperations />
 }
 />
+          <Route path="/admin/project-content" element={
+            <RequirePermission permission="properties.view">
+              <ProjectContentManager />
+            </RequirePermission>
+          } />
           <Route path="/admin/crm" element={
             <RequirePermission permission="properties.view">
               <CRMOperations />
