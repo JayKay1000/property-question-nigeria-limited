@@ -2,9 +2,7 @@ import {useState} from "react";
 import {base44} from "@/api/base44Client";
 
 
-export default function ProjectMediaUploader({
-projectId
-}){
+export default function ProjectMediaUploader({ projectId, project, onUploaded }) {
 
 
 const [files,setFiles]=useState([]);
@@ -53,35 +51,18 @@ throw new Error(
 
 
 await base44.entities.ProjectMedia.create({
-
-
-project_id:projectId,
-
-
-media_url:
-uploaded.file_url,
-
-
-media_type:
-
-file.type.includes("video")
-
-?
-
-"video"
-
-:
-
-"image",
-
-
-title:file.name,
-
-
-visibility:"public"
-
-
+  project_id: projectId,
+  media_url: uploaded.file_url,
+  media_type: file.type.includes("video") ? "video" : "image",
+  title: file.name,
+  visibility: "public",
 });
+
+// First uploaded image becomes the project's display (featured) image.
+if (!file.type.includes("video") && !project?.featured_image_url) {
+  await base44.entities.Project.update(projectId, { featured_image_url: uploaded.file_url });
+  onUploaded?.();
+}
 
 
 }

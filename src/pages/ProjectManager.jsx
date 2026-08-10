@@ -235,7 +235,7 @@ export default function AdminProjects() {
                 <h2 className="text-xl font-bold">Manage Media — {mediaProject.name}</h2>
                 <Button variant="ghost" size="sm" onClick={() => setMediaProject(null)}>Close</Button>
               </div>
-              <ProjectMediaUploader projectId={mediaProject.id} />
+              <ProjectMediaUploader projectId={mediaProject.id} project={mediaProject} onUploaded={loadProjects} />
               <div className="mt-4">
                 <ProjectMediaManager projectId={mediaProject.id} />
               </div>
