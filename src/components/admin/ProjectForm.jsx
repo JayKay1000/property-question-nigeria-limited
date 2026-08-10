@@ -155,6 +155,12 @@ export default function ProjectForm({ project, close, saved }) {
 
     setUploadingMedia(true);
     try {
+      // Re-fetch the live project so we know whether a display (featured)
+      // image is already set — the first image uploaded should be the display
+      // picture, but subsequent uploads must never override it.
+      const live = await base44.entities.Project.get(projectId);
+      let featuredSet = !!live?.featured_image_url;
+
       for (const item of pendingMedia) {
         const uploaded = await base44.integrations.Core.UploadFile({
           file: item.file,
@@ -171,6 +177,13 @@ export default function ProjectForm({ project, close, saved }) {
           title: item.file.name,
           visibility: "public",
         });
+
+        if (!item.isVideo && !featuredSet) {
+          await base44.entities.Project.update(projectId, {
+            featured_image_url: uploaded.file_url,
+          });
+          featuredSet = true;
+        }
       }
 
       pendingMedia.forEach((item) => URL.revokeObjectURL(item.previewUrl));
