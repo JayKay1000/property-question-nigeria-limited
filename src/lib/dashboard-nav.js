@@ -3,10 +3,12 @@ import {
   Briefcase, UserCog, Headphones, Scale, Wallet,
   Megaphone, BarChart3, Shield, ShieldAlert, Database, Settings, Bell, FileText,
   Workflow, BrainCircuit, Plug, CalendarDays, LayoutGrid, Film, ShieldCheck, Upload, FileArchive, FileCheck,
+  FolderOpen,
 } from 'lucide-react';
 
 export const dashboardNav = [
   { label: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  { label: 'Projects', href: '/admin/projects', icon: FolderOpen, permission: 'properties.view' },
   { label: 'Properties', href: '/dashboard/properties', icon: Building2, permission: 'properties.view' },
   { label: 'Buy2Flip', href: '/dashboard/buy2flip', icon: TrendingUp, permission: 'buy2flip.view' },
   { label: 'Leads', href: '/dashboard/leads', icon: Users, permission: 'leads.view' },
