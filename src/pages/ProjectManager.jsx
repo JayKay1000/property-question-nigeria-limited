@@ -220,7 +220,11 @@ export default function AdminProjects() {
 
         {/* Form modal */}
         {showForm && (
-          <ProjectForm project={editingProject} close={closeForm} saved={onSaved} />
+          <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={closeForm}>
+            <div className="bg-white rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <ProjectForm project={editingProject} close={closeForm} saved={onSaved} />
+            </div>
+          </div>
         )}
 
         {/* Media modal */}
