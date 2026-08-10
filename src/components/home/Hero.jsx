@@ -39,7 +39,7 @@ export default function Hero() {
             initial={{ y: 30 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+            className="mt-6 font-heading text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
             
             Buying Or Selling
             <span className="block bg-gradient-to-r from-flame-400 to-flame-600 bg-clip-text text-transparent">
