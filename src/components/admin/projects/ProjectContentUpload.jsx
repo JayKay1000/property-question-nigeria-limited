@@ -49,6 +49,10 @@ export default function ProjectContentUpload({ projectId, projectName, project, 
           if (config.media_type === 'image' && !project?.featured_image_url) {
             await base44.entities.Project.update(projectId, { featured_image_url: file_url });
           }
+          // First uploaded brochure becomes the project's downloadable brochure.
+          if (config.media_type === 'brochure' && !project?.brochure_url) {
+            await base44.entities.Project.update(projectId, { brochure_url: file_url });
+          }
         } else {
           await base44.entities.ProjectDocument.create({
             project_id: projectId,

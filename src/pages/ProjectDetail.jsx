@@ -126,13 +126,20 @@ export default function ProjectDetail() {
               <h1 className="mt-3 font-heading text-3xl font-bold text-white sm:text-4xl lg:text-5xl">{project.name}</h1>
               <p className="mt-2 flex items-center gap-1.5 text-lg text-white/80"><MapPin className="h-5 w-5" />{buildProjectLocation(project) || 'Nigeria'}</p>
               {project.short_description && <p className="mt-3 max-w-2xl text-white/70">{project.short_description}</p>}
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <Button onClick={handleSave} className="bg-flame-500 hover:bg-flame-600">
                   <Heart className={`mr-1.5 h-4 w-4 ${saved ? 'fill-white' : ''}`} /> {saved ? 'Saved' : 'Save'}
                 </Button>
                 <Button onClick={handleShare} variant="outline" className="border-white/30 bg-white/10 text-white hover:bg-white/20">
                   <Share2 className="mr-1.5 h-4 w-4" /> Share
                 </Button>
+                {project.brochure_url && (
+                  <Button asChild variant="outline" className="border-white/30 bg-white/10 text-white hover:bg-white/20">
+                    <a href={project.brochure_url} target="_blank" rel="noopener noreferrer" download>
+                      <Download className="mr-1.5 h-4 w-4" /> Download Brochure
+                    </a>
+                  </Button>
+                )}
               </div>
             </div>
           </div>
