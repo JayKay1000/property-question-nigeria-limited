@@ -103,7 +103,7 @@ export default function ProjectContentManager() {
               <ProjectDescriptionEditor project={selected} onSaved={refresh} />
             </div>
             <div className="lg:col-span-1">
-              <ProjectContentUpload projectId={selected.id} projectName={selected.name} onUploaded={refresh} />
+              <ProjectContentUpload projectId={selected.id} projectName={selected.name} project={selected} onUploaded={refresh} />
             </div>
             <div className="lg:col-span-2">
               <ProjectContentList projectId={selected.id} refreshKey={refreshKey} onDeleted={refresh} />

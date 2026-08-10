@@ -14,7 +14,7 @@ export const CONTENT_CATEGORIES = [
   { value: 'survey_plan', label: 'Survey Plans', accept: 'application/pdf,image/*', icon: Map, entity: 'document', document_type: 'survey_plan' },
 ];
 
-export default function ProjectContentUpload({ projectId, projectName, onUploaded }) {
+export default function ProjectContentUpload({ projectId, projectName, project, onUploaded }) {
   const [category, setCategory] = useState('image');
   const [files, setFiles] = useState([]);
   const [title, setTitle] = useState('');
@@ -45,6 +45,10 @@ export default function ProjectContentUpload({ projectId, projectName, onUploade
             visibility: 'public',
             display_order: 0,
           });
+          // First uploaded image becomes the project's display (featured) image.
+          if (config.media_type === 'image' && !project?.featured_image_url) {
+            await base44.entities.Project.update(projectId, { featured_image_url: file_url });
+          }
         } else {
           await base44.entities.ProjectDocument.create({
             project_id: projectId,
