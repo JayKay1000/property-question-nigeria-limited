@@ -4,9 +4,9 @@
 
 export const formatPrice = (price) => {
   if (!price && price !== 0) return 'Price on request';
-  if (price >= 1_000_000_000) return `₦${(price / 1_000_000_000).toFixed(2)}B`;
-  if (price >= 1_000_000) return `₦${(price / 1_000_000).toFixed(1)}M`;
-  if (price >= 1_000) return `₦${(price / 1_000).toFixed(0)}K`;
+  if (price >= 1_000_000_000) return `₦${Math.round(price / 1_000_000_000)} Billion`;
+  if (price >= 1_000_000) return `₦${Math.round(price / 1_000_000)} Million`;
+  if (price >= 1_000) return `₦${Math.round(price / 1_000)}K`;
   return `₦${price.toLocaleString('en-NG')}`;
 };
 
