@@ -35,7 +35,7 @@ export const navItems = [
         {
           title: 'Estate Projects',
           links: [
-            { label: 'Colony Enclave', href: '/projects?loc=Colony Enclave' },
+            { label: 'Colony Enclave Estate', href: '/projects?loc=Colony Enclave Estate' },
             { label: 'Otunba Heritage Gardens', href: '/projects?loc=Otunba Heritage Gardens' },
             { label: 'Hillcrest Oaks Gardens', href: '/projects?loc=Hillcrest Oaks Gardens' },
           ],
