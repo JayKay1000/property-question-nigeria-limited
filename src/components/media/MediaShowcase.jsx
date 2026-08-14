@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Youtube } from "lucide-react";
+import { Image } from "@/components/ui/image";
 import Panorama360Viewer from "./Panorama360Viewer";
 import { youtubeEmbedUrl } from "./youtubeUtils";
 
@@ -38,7 +39,7 @@ export default function MediaShowcase({ tour360Urls = [], videoUrls = [] }) {
                     i === active360 ? "border-flame-500" : "border-transparent hover:border-brand-200"
                   }`}
                 >
-                  <img src={u} alt={`360 view ${i + 1}`} className="h-full w-full object-cover" />
+                  <Image src={u} alt={`360 view ${i + 1}`} fittingType="fill" className="h-full w-full" />
                   <span className="absolute left-1 top-1 rounded bg-brand-900/70 px-1 text-[9px] font-semibold text-white">360°</span>
                 </button>
               ))}
@@ -67,7 +68,7 @@ export default function MediaShowcase({ tour360Urls = [], videoUrls = [] }) {
                       allowFullScreen
                     />
                   ) : (
-                    <video src={v} controls className="h-full w-full object-contain" />
+                    <video src={v} controls preload="metadata" className="h-full w-full object-contain" />
                   )}
                 </div>
               );

@@ -37,7 +37,7 @@ export default function Gallery({ property }) {
           <Image src={active.url} alt={property.title} fittingType="fit"
             className="h-full w-full" />
         ) : active?.type === 'video' ? (
-          <video src={active.url} controls className="h-full w-full object-contain" />
+          <video src={active.url} controls preload="metadata" className="h-full w-full object-contain" />
         ) : null}
 
         <button onClick={goPrev} aria-label="Previous"
