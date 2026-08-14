@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
-import { Upload, X, ImagePlus, Save, Loader2, CheckCircle2, Box, Youtube } from 'lucide-react';
+import { Upload, X, ImagePlus, Save, Loader2, CheckCircle2, Box, Youtube, Pencil } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import YoutubeLinksInput from '@/components/media/YoutubeLinksInput';
 import PanoramaUploader from '@/components/media/PanoramaUploader';
@@ -16,19 +16,38 @@ import {
   propertyConditionOptions, furnishingOptions, availabilityOptions, visibilityOptions, nigerianStates,
 } from '@/lib/upload-utils';
 
-export default function PropertyUploadForm() {
-  const [form, setForm] = useState({
-    status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard',
-    property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN',
-    is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0,
-    video_urls: [], tour_360_urls: [],
-  });
+const EMPTY_FORM = {
+  status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard',
+  property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN',
+  is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0,
+  video_urls: [], tour_360_urls: [],
+};
+
+export default function PropertyUploadForm({ existingProperty, onDone }) {
+  const isEdit = !!existingProperty;
+  const [form, setForm] = useState(EMPTY_FORM);
   const [featuredImage, setFeaturedImage] = useState(null);
   const [gallery, setGallery] = useState([]);
+  const [existingFeaturedUrl, setExistingFeaturedUrl] = useState(null);
+  const [existingGalleryUrls, setExistingGalleryUrls] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (existingProperty) {
+      setForm({
+        ...EMPTY_FORM,
+        ...existingProperty,
+        video_urls: existingProperty.video_urls || [],
+        tour_360_urls: existingProperty.tour_360_urls || [],
+      });
+      setExistingFeaturedUrl(existingProperty.featured_image_url || null);
+      setExistingGalleryUrls(existingProperty.image_urls || []);
+      setSaved(null);
+    }
+  }, [existingProperty]);
 
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
   const setNum = (k, v) => setForm(p => ({ ...p, [k]: v === '' ? null : Number(v) }));
@@ -40,43 +59,64 @@ export default function PropertyUploadForm() {
     if (!form.property_type) { toast({ title: 'Property type is required', variant: 'destructive' }); return; }
     setSaving(true);
     try {
-      let featured_image_url = null;
-      let image_urls = [];
+      let featured_image_url = existingFeaturedUrl;
+      let image_urls = [...existingGalleryUrls];
       if (featuredImage || gallery.length > 0) {
         setUploading(true);
         if (featuredImage) featured_image_url = await uploadFile(featuredImage);
-        if (gallery.length > 0) image_urls = await Promise.all(gallery.map(uploadFile));
+        if (gallery.length > 0) {
+          const uploaded = await Promise.all(gallery.map(uploadFile));
+          image_urls = [...image_urls, ...uploaded];
+        }
         setUploading(false);
       }
-      const ref = `PQ-PROP-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9000) + 1000)}`;
       const slug = (form.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
       const payload = {
         ...form,
-        reference_number: ref,
-        property_code: ref,
         slug,
         featured_image_url,
-        image_urls,
+        image_urls: image_urls,
         video_urls: (form.video_urls || []).map((u) => (typeof u === 'string' ? u.trim() : '')).filter(Boolean),
         tour_360_urls: form.tour_360_urls || [],
-        published_at: form.status === 'published' || form.status === 'active' ? new Date().toISOString() : undefined,
       };
-      const created = await base44.entities.Property.create(payload);
-      setSaved(created);
-      toast({ title: 'Property created successfully', description: ref });
-      // reset
-      setForm({ status: 'published', listing_purpose: 'sale', availability_status: 'available', property_classification: 'standard', property_condition: 'good', furnishing_status: 'unfurnished', visibility: 'public', currency: 'NGN', is_featured: false, is_premium: false, is_new_listing: true, bedrooms: 0, bathrooms: 0, parking_spaces: 0, video_urls: [], tour_360_urls: [] });
-      setFeaturedImage(null); setGallery([]);
-    } catch (e) { toast({ title: 'Error creating property', description: e.message, variant: 'destructive' }); }
+      let result;
+      if (isEdit) {
+        const { published_at, reference_number, property_code, ...rest } = payload;
+        result = await base44.entities.Property.update(existingProperty.id, rest);
+        toast({ title: 'Property updated successfully', description: form.title });
+      } else {
+        const ref = `PQ-PROP-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9000) + 1000)}`;
+        payload.reference_number = ref;
+        payload.property_code = ref;
+        payload.published_at = form.status === 'published' || form.status === 'active' ? new Date().toISOString() : undefined;
+        result = await base44.entities.Property.create(payload);
+        toast({ title: 'Property created successfully', description: ref });
+      }
+      setSaved(result);
+      if (onDone) onDone(result);
+      if (!isEdit) {
+        setForm(EMPTY_FORM);
+        setFeaturedImage(null); setGallery([]);
+        setExistingFeaturedUrl(null); setExistingGalleryUrls([]);
+      }
+    } catch (e) { toast({ title: isEdit ? 'Error updating property' : 'Error creating property', description: e.message, variant: 'destructive' }); }
     setSaving(false);
   };
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {saved && (
+      {!isEdit && saved && (
         <Card className="p-4 border-success/30 bg-success/5 flex items-center justify-between">
           <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-success" /><div><p className="font-medium">Property created: {saved.title}</p><p className="text-xs text-muted-foreground">Reference {saved.reference_number}</p></div></div>
           <Button size="sm" variant="outline" onClick={() => setSaved(null)}>Create another</Button>
+        </Card>
+      )}
+
+      {isEdit && (
+        <Card className="p-4 border-brand-200 bg-brand-50/50 flex items-center gap-2">
+          <Pencil className="w-4 h-4 text-brand-700" />
+          <p className="text-sm font-medium">Editing: {form.title || 'Untitled'}</p>
+          {form.reference_number && <Badge variant="outline" className="text-xs">{form.reference_number}</Badge>}
         </Card>
       )}
 
@@ -126,6 +166,12 @@ export default function PropertyUploadForm() {
         <div className="space-y-4">
           <div>
             <Label className="mb-2 block">Featured Image</Label>
+            {existingFeaturedUrl && !featuredImage && (
+              <div className="relative inline-block mb-2">
+                <img src={existingFeaturedUrl} alt="featured" className="w-40 h-28 object-cover rounded-lg border" />
+                <button onClick={() => setExistingFeaturedUrl(null)} className="absolute -top-2 -right-2 bg-destructive text-white rounded-full p-1"><X className="w-3 h-3" /></button>
+              </div>
+            )}
             {featuredImage ? (
               <div className="relative inline-block">
                 <img src={URL.createObjectURL(featuredImage)} alt="featured" className="w-40 h-28 object-cover rounded-lg border" />
@@ -133,16 +179,22 @@ export default function PropertyUploadForm() {
               </div>
             ) : (
               <label className="flex flex-col items-center justify-center w-40 h-28 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-flame-500 hover:bg-flame-50/50 transition-colors">
-                <ImagePlus className="w-6 h-6 text-muted-foreground mb-1" /><span className="text-xs text-muted-foreground">Click to upload</span>
+                <ImagePlus className="w-6 h-6 text-muted-foreground mb-1" /><span className="text-xs text-muted-foreground">{isEdit ? 'Replace' : 'Upload'}</span>
                 <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) setFeaturedImage(f); }} />
               </label>
             )}
           </div>
           <div>
-            <Label className="mb-2 block">Image Gallery ({gallery.length})</Label>
+            <Label className="mb-2 block">Image Gallery ({existingGalleryUrls.length + gallery.length})</Label>
             <div className="flex gap-2 flex-wrap">
+              {existingGalleryUrls.map((url, i) => (
+                <div key={`ex-${i}`} className="relative">
+                  <img src={url} alt={`gallery-${i}`} className="w-24 h-20 object-cover rounded-lg border" />
+                  <button onClick={() => setExistingGalleryUrls(g => g.filter((_, idx) => idx !== i))} className="absolute -top-2 -right-2 bg-destructive text-white rounded-full p-1"><X className="w-3 h-3" /></button>
+                </div>
+              ))}
               {gallery.map((f, i) => (
-                <div key={i} className="relative">
+                <div key={`new-${i}`} className="relative">
                   <img src={URL.createObjectURL(f)} alt={`gallery-${i}`} className="w-24 h-20 object-cover rounded-lg border" />
                   <button onClick={() => setGallery(g => g.filter((_, idx) => idx !== i))} className="absolute -top-2 -right-2 bg-destructive text-white rounded-full p-1"><X className="w-3 h-3" /></button>
                 </div>
@@ -184,7 +236,7 @@ export default function PropertyUploadForm() {
 
       <div className="flex justify-end gap-2 sticky bottom-4">
         <Button onClick={save} disabled={saving} className="bg-flame-500 hover:bg-flame-600 text-white border-0 shadow-lg">
-          {saving ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> {uploading ? 'Uploading images…' : 'Saving…'}</> : <><Save className="w-4 h-4 mr-2" /> Create Property</>}
+          {saving ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> {uploading ? 'Uploading images…' : 'Saving…'}</> : <><Save className="w-4 h-4 mr-2" /> {isEdit ? 'Update Property' : 'Create Property'}</>}
         </Button>
       </div>
     </div>

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Search, MapPin, Building2, ChevronRight, X } from 'lucide-react';
+import { Search, MapPin, Building2, ChevronRight, X, Pencil } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import PropertyUploadForm from '@/components/admin/upload/PropertyUploadForm';
 
 const STATUS_COLORS = {
   draft: 'secondary', pending: 'secondary', under_review: 'default',
@@ -17,6 +20,7 @@ export default function PropertyExplorer() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState(null);
+  const [editing, setEditing] = useState(null);
   const updateDisplayOrder = async () => {
 
     if(!selected) return;
@@ -197,15 +201,32 @@ Save Display Order
           )}
           
          {selected && (
-    <div className="pt-4">
-        <button
-            onClick={() => deleteProperty(selected.id)}
-            className="rounded-md bg-red-600 px-5 py-2 text-white hover:bg-red-700"
-        >
-            Delete Property
-        </button>
-    </div>
-)}
+         <div className="pt-4 flex gap-2">
+         <Button
+           onClick={() => setEditing(selected)}
+           className="bg-flame-500 hover:bg-flame-600 text-white border-0"
+         >
+           <Pencil className="w-4 h-4 mr-1.5" /> Edit Property
+         </Button>
+         <Button
+           onClick={() => deleteProperty(selected.id)}
+           variant="destructive"
+         >
+           Delete Property
+         </Button>
+         </div>
+         )}
+
+         {editing && (
+         <Dialog open onOpenChange={(o) => { if (!o) { setEditing(null); loadProperties(); } }}>
+           <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+             <DialogHeader>
+               <DialogTitle>Edit Property Listing</DialogTitle>
+             </DialogHeader>
+             <PropertyUploadForm existingProperty={editing} onDone={() => { setEditing(null); loadProperties(); }} />
+           </DialogContent>
+         </Dialog>
+         )}
         </CardContent>
       </Card>
     </div>
