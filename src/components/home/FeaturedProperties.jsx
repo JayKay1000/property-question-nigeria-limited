@@ -4,6 +4,7 @@ import { Bed, Bath, Maximize, ArrowRight, MapPin, Building2, Loader2 } from 'luc
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Reveal from '@/components/ui/Reveal';
+import { Image } from '@/components/ui/image';
 import { base44 } from '@/api/base44Client';
 import { formatPrice, buildShortLocation, ACTIVE_STATUSES } from '@/lib/property-utils';
 
@@ -67,7 +68,7 @@ export default function FeaturedProperties() {
                   <Link to={`/properties/${prop.id}`} className="group block overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
                     <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                       {img ? (
-                        <img src={img} alt={prop.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <Image src={img} alt={prop.title} fittingType="fill" className="h-full w-full transition-transform duration-500 group-hover:scale-110" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center"><Building2 className="h-8 w-8 text-muted-foreground/40" /></div>
                       )}
