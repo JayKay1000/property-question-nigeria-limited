@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, User, ArrowLeft, Share2, Tag } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, Share2, Tag, CheckCircle2 } from 'lucide-react';
 import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
 import { Image as OptimizedImage } from '@/components/ui/image';
@@ -14,6 +14,14 @@ export default function BlogDetail() {
   const [post, setPost] = useState(null);
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    try { await navigator.clipboard.writeText(url); } catch { /* clipboard unavailable */ }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   useEffect(() => {
     (async () => {
@@ -124,8 +132,9 @@ export default function BlogDetail() {
             <Button asChild variant="outline">
               <Link to="/blog"><ArrowLeft className="w-4 h-4 mr-2" /> All Articles</Link>
             </Button>
-            <Button variant="ghost" className="text-muted-foreground">
-              <Share2 className="w-4 h-4 mr-2" /> Share
+            <Button variant="ghost" className="text-muted-foreground" onClick={handleShare}>
+              {copied ? <CheckCircle2 className="w-4 h-4 mr-2 text-success" /> : <Share2 className="w-4 h-4 mr-2" />}
+              {copied ? 'Link copied!' : 'Share'}
             </Button>
           </div>
         </div>
