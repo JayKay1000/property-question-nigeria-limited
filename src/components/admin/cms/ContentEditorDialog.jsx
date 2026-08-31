@@ -8,6 +8,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { fieldConfigs, slugify, entityLabels, getRecordTitle } from '@/lib/cms-utils';
+import MediaUploadField from './MediaUploadField';
 
 export default function ContentEditorDialog({ open, onClose, entityType, record, onSaved }) {
   const [form, setForm] = useState({});
@@ -118,6 +119,27 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
             <Label htmlFor={field.key}>{field.label}</Label>
             <Input id={field.key} type="datetime-local" value={value ? new Date(value).toISOString().slice(0, 16) : ''}
               onChange={e => setField(field.key, e.target.value ? new Date(e.target.value).toISOString() : null)} />
+          </div>
+        );
+      case 'image':
+        return (
+          <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
+            <Label>{field.label}{field.required ? ' *' : ''}</Label>
+            <MediaUploadField type="image" value={value || ''} onChange={v => setField(field.key, v)} />
+          </div>
+        );
+      case 'gallery':
+        return (
+          <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
+            <Label>{field.label}</Label>
+            <MediaUploadField type="gallery" value={value || []} onChange={v => setField(field.key, v)} />
+          </div>
+        );
+      case 'videos':
+        return (
+          <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
+            <Label>{field.label}</Label>
+            <MediaUploadField type="videos" value={value || []} onChange={v => setField(field.key, v)} />
           </div>
         );
       default:

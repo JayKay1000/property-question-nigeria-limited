@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Clock, User, ArrowLeft, Share2, Tag } from 'lucide-react';
 import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
+import { Image as OptimizedImage } from '@/components/ui/image';
 import ReactMarkdown from 'react-markdown';
 
 export default function BlogDetail() {
@@ -78,8 +79,30 @@ export default function BlogDetail() {
         {post.featured_image_url && (
           <div className="container-wide max-w-4xl -mt-12 relative z-10 mb-12">
             <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-card-hover">
-              <img src={post.featured_image_url} alt={post.title} className="w-full h-full object-cover" />
+              <OptimizedImage src={post.featured_image_url} alt={post.title} fittingType="fill" className="w-full h-full" />
             </div>
+          </div>
+        )}
+
+        {post.image_urls?.length > 0 && (
+          <div className="container-wide max-w-4xl mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {post.image_urls.map((url, i) => (
+                <div key={i} className="aspect-video rounded-xl overflow-hidden border border-border">
+                  <OptimizedImage src={url} alt={`Gallery ${i + 1}`} fittingType="fill" className="w-full h-full" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {post.video_urls?.length > 0 && (
+          <div className="container-wide max-w-4xl mb-12 space-y-4">
+            {post.video_urls.map((url, i) => (
+              <div key={i} className="aspect-video rounded-xl overflow-hidden border border-border bg-black">
+                <video src={url} controls preload="metadata" className="w-full h-full object-contain" />
+              </div>
+            ))}
           </div>
         )}
 

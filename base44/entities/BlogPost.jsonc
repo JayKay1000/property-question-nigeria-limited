@@ -20,6 +20,20 @@
     "featured_image_url": {
       "type": "string"
     },
+    "image_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional gallery images for the post"
+    },
+    "video_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Video URLs attached to the post"
+    },
     "category": {
       "type": "string",
       "enum": [
