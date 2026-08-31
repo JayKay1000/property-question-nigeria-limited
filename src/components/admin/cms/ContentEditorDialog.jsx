@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { fieldConfigs, slugify, entityLabels, getRecordTitle } from '@/lib/cms-utils';
 import MediaUploadField from './MediaUploadField';
+import RichTextEditor from './RichTextEditor';
 
 export default function ContentEditorDialog({ open, onClose, entityType, record, onSaved }) {
   const [form, setForm] = useState({});
@@ -68,12 +69,18 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
     const colSpan = field.span === 2 ? 'sm:col-span-2' : '';
     switch (field.type) {
       case 'textarea':
-      case 'richtext':
         return (
           <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
             <Label htmlFor={field.key}>{field.label}{field.required ? ' *' : ''}</Label>
-            <Textarea id={field.key} value={value || ''} rows={field.type === 'richtext' ? 8 : 3}
+            <Textarea id={field.key} value={value || ''} rows={3}
               placeholder={field.placeholder} onChange={e => setField(field.key, e.target.value)} />
+          </div>
+        );
+      case 'richtext':
+        return (
+          <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
+            <Label>{field.label}{field.required ? ' *' : ''}</Label>
+            <RichTextEditor value={value || ''} onChange={v => setField(field.key, v)} placeholder={field.placeholder} />
           </div>
         );
       case 'select':

@@ -8,7 +8,6 @@ import { Calendar, Clock, User, ArrowLeft, Share2, Tag } from 'lucide-react';
 import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
 import { Image as OptimizedImage } from '@/components/ui/image';
-import ReactMarkdown from 'react-markdown';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -107,11 +106,10 @@ export default function BlogDetail() {
         )}
 
         <div className="container-wide max-w-3xl pb-16">
-          <div className="prose prose-lg max-w-none">
-            <ReactMarkdown className="text-foreground leading-relaxed space-y-4 [&>p]:mb-4 [&>h2]:text-2xl [&>h2]:font-heading [&>h2]:font-bold [&>h2]:mt-8 [&>h2]:mb-3 [&>h3]:text-xl [&>h3]:font-heading [&>h3]:font-semibold [&>h3]:mt-6 [&>h3]:mb-2 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1 [&>ol]:list-decimal [&>ol]:pl-5 [&>blockquote]:border-l-4 [&>blockquote]:border-flame-500 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-muted-foreground [&>a]:text-flame-600 [&>a]:underline">
-              {post.content || post.excerpt || 'Content coming soon.'}
-            </ReactMarkdown>
-          </div>
+          <div
+            className="prose prose-lg max-w-none text-foreground leading-relaxed [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:font-heading [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-3 [&_h3]:text-xl [&_h3]:font-heading [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-flame-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_a]:text-flame-600 [&_a]:underline [&_img]:rounded-xl [&_img]:mb-4 [&_img]:w-full"
+            dangerouslySetInnerHTML={{ __html: post.content || post.excerpt || '<p>Content coming soon.</p>' }}
+          />
 
           {post.tags?.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 mt-8 pt-8 border-t">
