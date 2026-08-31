@@ -8,6 +8,7 @@ import { Calendar, Clock, User, ArrowLeft, Share2, Tag, CheckCircle2 } from 'luc
 import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
 import { Image as OptimizedImage } from '@/components/ui/image';
+import { loadContent } from '@/lib/content-storage';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -15,6 +16,7 @@ export default function BlogDetail() {
   const [related, setRelated] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [htmlContent, setHtmlContent] = useState('');
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -39,6 +41,20 @@ export default function BlogDetail() {
       setLoading(false);
     })();
   }, [slug]);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      if (!post) return;
+      try {
+        const html = await loadContent(post.content);
+        if (active) setHtmlContent(html || post.excerpt || '<p>Content coming soon.</p>');
+      } catch {
+        if (active) setHtmlContent(post.excerpt || '<p>Content coming soon.</p>');
+      }
+    })();
+    return () => { active = false; };
+  }, [post]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-flame-200 border-t-flame-500 rounded-full animate-spin" /></div>;
@@ -116,7 +132,7 @@ export default function BlogDetail() {
         <div className="container-wide max-w-3xl pb-16">
           <div
             className="prose prose-lg max-w-none text-foreground leading-relaxed [&_p]:mb-4 [&_h2]:text-2xl [&_h2]:font-heading [&_h2]:font-bold [&_h2]:mt-8 [&_h2]:mb-3 [&_h3]:text-xl [&_h3]:font-heading [&_h3]:font-semibold [&_h3]:mt-6 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-flame-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_a]:text-flame-600 [&_a]:underline [&_img]:rounded-xl [&_img]:mb-4 [&_img]:w-full"
-            dangerouslySetInnerHTML={{ __html: post.content || post.excerpt || '<p>Content coming soon.</p>' }}
+            dangerouslySetInnerHTML={{ __html: htmlContent || '<p>Content coming soon.</p>' }}
           />
 
           {post.tags?.length > 0 && (

@@ -8,6 +8,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { base44 } from '@/api/base44Client';
 import { useToast } from '@/components/ui/use-toast';
 import { fieldConfigs, slugify, entityLabels, getRecordTitle } from '@/lib/cms-utils';
+import { loadContent, saveContent } from '@/lib/content-storage';
 import MediaUploadField from './MediaUploadField';
 import RichTextEditor from './RichTextEditor';
 
@@ -18,7 +19,20 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
   const fields = fieldConfigs[entityType] || [];
 
   useEffect(() => {
-    setForm(record ? { ...record } : {});
+    let active = true;
+    (async () => {
+      const initial = record ? { ...record } : {};
+      // Hydrate any offloaded richtext content back to HTML for editing.
+      if (entityType === 'BlogPost') {
+        for (const f of fields) {
+          if (f.type === 'richtext' && initial[f.key]) {
+            try { initial[f.key] = await loadContent(initial[f.key]); } catch { /* leave as-is */ }
+          }
+        }
+      }
+      if (active) setForm(initial);
+    })();
+    return () => { active = false; };
   }, [record, open, entityType]);
 
   const setField = (key, value) => setForm(prev => ({ ...prev, [key]: value }));
@@ -32,6 +46,14 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
     // Auto-slugify if slug field exists and is empty but title is present
     const payload = { ...form };
     if ('slug' in payload && !payload.slug && payload.title) payload.slug = slugify(payload.title);
+    // Offload large richtext content to a file so it fits the field size limit.
+    if (entityType === 'BlogPost') {
+      for (const f of fields) {
+        if (f.type === 'richtext' && payload[f.key]) {
+          try { payload[f.key] = await saveContent(payload[f.key]); } catch { /* leave inline */ }
+        }
+      }
+    }
 
     setSaving(true);
     try {
