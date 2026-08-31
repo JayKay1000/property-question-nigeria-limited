@@ -46,6 +46,12 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
     // Auto-slugify if slug field exists and is empty but title is present
     const payload = { ...form };
     if ('slug' in payload && !payload.slug && payload.title) payload.slug = slugify(payload.title);
+    // New blog posts default to published so they appear publicly; stamp the
+    // publish date when publishing for the first time.
+    if (entityType === 'BlogPost') {
+      if (!payload.status) payload.status = 'published';
+      if (payload.status === 'published' && !payload.published_date) payload.published_date = new Date().toISOString();
+    }
     // Offload large richtext content to a file so it fits the field size limit.
     if (entityType === 'BlogPost') {
       for (const f of fields) {
