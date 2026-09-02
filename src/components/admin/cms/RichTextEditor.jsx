@@ -54,9 +54,10 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
     const root = editor.root;
     const onPaste = (e) => {
       const items = e.clipboardData?.items;
-      if (!items) return;
-      for (const item of items) {
-        if (item.type.startsWith('image/')) {
+      if (!items || !items.length) return;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.type && item.type.startsWith('image/')) {
           e.preventDefault();
           const file = item.getAsFile();
           if (file) insertImage(file);
