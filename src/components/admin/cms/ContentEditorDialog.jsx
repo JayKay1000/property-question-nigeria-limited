@@ -15,11 +15,16 @@ import RichTextEditor from './RichTextEditor';
 export default function ContentEditorDialog({ open, onClose, entityType, record, onSaved }) {
   const [form, setForm] = useState({});
   const [saving, setSaving] = useState(false);
+  // For existing records, the form hydrates asynchronously (offloaded content
+  // is fetched back as HTML). Rich text editors must mount only after that
+  // resolves — ReactQuill won't reflect a value that arrives after mount.
+  const [ready, setReady] = useState(!record);
   const { toast } = useToast();
   const fields = fieldConfigs[entityType] || [];
 
   useEffect(() => {
     let active = true;
+    setReady(!record);
     (async () => {
       const initial = record ? { ...record } : {};
       // Hydrate any offloaded richtext content back to HTML for editing.
@@ -30,7 +35,7 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
           }
         }
       }
-      if (active) setForm(initial);
+      if (active) { setForm(initial); setReady(true); }
     })();
     return () => { active = false; };
   }, [record, open, entityType]);
@@ -108,7 +113,9 @@ export default function ContentEditorDialog({ open, onClose, entityType, record,
         return (
           <div key={field.key} className={`space-y-1.5 ${colSpan}`}>
             <Label>{field.label}{field.required ? ' *' : ''}</Label>
-            <RichTextEditor value={value || ''} onChange={v => setField(field.key, v)} placeholder={field.placeholder} />
+            {ready
+              ? <RichTextEditor key={`${field.key}-${record?.id || 'new'}`} value={value || ''} onChange={v => setField(field.key, v)} placeholder={field.placeholder} />
+              : <div className="h-[280px] rounded-lg border border-input bg-white animate-pulse" />}
           </div>
         );
       case 'select':
