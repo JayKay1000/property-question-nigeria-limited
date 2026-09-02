@@ -9,6 +9,7 @@ import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
 import { Image as OptimizedImage } from '@/components/ui/image';
 import { loadContent } from '@/lib/content-storage';
+import { processBlogContent } from '@/lib/blog-content-utils';
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -48,7 +49,7 @@ export default function BlogDetail() {
       if (!post) return;
       try {
         const html = await loadContent(post.content);
-        if (active) setHtmlContent(html || post.excerpt || '<p>Content coming soon.</p>');
+        if (active) setHtmlContent(processBlogContent(html) || post.excerpt || '<p>Content coming soon.</p>');
       } catch {
         if (active) setHtmlContent(post.excerpt || '<p>Content coming soon.</p>');
       }
