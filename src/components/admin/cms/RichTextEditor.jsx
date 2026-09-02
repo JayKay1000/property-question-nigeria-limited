@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { base44 } from '@/api/base44Client';
+import { useToast } from '@/components/ui/use-toast';
 
 /**
  * Rich text editor (ReactQuill) with an image upload button.
@@ -12,9 +13,24 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
   const quillRef = useRef(null);
   const fileInputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
 
-  const handleImage = () => {
-    fileInputRef.current?.click();
+  const insertImage = async (file) => {
+    setUploading(true);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const editor = quillRef.current?.getEditor();
+      if (editor && file_url) {
+        const range = editor.getSelection(true) || { index: editor.getLength(), length: 0 };
+        editor.insertEmbed(range.index, 'image', file_url);
+        editor.setSelection(range.index + 1, 0);
+      } else if (!file_url) {
+        toast({ title: 'Image upload failed', description: 'No file URL returned.', variant: 'destructive' });
+      }
+    } catch (e) {
+      toast({ title: 'Image upload failed', description: e?.message || 'Could not upload image.', variant: 'destructive' });
+    }
+    setUploading(false);
   };
 
   const onFileSelected = async (e) => {
@@ -24,29 +40,18 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
     e.target.value = '';
   };
 
-  // Uploads an image file and inserts the resulting URL (never a base64 data
-  // URI, which would bloat the stored content past the record size limit).
-  const insertImage = async (file) => {
-    setUploading(true);
-    try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      const editor = quillRef.current?.getEditor();
-      if (editor) {
-        const range = editor.getSelection(true) || { index: editor.getLength(), length: 0 };
-        editor.insertEmbed(range.index, 'image', file_url);
-        editor.setSelection(range.index + 1, 0);
-      }
-    } catch { /* ignore */ }
-    setUploading(false);
-  };
-
-  // Intercept pasted/dragged images so they upload to storage instead of being
-  // embedded inline as base64 (which exceeds the entity record size limit).
+  // Attach the image handler and paste/drop interception once the editor is
+  // ready. Binding via toolbar.addHandler (rather than only the modules config)
+  // is the reliable way to override Quill's default image handler.
   useEffect(() => {
     const editor = quillRef.current?.getEditor();
     if (!editor) return;
-    const root = editor.root;
+    const toolbar = editor.getModule('toolbar');
+    if (toolbar) {
+      toolbar.addHandler('image', () => fileInputRef.current?.click());
+    }
 
+    const root = editor.root;
     const onPaste = (e) => {
       const items = e.clipboardData?.items;
       if (!items) return;
@@ -59,14 +64,12 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
         }
       }
     };
-
     const onDrop = (e) => {
       const files = Array.from(e.dataTransfer?.files || []).filter((f) => f.type.startsWith('image/'));
       if (!files.length) return;
       e.preventDefault();
       files.forEach(insertImage);
     };
-
     root.addEventListener('paste', onPaste);
     root.addEventListener('drop', onDrop);
     return () => {
@@ -86,7 +89,6 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
           ['link', 'image', 'blockquote'],
           ['clean'],
         ],
-        handlers: { image: handleImage },
       },
     }),
     [],
