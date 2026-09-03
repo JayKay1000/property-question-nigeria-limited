@@ -10,31 +10,42 @@ const BUY2FLIP_URL = 'https://buy2flip.net';
 
 // Converts "(hyperlink)" placeholder markers the author leaves beside entity
 // names into real anchor tags. "Buy2Flip" -> buy2flip.net, "Property Question
-// Nigeria Limited" -> propertyquestion.net. Longer/specific phrases are
-// matched before shorter ones so "Buy2Flip team" isn't half-matched.
+// Nigeria Limited" -> propertyquestion.net. The marker is written two ways in
+// the rich-text editor: as plain text "(hyperlink)", or split across styled
+// spans with "hyperlink" coloured red between black "(" and ")". Both forms
+// are matched. Bare "Property Question Nigeria Limited" mentions (no marker)
+// are also linked to the website.
+const MARKER =
+  '(?:\\(hyperlink\\)|\\(<\\/span>\\s*<span[^>]*>\\s*hyperlink\\s*<\\/span>\\s*<span[^>]*>\\s*\\))';
+
 function applyHyperlinkMarkers(html) {
   let out = html;
   const link = (href, text) =>
     `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>`;
-  // Property Question Nigeria Limited (with optional comma before the marker)
+
+  // Property Question Nigeria Limited (optional comma before the marker).
   out = out.replace(
-    /Property Question Nigeria Limited,\s*\(hyperlink\)/g,
-    () => link(WEBSITE_URL, 'Property Question Nigeria Limited') + ',',
+    new RegExp(`(Property Question Nigeria Limited)(,?)\\s*${MARKER}`, 'g'),
+    (_, text, comma) => link(WEBSITE_URL, text) + (comma || ''),
   );
+  // Buy2Flip, optionally followed by "team" or "Relationship Officer".
   out = out.replace(
-    /Property Question Nigeria Limited\s*\(hyperlink\)/g,
-    () => link(WEBSITE_URL, 'Property Question Nigeria Limited'),
+    new RegExp(`(Buy2Flip(?:\\s+(?:team|Relationship Officer))?)(,?)\\s*${MARKER}`, 'g'),
+    (_, text, comma) => link(BUY2FLIP_URL, text) + (comma || ''),
   );
-  // Buy2Flip team (hyperlink) -> link the whole phrase
+
+  // Link any remaining bare "Property Question Nigeria Limited" mentions that
+  // are not already inside an anchor. Protect existing <a>...</a> blocks first.
+  const anchors = [];
+  out = out.replace(/<a\s[^>]*>[\s\S]*?<\/a>/gi, (m) => {
+    anchors.push(m);
+    return `\u0000A${anchors.length - 1}\u0000`;
+  });
   out = out.replace(
-    /Buy2Flip team\s*\(hyperlink\)/g,
-    () => link(BUY2FLIP_URL, 'Buy2Flip team'),
+    /Property Question Nigeria Limited/g,
+    (text) => link(WEBSITE_URL, text),
   );
-  // Buy2Flip (hyperlink) -> link just Buy2Flip
-  out = out.replace(
-    /Buy2Flip\s*\(hyperlink\)/g,
-    () => link(BUY2FLIP_URL, 'Buy2Flip'),
-  );
+  out = out.replace(/\u0000A(\d+)\u0000/g, (_, i) => anchors[Number(i)]);
   return out;
 }
 
