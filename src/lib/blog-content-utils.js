@@ -51,6 +51,8 @@ function applyHyperlinkMarkers(html) {
     /Property Question Nigeria Limited/g,
     (text) => link(WEBSITE_URL, text),
   );
+  // Bare "Buy2Flip" (no marker, not already inside a link) -> main Buy2Flip site.
+  out = out.replace(/Buy2Flip\b/g, (text) => link(BUY2FLIP_URL, text));
   out = out.replace(/\u0000A(\d+)\u0000/g, (_, i) => anchors[Number(i)]);
   return out;
 }
