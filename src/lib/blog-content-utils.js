@@ -7,6 +7,7 @@
 
 const WEBSITE_URL = 'https://propertyquestion.net';
 const BUY2FLIP_URL = 'https://buy2flip.net';
+const BUY2FLIP_CONTACT_URL = 'https://buy2flip.net/contact-officer';
 
 // Converts "(hyperlink)" placeholder markers the author leaves beside entity
 // names into real anchor tags. "Buy2Flip" -> buy2flip.net, "Property Question
@@ -28,9 +29,14 @@ function applyHyperlinkMarkers(html) {
     new RegExp(`(Property Question Nigeria Limited)(,?)\\s*${MARKER}`, 'g'),
     (_, text, comma) => link(WEBSITE_URL, text) + (comma || ''),
   );
-  // Buy2Flip, optionally followed by "team" or "Relationship Officer".
+  // "Buy2Flip team" / "Buy2Flip Relationship Officer" -> contact-officer page.
   out = out.replace(
-    new RegExp(`(Buy2Flip(?:\\s+(?:team|Relationship Officer))?)(,?)\\s*${MARKER}`, 'g'),
+    new RegExp(`(Buy2Flip\\s+(?:team|Relationship Officer))(,?)\\s*${MARKER}`, 'g'),
+    (_, text, comma) => link(BUY2FLIP_CONTACT_URL, text) + (comma || ''),
+  );
+  // Plain "Buy2Flip" -> main Buy2Flip site.
+  out = out.replace(
+    new RegExp(`(Buy2Flip)(,?)\\s*${MARKER}`, 'g'),
     (_, text, comma) => link(BUY2FLIP_URL, text) + (comma || ''),
   );
 
