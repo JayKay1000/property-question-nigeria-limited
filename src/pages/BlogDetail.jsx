@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, User, ArrowLeft, Share2, Tag, CheckCircle2 } from 'lucide-react';
+import { Calendar, Clock, User, ArrowLeft, Share2, Tag, CheckCircle2, Camera } from 'lucide-react';
 import { formatDate, categoryLabels } from '@/lib/marketing-utils';
 import CTASection from '@/components/marketing/CTASection';
 import { Image as OptimizedImage } from '@/components/ui/image';
@@ -93,6 +93,7 @@ export default function BlogDetail() {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">{post.title}</h1>
               <div className="flex flex-wrap items-center gap-4 text-sm text-white/60">
                 {post.author_name && <span className="flex items-center gap-1.5"><User className="w-4 h-4" /> {post.author_name}</span>}
+                {post.photo_credit && <span className="flex items-center gap-1.5"><Camera className="w-4 h-4" /> Photo: {post.photo_credit}</span>}
                 {post.published_date && <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {formatDate(post.published_date)}</span>}
                 <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> {post.reading_time_minutes || 5} min read</span>
               </div>
@@ -105,9 +106,6 @@ export default function BlogDetail() {
             <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-card-hover">
               <OptimizedImage src={post.featured_image_url} alt={post.title} fittingType="fill" className="w-full h-full" />
             </div>
-            {post.photo_credit && (
-              <p className="mt-2 text-right text-xs text-white/50 italic">Photo: {post.photo_credit}</p>
-            )}
           </div>
         )}
 
