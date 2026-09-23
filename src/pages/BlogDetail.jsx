@@ -105,6 +105,9 @@ export default function BlogDetail() {
             <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-card-hover">
               <OptimizedImage src={post.featured_image_url} alt={post.title} fittingType="fill" className="w-full h-full" />
             </div>
+            {post.photo_credit && (
+              <p className="mt-2 text-right text-xs text-white/50 italic">Photo: {post.photo_credit}</p>
+            )}
           </div>
         )}
 

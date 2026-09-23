@@ -20,6 +20,10 @@
     "featured_image_url": {
       "type": "string"
     },
+    "photo_credit": {
+      "type": "string",
+      "description": "Photographer or source credit for the featured image"
+    },
     "image_urls": {
       "type": "array",
       "items": {

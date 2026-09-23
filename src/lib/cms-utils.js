@@ -53,6 +53,7 @@ export const fieldConfigs = {
     { key: 'content', label: 'Content (HTML supported)', type: 'richtext', span: 2 },
     { key: 'tags', label: 'Tags (comma-separated)', type: 'tags', span: 2 },
     { key: 'featured_image_url', label: 'Featured Image', type: 'image', span: 2 },
+    { key: 'photo_credit', label: 'Photo Credit', type: 'text', placeholder: 'e.g. Jane Doe / Unsplash', span: 2 },
     { key: 'image_urls', label: 'Gallery Images', type: 'gallery', span: 2 },
     { key: 'video_urls', label: 'Videos', type: 'videos', span: 2 },
     { key: 'status', label: 'Status', type: 'select', options: ['draft', 'published', 'archived'] },
