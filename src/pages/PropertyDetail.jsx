@@ -3,77 +3,108 @@ import { useParams, Link } from 'react-router-dom';
 import { ChevronRight, Home, Loader2, Building2, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
-import { formatPrice, buildLocation, buildShortLocation, getPrimaryImage, AVAILABILITY_CONFIG, PURPOSE_CONFIG, CLASSIFICATION_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
+import { formatPrice, buildLocation, buildShortLocation, AVAILABILITY_CONFIG, PURPOSE_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
 import Gallery from '@/components/properties/Gallery';
 import MediaShowcase from '@/components/media/MediaShowcase';
 import { isYoutubeUrl } from '@/components/media/youtubeUtils';
 import DetailSidebar from '@/components/properties/DetailSidebar';
 import PropertyTabs from '@/components/properties/PropertyTabs';
 import ListingCard from '@/components/properties/ListingCard';
+import BuyerSafetyNotice from '@/components/properties/BuyerSafetyNotice';
+import { setPropertySEO, clearPropertySEO } from '@/lib/property-seo';
 
 const SAVE_KEY = 'pq_saved_properties';
-const COMPARE_KEY = 'pq_compare_properties';
 
 export default function PropertyDetail() {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
+  const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const [related, setRelated] = useState([]);
-  const [savedIds, setSavedIds] = useState([]);
-  const [compareIds, setCompareIds] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Check auth status on mount
   useEffect(() => {
-    setSavedIds(JSON.parse(localStorage.getItem(SAVE_KEY) || '[]'));
-    setCompareIds(JSON.parse(localStorage.getItem(COMPARE_KEY) || '[]'));
+    base44.auth.isAuthenticated().then(setIsAuthenticated).catch(() => setIsAuthenticated(false));
   }, []);
 
+  // Fetch property + agent via backend function (enforces public eligibility server-side)
   useEffect(() => {
     setLoading(true);
+    setNotFound(false);
+    setProperty(null);
+    setAgent(null);
     window.scrollTo(0, 0);
-    base44.entities.Property.get(id)
-      .then(setProperty)
-      .catch(() => setProperty(null))
+
+    base44.functions.invoke('getMarketplacePropertyDetail', { property_id: id })
+      .then((res) => {
+        setProperty(res.data.property);
+        setAgent(res.data.agent);
+      })
+      .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
   }, [id]);
 
-  // Fetch related properties
+  // Set SEO metadata when property loads
+  useEffect(() => {
+    if (property) setPropertySEO(property);
+    return () => clearPropertySEO();
+  }, [property]);
+
+  // Check saved status
   useEffect(() => {
     if (!property) return;
-    const query = { visibility: 'public' };
+    if (isAuthenticated) {
+      base44.auth.me().then((user) => {
+        if (!user) return;
+        base44.entities.SavedProperty.filter({ user_id: user.id, property_id: property.id })
+          .then((res) => {
+            const items = res.items || res;
+            setIsSaved(items.length > 0);
+          })
+          .catch(() => {});
+      }).catch(() => {});
+    } else {
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || '[]');
+      setIsSaved(saved.includes(property.id));
+    }
+  }, [property, isAuthenticated]);
+
+  // Fetch similar properties
+  useEffect(() => {
+    if (!property) return;
+    const query = { visibility: 'public', status: { $in: ACTIVE_STATUSES } };
+    if (property.listing_purpose) query.listing_purpose = property.listing_purpose;
     if (property.state) query.state = property.state;
-    base44.entities.Property.filter(query, '-created_date', 6)
-      .then((results) => {
-        setRelated(
-          results
-            .filter((p) => p.id !== property.id && ACTIVE_STATUSES.includes(p.status))
-            .slice(0, 3)
-        );
+    base44.entities.Property.filter(query, { sort: '-created_date', limit: 6 })
+      .then((res) => {
+        const items = res.items || res;
+        setRelated(items.filter((p) => p.id !== property.id).slice(0, 3));
       })
       .catch(() => setRelated([]));
   }, [property]);
 
-  const handleSave = useCallback((prop) => {
-    setSavedIds((prev) => {
-      const next = prev.includes(prop.id) ? prev.filter((pid) => pid !== prop.id) : [...prev, prop.id];
-      localStorage.setItem(SAVE_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, []);
-
-  const handleCompare = useCallback((prop) => {
-    setCompareIds((prev) => {
-      let next;
-      if (prev.includes(prop.id)) {
-        next = prev.filter((pid) => pid !== prop.id);
-      } else if (prev.length >= 4) {
-        next = [...prev.slice(1), prop.id];
-      } else {
-        next = [...prev, prop.id];
+  const handleSave = useCallback(async () => {
+    if (!property) return;
+    if (isAuthenticated) {
+      setSaving(true);
+      try {
+        const res = await base44.functions.invoke('toggleSavedProperty', { property_id: property.id });
+        setIsSaved(res.data.saved);
+      } catch {
+        // ignore
       }
-      localStorage.setItem(COMPARE_KEY, JSON.stringify(next));
-      return next;
-    });
-  }, []);
+      setSaving(false);
+    } else {
+      const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || '[]');
+      const next = saved.includes(property.id) ? saved.filter((pid) => pid !== property.id) : [...saved, property.id];
+      localStorage.setItem(SAVE_KEY, JSON.stringify(next));
+      setIsSaved(next.includes(property.id));
+    }
+  }, [property, isAuthenticated]);
 
   if (loading) {
     return (
@@ -86,21 +117,19 @@ export default function PropertyDetail() {
     );
   }
 
-  if (!property) {
+  if (notFound || !property) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-ice-50 pt-24">
         <Building2 className="h-16 w-16 text-brand-200" />
-        <h1 className="mt-4 font-heading text-2xl font-bold text-brand-900">Property Not Found</h1>
-        <p className="mt-2 text-sm text-muted-foreground">This property may have been removed or is no longer available.</p>
+        <h1 className="mt-4 font-heading text-2xl font-bold text-brand-900">Property Not Available</h1>
+        <p className="mt-2 text-sm text-muted-foreground">This property may have been removed, sold, or is no longer available.</p>
         <Button asChild className="mt-6 bg-flame-500 hover:bg-flame-600">
-          <Link to="/properties"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Listings</Link>
+          <Link to="/marketplace"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Marketplace</Link>
         </Button>
       </div>
     );
   }
 
-  const isSaved = savedIds.includes(property.id);
-  const isCompared = compareIds.includes(property.id);
   const availability = AVAILABILITY_CONFIG[property.availability_status];
   const purpose = PURPOSE_CONFIG[property.listing_purpose] || 'For Sale';
   const location = buildShortLocation(property);
@@ -113,7 +142,7 @@ export default function PropertyDetail() {
         <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-flame-600"><Home className="h-4 w-4" /></Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <Link to="/properties" className="hover:text-flame-600">Properties</Link>
+          <Link to="/marketplace" className="hover:text-flame-600">Marketplace</Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <span className="line-clamp-1 text-brand-900 font-medium">{property.title}</span>
         </nav>
@@ -145,13 +174,15 @@ export default function PropertyDetail() {
               <span className={`rounded-full px-3 py-1 text-xs font-semibold ${availability.className}`}>{availability.label}</span>
             )}
             {property.is_featured && <span className="rounded-full bg-brand-900 px-3 py-1 text-xs font-semibold text-white">Featured</span>}
-            {property.is_exclusive && <span className="rounded-full bg-amber-600 px-3 py-1 text-xs font-semibold text-white">Exclusive</span>}
-            {property.verified && <span className="rounded-full bg-success px-3 py-1 text-xs font-semibold text-white">✓ Verified</span>}
+            {property.is_joint_venture && <span className="rounded-full bg-amber-600 px-3 py-1 text-xs font-semibold text-white">Joint Venture</span>}
           </div>
           <h1 className="font-heading text-2xl font-bold text-brand-900 sm:text-3xl">{property.title}</h1>
           <p className="flex items-center gap-1 text-muted-foreground">
             📍 {fullLocation || location || 'Location unavailable'}
           </p>
+          {property.published_at && (
+            <p className="text-xs text-muted-foreground/70">Listed on {new Date(property.published_at).toLocaleDateString('en-NG', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          )}
         </div>
       </div>
 
@@ -163,27 +194,28 @@ export default function PropertyDetail() {
             <div className="rounded-2xl border border-border bg-white p-5 shadow-card sm:p-8">
               <PropertyTabs property={property} />
             </div>
+            {/* Buyer safety notice */}
+            <div className="mt-6">
+              <BuyerSafetyNotice />
+            </div>
           </div>
 
           {/* Sidebar */}
           <aside className="w-full lg:w-96 lg:shrink-0">
             <div className="sticky top-24">
-              <DetailSidebar property={property} isSaved={isSaved} isCompared={isCompared}
-                onSave={() => handleSave(property)} onCompare={() => handleCompare(property)} />
+              <DetailSidebar property={property} agent={agent} isSaved={isSaved} onSave={handleSave} saving={saving} />
             </div>
           </aside>
         </div>
       </div>
 
-      {/* Related properties */}
+      {/* Similar properties */}
       {related.length > 0 && (
         <div className="container-wide section-pad mt-16">
           <h2 className="mb-6 font-heading text-2xl font-bold text-brand-900">Similar Properties</h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
-              <ListingCard key={p.id} property={p}
-                onSave={handleSave} isSaved={savedIds.includes(p.id)}
-                onCompare={handleCompare} isCompared={compareIds.includes(p.id)} />
+              <ListingCard key={p.id} property={p} />
             ))}
           </div>
         </div>

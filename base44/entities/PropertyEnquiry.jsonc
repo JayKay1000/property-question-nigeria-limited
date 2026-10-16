@@ -49,9 +49,17 @@
       ],
       "default": "website"
     },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent entity ID of the advertiser (set server-side)"
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Display name of the advertiser (set server-side)"
+    },
     "assigned_to_id": {
       "type": "string",
-      "description": "Assigned sales executive"
+      "description": "User ID of the assigned agent (for RLS read access)"
     },
     "assigned_to_name": {
       "type": "string"

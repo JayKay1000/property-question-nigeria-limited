@@ -114,3 +114,44 @@ export async function createAuditLog(base44: any, entry: Record<string, any>) {
     ...entry,
   }).catch(() => {});
 }
+
+// ─── Phase 5: Public property detail & enquiry support ───
+
+/**
+ * Fields from the Agent entity that are safe to show to the public.
+ * Excludes address, date_of_birth, emergency contacts, and other private data.
+ */
+export const PUBLIC_AGENT_FIELDS = [
+  "id", "full_name", "first_name", "last_name", "photo_url",
+  "bio", "specialization", "years_experience", "service_areas",
+  "languages", "agent_code", "email", "phone",
+  "identity_verification_status", "address_verification_status",
+  "verification_status", "tier", "status",
+  "rating", "review_count", "total_listings",
+];
+
+/**
+ * Returns a stripped-down agent object containing only public fields.
+ * Never returns private fields like address, DOB, or emergency contacts.
+ */
+export function getPublicAgent(agent: any): Record<string, any> | null {
+  if (!agent) return null;
+  const result: Record<string, any> = {};
+  for (const key of PUBLIC_AGENT_FIELDS) {
+    if (agent[key] !== undefined) result[key] = agent[key];
+  }
+  // Derived display flags (from authoritative verification records)
+  result.identity_verified = agent.identity_verification_status === "approved";
+  result.address_verified = agent.address_verification_status === "approved";
+  return result;
+}
+
+/**
+ * Checks whether a property is eligible for public display.
+ * Draft, pending, rejected, archived, and inactive listings are not public.
+ */
+export function isPubliclyVisible(property: any): boolean {
+  if (!property) return false;
+  if (property.visibility !== "public") return false;
+  return ACTIVE_PUBLISHED_STATUSES.includes(property.status);
+}
