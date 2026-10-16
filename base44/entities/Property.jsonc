@@ -34,6 +34,16 @@
       ],
       "default": "sale"
     },
+    "pricing_frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "yearly",
+        "weekly",
+        "daily"
+      ],
+      "description": "Pricing frequency for rental listings"
+    },
     "property_type": {
       "type": "string"
     },
@@ -41,6 +51,9 @@
       "type": "number"
     },
     "bathrooms": {
+      "type": "number"
+    },
+    "toilets": {
       "type": "number"
     },
     "parking_spaces": {
@@ -54,6 +67,10 @@
     },
     "year_built": {
       "type": "number"
+    },
+    "plot_dimensions": {
+      "type": "string",
+      "description": "Plot dimensions e.g. 100x50 ft"
     },
     "property_classification": {
       "type": "string"
@@ -148,7 +165,8 @@
         "approved",
         "published",
         "active",
-        "inactive"
+        "inactive",
+        "rejected"
       ],
       "default": "published"
     },
@@ -182,11 +200,28 @@
     "owner_name": {
       "type": "string"
     },
+    "owner_user_id": {
+      "type": "string",
+      "description": "Authenticated user ID of the listing owner (for RLS ownership checks)"
+    },
     "listing_agent_id": {
       "type": "string"
     },
     "listing_agent_name": {
       "type": "string"
+    },
+    "ownership_confirmed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Agent confirmed they own or have permission to market this property"
+    },
+    "ownership_confirmed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "marketplace_rejection_reason": {
+      "type": "string",
+      "description": "Admin feedback when a marketplace listing submission is rejected"
     },
     "published_at": {
       "type": "string",
@@ -213,7 +248,38 @@
         "role": "admin"
       }
     },
-    "read": true,
+    "read": {
+      "$or": [
+        {
+          "data.visibility": "public",
+          "data.status": {
+            "$in": [
+              "published",
+              "active",
+              "approved",
+              "verified"
+            ]
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.owner_user_id": "{{user.id}}"
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
     "update": {
       "user_condition": {
         "role": "admin"

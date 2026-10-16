@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { base44 } from '@/api/base44Client';
 import { IDENTITY_DOCUMENT_TYPES, ADDRESS_DOCUMENT_TYPES } from '@/lib/marketplace-utils';
+import MarketplaceListingReview from '@/components/marketplace/MarketplaceListingReview';
 
 const ALL_DOC_TYPES = [...IDENTITY_DOCUMENT_TYPES, ...ADDRESS_DOCUMENT_TYPES];
 const docLabel = (val) => ALL_DOC_TYPES.find((d) => d.value === val)?.label || val;
@@ -20,6 +21,7 @@ export default function MarketplaceVerifications() {
   const [reason, setReason] = useState('');
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+  const [tab, setTab] = useState('verifications');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -85,7 +87,21 @@ export default function MarketplaceVerifications() {
         <p className="mt-1 text-sm text-muted-foreground">Review agent identity and address verification submissions for tier upgrades.</p>
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-1 rounded-lg border border-border bg-white p-1">
+        <button onClick={() => setTab('verifications')} className={`flex-1 rounded-md px-3 py-2 text-sm font-semibold transition ${tab === 'verifications' ? 'bg-brand-900 text-white' : 'text-muted-foreground hover:bg-brand-50'}`}>
+          <ShieldCheck className="mr-1.5 inline h-4 w-4" /> Agent Verifications
+        </button>
+        <button onClick={() => setTab('listings')} className={`flex-1 rounded-md px-3 py-2 text-sm font-semibold transition ${tab === 'listings' ? 'bg-brand-900 text-white' : 'text-muted-foreground hover:bg-brand-50'}`}>
+          <FileText className="mr-1.5 inline h-4 w-4" /> Listing Reviews
+        </button>
+      </div>
+
+      {tab === 'listings' && <MarketplaceListingReview />}
+
       {/* Pending queue */}
+      {tab === 'verifications' && (
+      <>
       <div>
         <h2 className="mb-3 flex items-center gap-2 text-sm font-heading font-bold text-brand-900">
           <Clock className="h-4 w-4 text-warning" /> Pending Review ({pending.length})
@@ -221,6 +237,8 @@ export default function MarketplaceVerifications() {
             ))}
           </div>
         </div>
+      )}
+      </>
       )}
     </div>
   );

@@ -36,6 +36,8 @@ import Marketplace from '@/pages/Marketplace';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import MarketplaceAgentRegister from '@/pages/marketplace/MarketplaceAgentRegister';
 import MarketplaceAgentProfile from '@/pages/marketplace/MarketplaceAgentProfile';
+import MarketplaceAgentDashboard from '@/pages/marketplace/MarketplaceAgentDashboard';
+import MarketplacePropertyForm from '@/pages/marketplace/MarketplacePropertyForm';
 import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
@@ -145,6 +147,9 @@ element={<AdminProjects />}
       </Route>
       <Route path="/marketplace/agent/register" element={<MarketplaceAgentRegister />} />
       <Route path="/marketplace/agent/profile" element={<MarketplaceAgentProfile />} />
+      <Route path="/marketplace/agent/dashboard" element={<MarketplaceAgentDashboard />} />
+      <Route path="/marketplace/agent/properties/new" element={<MarketplacePropertyForm />} />
+      <Route path="/marketplace/agent/properties/:id/edit" element={<MarketplacePropertyForm />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/buy2flip" element={<Buy2Flip />} />
