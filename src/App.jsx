@@ -32,6 +32,8 @@ import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import AccessDenied from '@/pages/AccessDenied';
+import Marketplace from '@/pages/Marketplace';
+import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
 import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
@@ -135,6 +137,9 @@ element={<AdminProjects />}
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route element={<MarketplaceLayout />}>
+        <Route path="/marketplace" element={<Marketplace />} />
+      </Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/buy2flip" element={<Buy2Flip />} />
