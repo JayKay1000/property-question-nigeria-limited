@@ -1,12 +1,31 @@
+import { useState, useEffect } from 'react';
 import MarketplaceSearch from '@/components/marketplace/MarketplaceSearch';
 import CategoryShortcuts from '@/components/marketplace/CategoryShortcuts';
 import PropertyDiscovery from '@/components/marketplace/PropertyDiscovery';
 import AgentParticipation from '@/components/marketplace/AgentParticipation';
+import { base44 } from '@/api/base44Client';
+
+export const defaultFilters = {
+  keyword: '', state: '', lga: '', propertyType: '', purpose: '',
+  priceRange: '', priceMin: undefined, priceMax: undefined,
+  bedrooms: undefined, bathrooms: undefined,
+  classification: undefined, amenities: [],
+  featured: false, jointVenture: false,
+};
 
 export default function Marketplace() {
+  const [filters, setFilters] = useState({ ...defaultFilters });
+  const [sort, setSort] = useState('newest');
+  const [propertyTypes, setPropertyTypes] = useState([]);
+
+  useEffect(() => {
+    base44.entities.LookupPropertyType.list('sort_order', 50)
+      .then((types) => setPropertyTypes(types.filter((t) => t.is_active !== false)))
+      .catch(() => setPropertyTypes([]));
+  }, []);
+
   return (
     <>
-      {/* Hero / Search area */}
       <section className="relative overflow-hidden bg-brand-900">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800" />
         <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-flame-500/10 blur-3xl" />
@@ -19,12 +38,18 @@ export default function Marketplace() {
               Discover property advertisements from agents across Nigeria. Find homes, land, and commercial spaces — all in one place.
             </p>
           </div>
-          <MarketplaceSearch />
+          <MarketplaceSearch filters={filters} setFilters={setFilters} propertyTypes={propertyTypes} />
         </div>
       </section>
 
       <CategoryShortcuts />
-      <PropertyDiscovery />
+      <PropertyDiscovery
+        filters={filters}
+        setFilters={setFilters}
+        sort={sort}
+        setSort={setSort}
+        propertyTypes={propertyTypes}
+      />
       <AgentParticipation />
     </>
   );

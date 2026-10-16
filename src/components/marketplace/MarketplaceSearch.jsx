@@ -1,93 +1,92 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Tag, ArrowRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, MapPin, Building2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { PURPOSE_CONFIG } from '@/lib/property-utils';
+import { NIGERIA_STATES, getLGAsForState } from '@/lib/nigeria-locations';
 
-const categories = [
-  { value: '', label: 'All Categories' },
-  { value: 'house', label: 'Houses' },
-  { value: 'apartment', label: 'Apartments' },
-  { value: 'land', label: 'Land & Plots' },
-  { value: 'commercial', label: 'Commercial' },
-  { value: 'duplex', label: 'Duplexes' },
-];
+export default function MarketplaceSearch({ filters, setFilters, propertyTypes }) {
+  const [keywordInput, setKeywordInput] = useState(filters.keyword || '');
+  const lgaOptions = getLGAsForState(filters.state);
 
-const purposes = [
-  { value: 'sale', label: 'Buy' },
-  { value: 'rent', label: 'Rent' },
-  { value: 'land', label: 'Land' },
-];
+  useEffect(() => { setKeywordInput(filters.keyword || ''); }, [filters.keyword]);
 
-export default function MarketplaceSearch() {
-  const navigate = useNavigate();
-  const [location, setLocation] = useState('');
-  const [category, setCategory] = useState('');
-  const [purpose, setPurpose] = useState('sale');
+  const submitKeyword = () => setFilters({ ...filters, keyword: keywordInput });
 
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (location) params.set('loc', location);
-    if (category) params.set('type', category);
-    if (purpose === 'land') {
-      params.set('type', 'land');
-    } else if (purpose) {
-      params.set('purpose', purpose);
-    }
-    navigate(`/properties${params.toString() ? `?${params.toString()}` : ''}`);
-  };
+  const purposes = [['', 'All'], ...Object.entries(PURPOSE_CONFIG)];
 
   return (
-    <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-white p-3 shadow-premium sm:p-4">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-        <div className="flex-1">
-          <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-            <MapPin className="h-3.5 w-3.5" /> Location
-          </label>
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            placeholder="e.g. Lagos, Abuja, Lekki..."
-            className="h-11 w-full rounded-lg border border-input bg-transparent px-3 text-sm outline-none transition-colors focus:border-flame-500 focus:ring-1 focus:ring-flame-500"
-          />
-        </div>
-        <div className="lg:w-48">
-          <label className="mb-1 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-            <Tag className="h-3.5 w-3.5" /> Category
-          </label>
-          <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger className="h-11 border-input bg-transparent"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {categories.map((c) => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="lg:w-40">
-          <label className="mb-1 block text-xs font-medium text-muted-foreground">Transaction</label>
-          <Select value={purpose} onValueChange={setPurpose}>
-            <SelectTrigger className="h-11 border-input bg-transparent"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {purposes.map((p) => <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>)}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button onClick={handleSearch} className="h-11 bg-flame-500 px-6 text-white hover:bg-flame-600 lg:px-8">
-          <Search className="mr-1.5 h-4 w-4" /> Search
-        </Button>
-      </div>
-      <div className="mt-2 flex items-center gap-1.5 px-1 text-xs text-muted-foreground">
-        <span>Popular:</span>
-        {['Lekki', 'Abuja', 'Ikeja', 'Yaba'].map((tag) => (
+    <div className="mx-auto max-w-5xl rounded-2xl border border-white/20 bg-white p-3 shadow-premium-lg sm:p-4">
+      {/* Purpose tabs */}
+      <div className="mb-3 flex gap-2">
+        {purposes.map(([key, label]) => (
           <button
-            key={tag}
-            onClick={() => { setLocation(tag); }}
-            className="rounded-full bg-brand-50 px-2.5 py-0.5 font-medium text-brand-700 transition-colors hover:bg-brand-100"
+            key={key || 'all'}
+            onClick={() => setFilters({ ...filters, purpose: key })}
+            className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition-colors ${
+              filters.purpose === key ? 'bg-flame-500 text-white shadow' : 'bg-brand-50 text-brand-700 hover:bg-brand-100'
+            }`}
           >
-            {tag}
+            {label}
           </button>
         ))}
+      </div>
+
+      {/* Search inputs */}
+      <div className="flex flex-col gap-2.5 lg:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            value={keywordInput}
+            onChange={(e) => setKeywordInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submitKeyword()}
+            placeholder="Search by title, estate, or keyword…"
+            className="h-11 w-full rounded-lg border border-input bg-transparent pl-10 pr-9 text-sm outline-none transition-colors focus:border-flame-500 focus:ring-1 focus:ring-flame-500"
+          />
+          {keywordInput && (
+            <button onClick={() => { setKeywordInput(''); setFilters({ ...filters, keyword: '' }); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-brand-900">
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+
+        <Select value={filters.state || '__all__'} onValueChange={(v) => setFilters({ ...filters, state: v === '__all__' ? '' : v, lga: '' })}>
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44">
+            <MapPin className="mr-1.5 h-4 w-4 text-muted-foreground" />
+            <SelectValue placeholder="All States" />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            <SelectItem value="__all__">All States</SelectItem>
+            {NIGERIA_STATES.map((s) => <SelectItem key={s.name} value={s.name}>{s.name}</SelectItem>)}
+          </SelectContent>
+        </Select>
+
+        <Select value={filters.lga || '__all__'} onValueChange={(v) => setFilters({ ...filters, lga: v === '__all__' ? '' : v })} disabled={!filters.state}>
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-40 disabled:opacity-50">
+            <SelectValue placeholder={filters.state ? 'All LGAs' : 'Select state'} />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            <SelectItem value="__all__">All LGAs</SelectItem>
+            {lgaOptions.map((lga) => <SelectItem key={lga} value={lga}>{lga}</SelectItem>)}
+          </SelectContent>
+        </Select>
+
+        <Select value={filters.propertyType || '__all__'} onValueChange={(v) => setFilters({ ...filters, propertyType: v === '__all__' ? '' : v })}>
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44">
+            <Building2 className="mr-1.5 h-4 w-4 text-muted-foreground" />
+            <SelectValue placeholder="All Types" />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            <SelectItem value="__all__">All Types</SelectItem>
+            {propertyTypes.map((t) => <SelectItem key={t.id} value={t.code}>{t.label}</SelectItem>)}
+          </SelectContent>
+        </Select>
+
+        <Button onClick={submitKeyword} className="h-11 bg-flame-500 px-6 text-white hover:bg-flame-600 lg:px-8">
+          <Search className="mr-1.5 h-4 w-4" /> Search
+        </Button>
       </div>
     </div>
   );
