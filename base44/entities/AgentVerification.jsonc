@@ -1,0 +1,119 @@
+{
+  "name": "AgentVerification",
+  "type": "object",
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "description": "Reference to Agent entity"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Authenticated user ID of the agent (for RLS)"
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Denormalized agent display name"
+    },
+    "agent_email": {
+      "type": "string",
+      "description": "Denormalized agent email"
+    },
+    "verification_type": {
+      "type": "string",
+      "enum": [
+        "identity",
+        "address"
+      ],
+      "description": "Tier 2 = identity, Tier 3 = address"
+    },
+    "document_type": {
+      "type": "string",
+      "description": "e.g. international_passport, drivers_license, utility_bill, bank_statement"
+    },
+    "document_file_uri": {
+      "type": "string",
+      "description": "Private storage URI from UploadPrivateFile \u2014 never publicly accessible"
+    },
+    "document_filename": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "resubmitted"
+      ],
+      "default": "pending"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Admin user ID who reviewed"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "agent_id",
+    "user_id",
+    "verification_type",
+    "document_type",
+    "document_file_uri",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

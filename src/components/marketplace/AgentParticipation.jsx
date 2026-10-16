@@ -22,10 +22,10 @@ export default function AgentParticipation() {
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button asChild className="bg-flame-500 text-white hover:bg-flame-600">
-                  <Link to="/submit"><Plus className="mr-1.5 h-4 w-4" /> Post a Property</Link>
+                  <Link to="/marketplace/agent/register"><Plus className="mr-1.5 h-4 w-4" /> Become an Agent</Link>
                 </Button>
                 <Button asChild variant="outline" className="border-brand-200 hover:bg-white">
-                  <Link to="/agents">Find Agents</Link>
+                  <Link to="/marketplace/agent/profile">Agent Dashboard</Link>
                 </Button>
               </div>
             </div>

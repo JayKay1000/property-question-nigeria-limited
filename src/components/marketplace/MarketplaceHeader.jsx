@@ -48,8 +48,11 @@ export default function MarketplaceHeader() {
           <Button asChild variant="ghost" size="sm" className="hidden text-brand-700 hover:text-flame-600 md:inline-flex">
             <Link to="/"><ArrowLeft className="mr-1.5 h-4 w-4" /> Back to PQNL</Link>
           </Button>
+          <Button asChild variant="ghost" size="sm" className="hidden text-brand-700 hover:text-flame-600 sm:inline-flex">
+            <Link to="/marketplace/agent/register">Become an Agent</Link>
+          </Button>
           <Button asChild size="sm" className="bg-flame-500 text-white hover:bg-flame-600">
-            <Link to="/submit"><Plus className="mr-1.5 h-4 w-4" /> Post a Property</Link>
+            <Link to="/marketplace/agent/profile"><Plus className="mr-1.5 h-4 w-4" /> Agent Dashboard</Link>
           </Button>
           <button
             className="rounded-lg p-2 text-brand-800 hover:bg-brand-50 lg:hidden"
@@ -90,9 +93,12 @@ export default function MarketplaceHeader() {
                 <ArrowLeft className="h-4 w-4" /> Back to PQNL Website
               </Link>
             </nav>
-            <div className="border-t border-border p-4">
+            <div className="border-t border-border p-4 space-y-2">
+              <Button asChild variant="outline" className="w-full border-brand-200 hover:bg-brand-50">
+                <Link to="/marketplace/agent/register" onClick={() => setMobileOpen(false)}>Become an Agent</Link>
+              </Button>
               <Button asChild className="w-full bg-flame-500 text-white hover:bg-flame-600">
-                <Link to="/submit" onClick={() => setMobileOpen(false)}><Plus className="mr-1.5 h-4 w-4" /> Post a Property</Link>
+                <Link to="/marketplace/agent/profile" onClick={() => setMobileOpen(false)}><Plus className="mr-1.5 h-4 w-4" /> Agent Dashboard</Link>
               </Button>
             </div>
           </div>

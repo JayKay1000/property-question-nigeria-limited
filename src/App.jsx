@@ -34,6 +34,8 @@ import ResetPassword from '@/pages/ResetPassword';
 import AccessDenied from '@/pages/AccessDenied';
 import Marketplace from '@/pages/Marketplace';
 import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
+import MarketplaceAgentRegister from '@/pages/marketplace/MarketplaceAgentRegister';
+import MarketplaceAgentProfile from '@/pages/marketplace/MarketplaceAgentProfile';
 import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
@@ -68,6 +70,7 @@ import DocumentVerificationHub from '@/pages/admin/DocumentVerificationHub';
 import JobPostings from '@/pages/admin/JobPostings';
 import CSRProjects from '@/pages/admin/CSRProjects';
 import ContactSubmissions from '@/pages/admin/ContactSubmissions';
+import MarketplaceVerifications from '@/pages/admin/MarketplaceVerifications';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -140,6 +143,8 @@ element={<AdminProjects />}
       <Route element={<MarketplaceLayout />}>
         <Route path="/marketplace" element={<Marketplace />} />
       </Route>
+      <Route path="/marketplace/agent/register" element={<MarketplaceAgentRegister />} />
+      <Route path="/marketplace/agent/profile" element={<MarketplaceAgentProfile />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/buy2flip" element={<Buy2Flip />} />
@@ -370,6 +375,11 @@ element={
           <Route path="/admin/contact-submissions" element={
             <RequirePermission permission="security.view">
               <ContactSubmissions />
+            </RequirePermission>
+          } />
+          <Route path="/admin/marketplace-verifications" element={
+            <RequirePermission permission="security.view">
+              <MarketplaceVerifications />
             </RequirePermission>
           } />
         </Route>

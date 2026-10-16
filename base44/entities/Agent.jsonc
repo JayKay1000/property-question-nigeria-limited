@@ -13,6 +13,14 @@
     "full_name": {
       "type": "string"
     },
+    "first_name": {
+      "type": "string",
+      "description": "First name (marketplace agent registration)"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name (marketplace agent registration)"
+    },
     "email": {
       "type": "string"
     },
@@ -96,6 +104,47 @@
         "rejected"
       ],
       "default": "unverified"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "identity_verified",
+        "address_verified"
+      ],
+      "default": "basic",
+      "description": "Marketplace listing tier \u2014 derived from approved verification records by the backend, not client-settable"
+    },
+    "identity_verification_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "not_submitted",
+      "description": "Tier 2 identity verification status"
+    },
+    "address_verification_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "not_submitted",
+      "description": "Tier 3 address verification status"
+    },
+    "marketplace_terms_accepted": {
+      "type": "boolean",
+      "default": false,
+      "description": "Agent accepted the marketplace terms and privacy notice"
+    },
+    "marketplace_terms_accepted_at": {
+      "type": "string",
+      "format": "date-time"
     },
     "verified_by": {
       "type": "string"
