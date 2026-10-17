@@ -90,7 +90,7 @@ export default function PropertyDetail() {
     base44.entities.Property.filter(query, { sort: '-created_date', limit: 12 })
       .then((res) => {
         const items = res.items || res;
-        setRelated(items.filter((p) => p.id !== property.id).slice(0, 3));
+        setRelated(items.filter((p) => p.id !== property.id).slice(0, 6));
       })
       .catch(() => setRelated([]));
   }, [property]);
