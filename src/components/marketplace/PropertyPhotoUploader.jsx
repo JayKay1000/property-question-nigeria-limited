@@ -2,8 +2,11 @@ import { useState, useRef } from 'react';
 import { Loader2, Upload, X, Star, ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { Image } from '@/components/ui/image';
+import { optimizeImageFile } from '@/lib/image-optimize';
 
 const ACCEPT = 'image/jpeg,image/jpg,image/png,image/webp';
+// Hard ceiling on the raw file — large phone photos are auto-optimized down
+// before upload, but we reject anything above this so uploads stay bounded.
 const MAX_SIZE = 10 * 1024 * 1024;
 
 export default function PropertyPhotoUploader({ images = [], onChange, maxImages = 20, coverIndex = 0, onCoverChange }) {
@@ -26,7 +29,9 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
       for (const file of toUpload) {
         if (file.size > MAX_SIZE) { setError(`${file.name} is too large (max 10MB).`); continue; }
         if (!file.type.startsWith('image/')) { setError(`${file.name} is not an image.`); continue; }
-        const { file_url } = await base44.integrations.Core.UploadPublicFile({ file });
+        // Shrink and re-encode before upload for fast loading on slow connections.
+        const optimized = await optimizeImageFile(file);
+        const { file_url } = await base44.integrations.Core.UploadPublicFile({ file: optimized });
         uploaded.push(file_url);
       }
       if (uploaded.length) onChange([...images, ...uploaded]);
@@ -71,9 +76,9 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
         }`}
       >
         {uploading ? (
-          <><Loader2 className="h-6 w-6 animate-spin text-flame-500" /><p className="mt-2 text-sm text-muted-foreground">Uploading…</p></>
+          <><Loader2 className="h-6 w-6 animate-spin text-flame-500" /><p className="mt-2 text-sm text-muted-foreground">Optimizing & uploading…</p></>
         ) : (
-          <><Upload className="h-6 w-6 text-muted-foreground" /><p className="mt-2 text-sm text-muted-foreground">Click or drag to upload property photos</p><p className="text-xs text-muted-foreground/60">JPG, PNG, WebP (max 10MB each, up to {maxImages})</p></>
+          <><Upload className="h-6 w-6 text-muted-foreground" /><p className="mt-2 text-sm text-muted-foreground">Click or drag to upload property photos</p><p className="text-xs text-muted-foreground/60">JPG, PNG or WebP — auto-optimized for fast loading (max 10MB each, up to {maxImages})</p></>
         )}
         <input ref={inputRef} type="file" accept={ACCEPT} multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />
       </div>
