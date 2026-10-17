@@ -166,7 +166,8 @@
         "published",
         "active",
         "inactive",
-        "rejected"
+        "rejected",
+        "suspended"
       ],
       "default": "published"
     },
@@ -222,6 +223,36 @@
     "marketplace_rejection_reason": {
       "type": "string",
       "description": "Admin feedback when a marketplace listing submission is rejected"
+    },
+    "property_verification_status": {
+      "type": "string",
+      "enum": [
+        "not_submitted",
+        "pending",
+        "approved",
+        "rejected",
+        "evidence_requested",
+        "revoked"
+      ],
+      "default": "not_submitted",
+      "description": "Property-level verification status \u2014 separate from agent identity/address verification. Set server-side only."
+    },
+    "property_verification_scope": {
+      "type": "string",
+      "description": "Human-readable scope of what the property verification actually checked (set by reviewer)"
+    },
+    "suspended_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When an admin temporarily suspended the listing"
+    },
+    "suspended_by": {
+      "type": "string",
+      "description": "Admin user ID who suspended the listing"
+    },
+    "suspension_reason": {
+      "type": "string",
+      "description": "Reason for temporary suspension"
     },
     "published_at": {
       "type": "string",

@@ -4,6 +4,8 @@ import {
   sanitizeListingData,
   validateListingData,
   createAuditLog,
+  hasMaterialChanges,
+  ACTIVE_PUBLISHED_STATUSES,
 } from "../../shared/marketplace-listings.ts";
 
 export default async function (req: Request): Promise<Response> {
@@ -62,15 +64,25 @@ export default async function (req: Request): Promise<Response> {
         return Response.json({ error: "This listing cannot be edited in its current state." }, { status: 400 });
       }
 
-      // Update — service role bypasses RLS; ownership already verified
-      const updated = await base44.asServiceRole.entities.Property.update(listing_id, {
-        ...data,
-        // If editing a published listing, keep it published (no re-review needed for content edits)
-        // status and visibility are NOT in `data` (sanitized out), so they stay unchanged
-      });
+      // Material-edit re-review: if the listing is currently published/active and the
+      // agent changed a material field (price, location, description, photos, etc.),
+      // send it back to pending_approval so a moderator reviews the new content before
+      // it is shown publicly again. Non-material edits (e.g. adding an amenity) keep
+      // the listing published.
+      const wasPublished = ACTIVE_PUBLISHED_STATUSES.includes(existing.status);
+      const materialChanged = wasPublished && hasMaterialChanges(existing, data);
+
+      const updateData: Record<string, any> = { ...data };
+      if (materialChanged) {
+        updateData.status = "pending_approval";
+        updateData.visibility = "private";
+        updateData.marketplace_rejection_reason = "";
+      }
+
+      const updated = await base44.asServiceRole.entities.Property.update(listing_id, updateData);
 
       await createAuditLog(base44, {
-        action: "marketplace_listing_edited",
+        action: materialChanged ? "marketplace_listing_edited_re_review" : "marketplace_listing_edited",
         category: "property_management",
         module: "properties",
         entity_name: "Property",
@@ -79,10 +91,17 @@ export default async function (req: Request): Promise<Response> {
         user_id: user.id,
         user_email: user.email,
         user_role: user.role,
-        details: "Agent edited marketplace listing.",
+        details: materialChanged
+          ? "Agent edited material fields on a published listing — sent back to moderation for re-review."
+          : "Agent edited marketplace listing.",
       });
 
-      return Response.json({ success: true, listing_id: listing_id, listing: updated });
+      return Response.json({
+        success: true,
+        listing_id: listing_id,
+        listing: updated,
+        re_review_required: materialChanged,
+      });
     } else {
       // ── CREATE new draft ──
       const newListing = await base44.asServiceRole.entities.Property.create({

@@ -73,6 +73,7 @@ import JobPostings from '@/pages/admin/JobPostings';
 import CSRProjects from '@/pages/admin/CSRProjects';
 import ContactSubmissions from '@/pages/admin/ContactSubmissions';
 import MarketplaceVerifications from '@/pages/admin/MarketplaceVerifications';
+import MarketplaceComplaints from '@/pages/admin/MarketplaceComplaints';
 import AboutUs from '@/pages/AboutUs';
 import Blog from '@/pages/Blog';
 import BlogDetail from '@/pages/BlogDetail';
@@ -385,6 +386,11 @@ element={
           <Route path="/admin/marketplace-verifications" element={
             <RequirePermission permission="security.view">
               <MarketplaceVerifications />
+            </RequirePermission>
+          } />
+          <Route path="/admin/marketplace-complaints" element={
+            <RequirePermission permission="security.view">
+              <MarketplaceComplaints />
             </RequirePermission>
           } />
         </Route>

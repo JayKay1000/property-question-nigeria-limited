@@ -43,9 +43,23 @@
         "pending",
         "approved",
         "rejected",
-        "resubmitted"
+        "resubmitted",
+        "revoked"
       ],
       "default": "pending"
+    },
+    "revoked_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When an approved verification was subsequently revoked"
+    },
+    "revoked_by": {
+      "type": "string",
+      "description": "Admin user ID who revoked the verification"
+    },
+    "revocation_reason": {
+      "type": "string",
+      "description": "Reason for revoking a previously approved verification"
     },
     "submitted_at": {
       "type": "string",

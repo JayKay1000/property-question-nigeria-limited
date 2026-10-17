@@ -1,0 +1,120 @@
+{
+  "name": "ListingReport",
+  "type": "object",
+  "title": "Listing Complaint / Report",
+  "description": "A complaint or report submitted by a visitor about a marketplace property listing. Reports are allegations, not proof.",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to the Property entity reported"
+    },
+    "property_title": {
+      "type": "string",
+      "description": "Denormalized property title at time of report"
+    },
+    "report_reason": {
+      "type": "string",
+      "enum": [
+        "scam_impersonation",
+        "incorrect_details",
+        "duplicate",
+        "no_longer_available",
+        "unauthorized_advertising",
+        "suspicious_payment",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Details of the concern from the reporter"
+    },
+    "reporter_name": {
+      "type": "string",
+      "description": "Optional \u2014 visitor name for follow-up"
+    },
+    "reporter_email": {
+      "type": "string",
+      "description": "Optional \u2014 visitor email for follow-up"
+    },
+    "reporter_phone": {
+      "type": "string",
+      "description": "Optional \u2014 visitor phone for follow-up"
+    },
+    "reporter_user_id": {
+      "type": "string",
+      "description": "Platform user ID if the reporter was authenticated (set server-side)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "under_review",
+        "dismissed",
+        "escalated",
+        "resolved"
+      ],
+      "default": "new"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Admin user ID who handled the report"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "review_notes": {
+      "type": "string",
+      "description": "Admin's investigation notes"
+    },
+    "admin_action": {
+      "type": "string",
+      "enum": [
+        "none",
+        "listing_suspended",
+        "listing_restored",
+        "agent_flagged",
+        "referred_to_security"
+      ],
+      "default": "none"
+    },
+    "ip_hint": {
+      "type": "string",
+      "description": "Partial IP or region hint for abuse monitoring (not full IP)"
+    }
+  },
+  "required": [
+    "property_id",
+    "report_reason",
+    "description",
+    "status"
+  ],
+  "rls": {
+    "create": null,
+    "read": {
+      "$or": [
+        {
+          "data.reporter_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "name": "PropertyVerification",
+  "type": "object",
+  "title": "Property Verification Submission",
+  "description": "Property-level verification evidence submitted by an advertiser and reviewed by authorized PQNL staff. Separate from agent identity/address verification.",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to the Property entity being verified"
+    },
+    "property_title": {
+      "type": "string",
+      "description": "Denormalized property title at time of submission"
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Agent entity ID of the advertiser"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Authenticated user ID of the advertiser (for RLS)"
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Denormalized agent display name"
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "ownership_document",
+        "authority_to_market",
+        "title_document",
+        "other_supporting_evidence"
+      ],
+      "description": "Category of evidence submitted"
+    },
+    "evidence_description": {
+      "type": "string",
+      "description": "Agent's description of the evidence and what it demonstrates"
+    },
+    "document_file_uri": {
+      "type": "string",
+      "description": "Private storage URI from UploadPrivateFile \u2014 never publicly accessible"
+    },
+    "document_filename": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "evidence_requested",
+        "revoked"
+      ],
+      "default": "pending"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Admin user ID who reviewed"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "review_scope_notes": {
+      "type": "string",
+      "description": "Reviewer's notes on what was actually checked under the stated scope"
+    },
+    "approved_scope": {
+      "type": "string",
+      "description": "The scope of what the approval covers (e.g. 'authority to market confirmed; title not independently verified')"
+    },
+    "revoked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "revoked_by": {
+      "type": "string"
+    },
+    "revocation_reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "agent_id",
+    "user_id",
+    "evidence_type",
+    "document_file_uri",
+    "document_filename",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

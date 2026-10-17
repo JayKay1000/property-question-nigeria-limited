@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Home, Loader2, Building2, ArrowLeft } from 'lucide-react';
+import { ChevronRight, Home, Loader2, Building2, ArrowLeft, Flag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { formatPrice, buildLocation, buildShortLocation, AVAILABILITY_CONFIG, PURPOSE_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
@@ -11,6 +11,7 @@ import DetailSidebar from '@/components/properties/DetailSidebar';
 import PropertyTabs from '@/components/properties/PropertyTabs';
 import ListingCard from '@/components/properties/ListingCard';
 import BuyerSafetyNotice from '@/components/properties/BuyerSafetyNotice';
+import ReportListingForm from '@/components/properties/ReportListingForm';
 import { setPropertySEO, clearPropertySEO } from '@/lib/property-seo';
 
 const SAVE_KEY = 'pq_saved_properties';
@@ -25,6 +26,7 @@ export default function PropertyDetail() {
   const [isSaved, setIsSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showReportForm, setShowReportForm] = useState(false);
 
   // Check auth status on mount
   useEffect(() => {
@@ -197,6 +199,20 @@ export default function PropertyDetail() {
             {/* Buyer safety notice */}
             <div className="mt-6">
               <BuyerSafetyNotice />
+            </div>
+
+            {/* Report this listing */}
+            <div className="mt-4">
+              {showReportForm ? (
+                <ReportListingForm property={property} onClose={() => setShowReportForm(false)} />
+              ) : (
+                <button
+                  onClick={() => setShowReportForm(true)}
+                  className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition hover:text-error"
+                >
+                  <Flag className="h-3.5 w-3.5" /> Report this listing
+                </button>
+              )}
             </div>
           </div>
 

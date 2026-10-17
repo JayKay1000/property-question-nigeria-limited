@@ -1,4 +1,4 @@
-import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe } from 'lucide-react';
+import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { formatPrice, PURPOSE_CONFIG } from '@/lib/property-utils';
@@ -20,6 +20,7 @@ export default function DetailSidebar({ property, agent, isSaved, onSave, saving
 
   const identityVerified = agent?.identity_verified;
   const addressVerified = agent?.address_verified;
+  const propertyVerified = property.property_verification_status === 'approved';
 
   return (
     <div className="space-y-4">
@@ -66,22 +67,41 @@ export default function DetailSidebar({ property, agent, isSaved, onSave, saving
         </div>
 
         {/* Verification badges — only from authoritative approved records */}
+        {/* Agent verification badges (concern the agent, not the property) */}
         {(identityVerified || addressVerified) && (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {identityVerified && (
               <span className="flex items-center gap-1 rounded-full bg-info/10 px-2.5 py-1 text-xs font-medium text-info">
-                <BadgeCheck className="h-3.5 w-3.5" /> Identity Verified
+                <BadgeCheck className="h-3.5 w-3.5" /> Identity Verified Agent
               </span>
             )}
             {addressVerified && (
               <span className="flex items-center gap-1 rounded-full bg-success/10 px-2.5 py-1 text-xs font-medium text-success">
-                <ShieldCheck className="h-3.5 w-3.5" /> Address Verified
+                <ShieldCheck className="h-3.5 w-3.5" /> Address Verified Agent
               </span>
             )}
           </div>
         )}
         {!identityVerified && !addressVerified && agent && (
           <p className="mt-2 text-xs text-muted-foreground">Agent identity not yet verified.</p>
+        )}
+
+        {/* Property verification badge — separate from agent verification */}
+        {propertyVerified && (
+          <div className="mt-2 rounded-lg border border-flame/20 bg-flame/5 p-2.5">
+            <div className="flex items-start gap-1.5">
+              <Home className="mt-0.5 h-3.5 w-3.5 shrink-0 text-flame-600" />
+              <div>
+                <p className="text-xs font-semibold text-flame-700">Property Verification Completed</p>
+                {property.property_verification_scope && (
+                  <p className="mt-0.5 text-[10px] leading-relaxed text-muted-foreground">{property.property_verification_scope}</p>
+                )}
+                <p className="mt-0.5 text-[10px] text-muted-foreground">
+                  Evidence reviewed under the stated scope. Does not constitute a guarantee of title or ownership.
+                </p>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Agent profile details */}
