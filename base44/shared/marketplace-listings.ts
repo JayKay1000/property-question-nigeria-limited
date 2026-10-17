@@ -48,6 +48,12 @@ export function validateListingData(data: Record<string, any>): { valid: boolean
       return { valid: false, error: `${f} must be a non-negative number.` };
     }
   }
+  // Photo limit: featured image + gallery images must not exceed 20 total
+  const MAX_PHOTOS = 20;
+  const photoCount = (data.featured_image_url ? 1 : 0) + (Array.isArray(data.image_urls) ? data.image_urls.length : 0);
+  if (photoCount > MAX_PHOTOS) {
+    return { valid: false, error: `A property listing can have at most ${MAX_PHOTOS} photos.` };
+  }
   return { valid: true };
 }
 
