@@ -1,4 +1,5 @@
-import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe, Home } from 'lucide-react';
+import { useState } from 'react';
+import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe, Home, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { formatPrice, PURPOSE_CONFIG } from '@/lib/property-utils';
@@ -7,6 +8,7 @@ import EnquiryForm from './EnquiryForm';
 import PropertyShare from './PropertyShare';
 
 export default function DetailSidebar({ property, agent, isSaved, onSave, saving }) {
+  const [showContact, setShowContact] = useState(false);
   const purpose = PURPOSE_CONFIG[property.listing_purpose] || 'For Sale';
   const agentName = agent?.full_name || property.listing_agent_name || 'Property Question Team';
   const agentPhone = agent?.phone ? normalizePhone(agent.phone) : null;
@@ -117,25 +119,42 @@ export default function DetailSidebar({ property, agent, isSaved, onSave, saving
           </div>
         )}
 
-        {/* Contact actions — only render if a real number/email exists */}
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {agentPhone && (
-            <Button asChild variant="outline" size="sm" className="border-brand-200">
-              <a href={`tel:${agentPhone}`}><Phone className="mr-1.5 h-4 w-4" /> Call</a>
-            </Button>
-          )}
-          {whatsappUrl && (
-            <Button asChild variant="outline" size="sm" className="border-success/30 text-success hover:bg-success/5">
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle className="mr-1.5 h-4 w-4" /> WhatsApp</a>
-            </Button>
-          )}
-          {agentEmail && (
-            <Button asChild variant="outline" size="sm" className="border-brand-200">
+        {/* Contact actions — phone hidden behind "Show contact" reveal */}
+        <div className="mt-4 space-y-2">
+          {agentPhone ? (
+            !showContact ? (
+              <Button onClick={() => setShowContact(true)} variant="default" size="sm" className="w-full bg-brand-900 hover:bg-brand-800">
+                <Eye className="mr-1.5 h-4 w-4" /> Show contact
+              </Button>
+            ) : (
+              <>
+                <div className="rounded-lg border border-brand-200 bg-ice-50 p-3 text-center">
+                  <p className="text-xs font-medium text-muted-foreground">Agent phone number</p>
+                  <p className="mt-0.5 font-heading text-lg font-bold text-brand-900">{agentPhone}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button asChild variant="outline" size="sm" className="border-brand-200">
+                    <a href={`tel:${agentPhone}`}><Phone className="mr-1.5 h-4 w-4" /> Call</a>
+                  </Button>
+                  {whatsappUrl && (
+                    <Button asChild variant="outline" size="sm" className="border-success/30 text-success hover:bg-success/5">
+                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle className="mr-1.5 h-4 w-4" /> WhatsApp</a>
+                    </Button>
+                  )}
+                </div>
+                <Button onClick={() => setShowContact(false)} variant="ghost" size="sm" className="w-full text-xs text-muted-foreground">
+                  <EyeOff className="mr-1.5 h-3.5 w-3.5" /> Hide contact
+                </Button>
+              </>
+            )
+          ) : null}
+          {agentEmail && !showContact && (
+            <Button asChild variant="outline" size="sm" className="w-full border-brand-200">
               <a href={`mailto:${agentEmail}`}><Mail className="mr-1.5 h-4 w-4" /> Email</a>
             </Button>
           )}
           {!agentPhone && !agentEmail && (
-            <p className="col-span-2 text-xs text-muted-foreground">No direct contact available. Use the enquiry form below.</p>
+            <p className="text-xs text-muted-foreground">No direct contact available. Use the enquiry form below.</p>
           )}
         </div>
         {agent?.bio && <p className="mt-3 text-xs leading-relaxed text-muted-foreground line-clamp-3">{agent.bio}</p>}
