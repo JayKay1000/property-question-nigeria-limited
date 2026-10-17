@@ -6,10 +6,13 @@ import { Image } from '@/components/ui/image';
 const ACCEPT = 'image/jpeg,image/jpg,image/png,image/webp';
 const MAX_SIZE = 10 * 1024 * 1024;
 
-export default function PropertyPhotoUploader({ images = [], onChange, maxImages = 20 }) {
+export default function PropertyPhotoUploader({ images = [], onChange, maxImages = 20, coverIndex = 0, onCoverChange }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const inputRef = useRef(null);
+
+  const safeCover = Math.min(Math.max(coverIndex, 0), Math.max(images.length - 1, 0));
+  const setCover = (idx) => onCoverChange?.(idx);
 
   const handleFiles = async (files) => {
     if (!files || files.length === 0) return;
@@ -35,7 +38,14 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
   };
 
   const removeImage = (idx) => {
-    onChange(images.filter((_, i) => i !== idx));
+    const next = images.filter((_, i) => i !== idx);
+    onChange(next);
+    // Keep cover pointing at a valid image; if we removed the cover, fall back to 0
+    if (idx === safeCover) {
+      setCover(Math.min(idx, Math.max(next.length - 1, 0)));
+    } else if (idx < safeCover) {
+      setCover(safeCover - 1);
+    }
   };
 
   const moveImage = (idx, dir) => {
@@ -44,6 +54,9 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
     const next = [...images];
     [next[idx], next[newIdx]] = [next[newIdx], next[idx]];
     onChange(next);
+    // Track cover through the swap
+    if (idx === safeCover) setCover(newIdx);
+    else if (newIdx === safeCover) setCover(idx);
   };
 
   return (
@@ -73,8 +86,8 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
           {images.map((url, idx) => (
             <div key={idx} className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-brand-50">
               <Image src={url} alt={`Photo ${idx + 1}`} fittingType="fill" className="h-full w-full" />
-              {/* Primary badge */}
-              {idx === 0 && (
+              {/* Cover badge */}
+              {idx === safeCover && (
                 <span className="absolute left-1 top-1 flex items-center gap-0.5 rounded bg-flame-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
                   <Star className="h-2.5 w-2.5 fill-white" /> Cover
                 </span>
@@ -87,8 +100,8 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
                 <button onClick={() => moveImage(idx, 1)} disabled={idx === images.length - 1} className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-brand-700 disabled:opacity-30" title="Move right">
                   <ChevronRight className="h-4 w-4" />
                 </button>
-                {idx !== 0 && (
-                  <button onClick={() => { onChange([images[idx], ...images.filter((_, i) => i !== idx)]); }} className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-flame-600" title="Set as cover">
+                {idx !== safeCover && (
+                  <button onClick={() => setCover(idx)} className="flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-flame-600" title="Set as cover">
                     <Star className="h-3.5 w-3.5" />
                   </button>
                 )}
@@ -103,7 +116,7 @@ export default function PropertyPhotoUploader({ images = [], onChange, maxImages
 
       {images.length === 0 && (
         <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <ImageIcon className="h-3.5 w-3.5" /> No photos uploaded yet. The first photo will be the cover image.
+          <ImageIcon className="h-3.5 w-3.5" /> No photos uploaded yet. Upload photos, then tap the star on any photo to set it as the cover.
         </div>
       )}
     </div>

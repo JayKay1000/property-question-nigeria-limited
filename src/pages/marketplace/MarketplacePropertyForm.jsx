@@ -37,6 +37,7 @@ export default function MarketplacePropertyForm() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState(defaultForm);
   const [images, setImages] = useState([]);
+  const [coverIndex, setCoverIndex] = useState(0);
   const [category, setCategory] = useState('residential');
   const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
@@ -68,7 +69,9 @@ export default function MarketplacePropertyForm() {
         const imgs = [];
         if (p.featured_image_url) imgs.push(p.featured_image_url);
         if (p.image_urls) imgs.push(...p.image_urls);
-        setImages([...new Set(imgs)]);
+        const deduped = [...new Set(imgs)];
+        setImages(deduped);
+        setCoverIndex(0);
         // Detect category from property_type
         for (const [cat, cfg] of Object.entries(PROPERTY_CATEGORIES)) {
           if (cfg.types.includes(p.property_type)) { setCategory(cat); break; }
@@ -118,9 +121,10 @@ export default function MarketplacePropertyForm() {
     ['price', 'bedrooms', 'bathrooms', 'toilets', 'parking_spaces', 'land_size_sqm', 'built_up_area_sqm', 'year_built'].forEach((f) => {
       data[f] = data[f] === '' ? undefined : Number(data[f]);
     });
-    // Images: first is cover, rest are gallery
-    data.featured_image_url = images[0] || '';
-    data.image_urls = images.slice(1);
+    // Cover image is the selected one; the rest form the gallery
+    const safeCover = Math.min(Math.max(coverIndex, 0), Math.max(images.length - 1, 0));
+    data.featured_image_url = images.length ? images[safeCover] : '';
+    data.image_urls = images.filter((_, i) => i !== safeCover);
     // Ownership timestamp
     if (form.ownership_confirmed) data.ownership_confirmed_at = new Date().toISOString();
     return data;
@@ -381,7 +385,12 @@ export default function MarketplacePropertyForm() {
             <div>
               <h3 className="mb-1 font-heading text-base font-bold text-brand-900">Property Photographs</h3>
               <p className="mb-4 text-sm text-muted-foreground">Upload genuine photos of the property. The first photo will be the cover image shown in search results.</p>
-              <PropertyPhotoUploader images={images} onChange={(imgs) => { setImages(imgs); setDirty(true); }} />
+              <PropertyPhotoUploader
+                images={images}
+                onChange={(imgs) => { setImages(imgs); setDirty(true); }}
+                coverIndex={coverIndex}
+                onCoverChange={(idx) => { setCoverIndex(idx); setDirty(true); }}
+              />
             </div>
           )}
 
@@ -395,8 +404,8 @@ export default function MarketplacePropertyForm() {
 
               {/* Preview card */}
               <div className="overflow-hidden rounded-xl border border-border">
-                {images[0] ? (
-                  <img src={images[0]} alt={form.title} className="aspect-[4/3] w-full object-cover" />
+                {images[Math.min(Math.max(coverIndex, 0), Math.max(images.length - 1, 0))] ? (
+                  <img src={images[Math.min(Math.max(coverIndex, 0), Math.max(images.length - 1, 0))]} alt={form.title} className="aspect-[4/3] w-full object-cover" />
                 ) : (
                   <div className="flex aspect-[4/3] items-center justify-center bg-brand-50 text-brand-200"><ImageIcon className="h-10 w-10" /></div>
                 )}
