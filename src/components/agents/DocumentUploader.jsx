@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Upload, FileText, X, Loader2, CheckCircle2, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
+import { optimizeImageFile } from '@/lib/image-optimize';
 
 const ACCEPT_TYPES = '.pdf,.jpg,.jpeg,.png';
 
@@ -17,7 +18,9 @@ export default function DocumentUploader({ label, required, onUploaded, accept =
     if (file.size > 10 * 1024 * 1024) { setError('File too large (max 10MB)'); return; }
     setUploading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      // Optimize images (resize + re-encode) before upload; PDFs pass through.
+      const optimized = await optimizeImageFile(file);
+      const { file_url } = await base44.integrations.Core.UploadFile({ file: optimized });
       setUploaded({ url: file_url, name: file.name, size: file.size });
       onUploaded?.(file_url, file.name);
     } catch {
