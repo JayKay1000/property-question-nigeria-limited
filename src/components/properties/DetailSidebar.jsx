@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe, Home, Eye, EyeOff } from 'lucide-react';
+import { Phone, Mail, ShieldCheck, MessageCircle, BadgeCheck, MapPin, Globe, Home, Eye, EyeOff, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
 import { formatPrice, PURPOSE_CONFIG } from '@/lib/property-utils';
@@ -9,6 +9,26 @@ import PropertyShare from './PropertyShare';
 
 export default function DetailSidebar({ property, agent, isSaved, onSave, saving }) {
   const [showContact, setShowContact] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyPhone = async () => {
+    if (!agentPhone) return;
+    try {
+      await navigator.clipboard.writeText(agentPhone);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback for older browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = agentPhone;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
   const purpose = PURPOSE_CONFIG[property.listing_purpose] || 'For Sale';
   const agentName = agent?.full_name || property.listing_agent_name || 'Property Question Team';
   const agentPhone = agent?.phone ? normalizePhone(agent.phone) : null;
@@ -128,9 +148,20 @@ export default function DetailSidebar({ property, agent, isSaved, onSave, saving
               </Button>
             ) : (
               <>
-                <div className="rounded-lg border border-brand-200 bg-ice-50 p-3 text-center">
-                  <p className="text-xs font-medium text-muted-foreground">Agent phone number</p>
-                  <p className="mt-0.5 font-heading text-lg font-bold text-brand-900">{agentPhone}</p>
+                <div className="rounded-lg border border-brand-200 bg-ice-50 p-3">
+                  <p className="text-xs font-medium text-muted-foreground text-center">Agent phone number</p>
+                  <div className="mt-0.5 flex items-center justify-center gap-2">
+                    <p className="font-heading text-lg font-bold text-brand-900">{agentPhone}</p>
+                    <button
+                      onClick={copyPhone}
+                      className="flex items-center justify-center rounded-md border border-brand-200 bg-white px-2 py-1 text-xs font-medium text-brand-700 transition-colors hover:bg-brand-50"
+                      title="Copy phone number"
+                      aria-label="Copy phone number"
+                    >
+                      {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied ? 'Copied' : 'Copy'}
+                    </button>
+                  </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <Button asChild variant="outline" size="sm" className="border-brand-200">
