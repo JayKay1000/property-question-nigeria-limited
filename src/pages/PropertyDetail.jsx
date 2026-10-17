@@ -75,13 +75,19 @@ export default function PropertyDetail() {
     }
   }, [property, isAuthenticated]);
 
-  // Fetch similar properties
+  // Fetch similar properties from other agents
   useEffect(() => {
     if (!property) return;
     const query = { visibility: 'public', status: { $in: ACTIVE_STATUSES } };
     if (property.listing_purpose) query.listing_purpose = property.listing_purpose;
     if (property.state) query.state = property.state;
-    base44.entities.Property.filter(query, { sort: '-created_date', limit: 6 })
+    // Exclude properties from the same agent so buyers see other agents' listings
+    const agentId = property.listing_agent_id || property.owner_user_id;
+    if (agentId) {
+      query.listing_agent_id = { $ne: agentId };
+      query.owner_user_id = { $ne: agentId };
+    }
+    base44.entities.Property.filter(query, { sort: '-created_date', limit: 12 })
       .then((res) => {
         const items = res.items || res;
         setRelated(items.filter((p) => p.id !== property.id).slice(0, 3));
@@ -228,7 +234,7 @@ export default function PropertyDetail() {
       {/* Similar properties */}
       {related.length > 0 && (
         <div className="container-wide section-pad mt-16">
-          <h2 className="mb-6 font-heading text-2xl font-bold text-brand-900">Similar Properties</h2>
+          <h2 className="mb-6 font-heading text-2xl font-bold text-brand-900">Similar Properties from Other Agents</h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
               <ListingCard key={p.id} property={p} />
