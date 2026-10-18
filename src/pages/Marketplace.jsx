@@ -3,6 +3,7 @@ import MarketplaceSearch from '@/components/marketplace/MarketplaceSearch';
 import CategoryShortcuts from '@/components/marketplace/CategoryShortcuts';
 import PropertyDiscovery from '@/components/marketplace/PropertyDiscovery';
 import AgentParticipation from '@/components/marketplace/AgentParticipation';
+import RecommendationFeed from '@/components/taste/RecommendationFeed';
 import { base44 } from '@/api/base44Client';
 import { defaultFilters } from '@/lib/marketplace-search';
 
@@ -16,6 +17,16 @@ export default function Marketplace() {
       .then((types) => setPropertyTypes(types.filter((t) => t.is_active !== false)))
       .catch(() => setPropertyTypes([]));
   }, []);
+
+  const handleShowSimilar = (property) => {
+    const next = { ...defaultFilters };
+    if (property.property_type) next.propertyType = property.property_type;
+    if (property.state) next.state = property.state;
+    setFilters(next);
+    setTimeout(() => {
+      document.getElementById('marketplace-discovery')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
 
   return (
     <>
@@ -36,13 +47,16 @@ export default function Marketplace() {
       </section>
 
       <CategoryShortcuts />
-      <PropertyDiscovery
-        filters={filters}
-        setFilters={setFilters}
-        sort={sort}
-        setSort={setSort}
-        propertyTypes={propertyTypes}
-      />
+      <RecommendationFeed onShowSimilar={handleShowSimilar} />
+      <div id="marketplace-discovery">
+        <PropertyDiscovery
+          filters={filters}
+          setFilters={setFilters}
+          sort={sort}
+          setSort={setSort}
+          propertyTypes={propertyTypes}
+        />
+      </div>
       <AgentParticipation />
     </>
   );

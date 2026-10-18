@@ -1,0 +1,97 @@
+{
+  "name": "PropertyFeedback",
+  "type": "object",
+  "title": "Property Recommendation Feedback",
+  "description": "Per-property feedback events from the recommendation engine (like, not interested, too expensive, prefer location/type). Used to refine future recommendations. Private to the owner.",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Platform user ID of the feedback owner (for RLS)"
+    },
+    "property_id": {
+      "type": "string",
+      "description": "Reference to the Property entity the feedback applies to"
+    },
+    "property_title": {
+      "type": "string",
+      "description": "Denormalized property title at time of feedback"
+    },
+    "feedback_type": {
+      "type": "string",
+      "enum": [
+        "like",
+        "not_interested",
+        "show_similar",
+        "prefer_location",
+        "prefer_type",
+        "too_expensive",
+        "save_for_later"
+      ],
+      "description": "The type of feedback the user gave on a recommendation"
+    },
+    "location_value": {
+      "type": "string",
+      "description": "Captured location when feedback_type is prefer_location"
+    },
+    "property_type_value": {
+      "type": "string",
+      "description": "Captured property type when feedback_type is prefer_type"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the feedback was submitted"
+    }
+  },
+  "required": [
+    "user_id",
+    "property_id",
+    "feedback_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
