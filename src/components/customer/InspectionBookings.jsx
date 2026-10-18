@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarCheck, MapPin, User, Clock, X, Star, ArrowRight, Loader2 } from 'lucide-react';
+import { CalendarCheck, User, Clock, X, Star, ArrowRight, Loader2, CheckCircle2, XCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,28 +13,37 @@ export default function InspectionBookings({ inspections, userId, onRefresh }) {
   const { toast } = useToast();
   const [feedbackFor, setFeedbackFor] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [actionLoading, setActionLoading] = useState(null);
   const [feedback, setFeedback] = useState({ rating: 5, notes: '' });
 
-  const handleCancel = async (id) => {
+  const handleAction = async (inspectionId, action, params = {}) => {
+    setActionLoading(inspectionId + action);
     try {
-      await base44.entities.InspectionRequest.update(id, { status: 'cancelled' });
-      toast({ title: 'Inspection cancelled' });
+      await base44.functions.invoke('manageBuyerInspection', { inspection_id: inspectionId, action, ...params });
+      toast({ title: 'Inspection updated successfully.' });
       onRefresh?.();
-    } catch { toast({ title: 'Failed to cancel', variant: 'destructive' }); }
+    } catch (e) {
+      toast({ title: e.response?.data?.error || 'Action failed.', variant: 'destructive' });
+    }
+    setActionLoading(null);
   };
 
-  const submitFeedback = async () => {
+  const submitFeedback = async (inspectionId) => {
     setSubmitting(true);
     try {
-      await base44.entities.InspectionRequest.update(feedbackFor, {
-        feedback_rating: feedback.rating,
-        feedback_notes: feedback.notes,
+      await base44.functions.invoke('manageBuyerInspection', {
+        inspection_id: inspectionId,
+        action: 'submit_feedback',
+        rating: feedback.rating,
+        notes: feedback.notes,
       });
       toast({ title: 'Feedback submitted!' });
       setFeedbackFor(null);
       setFeedback({ rating: 5, notes: '' });
       onRefresh?.();
-    } catch { toast({ title: 'Failed to submit', variant: 'destructive' }); }
+    } catch (e) {
+      toast({ title: e.response?.data?.error || 'Failed to submit', variant: 'destructive' });
+    }
     finally { setSubmitting(false); }
   };
 
@@ -53,7 +62,8 @@ export default function InspectionBookings({ inspections, userId, onRefresh }) {
             const status = INSPECTION_STATUS_CONFIG[ins.status] || INSPECTION_STATUS_CONFIG.pending;
             const date = ins.confirmed_date || ins.requested_date;
             const time = ins.confirmed_time || ins.requested_time;
-            const canCancel = ['pending', 'confirmed'].includes(ins.status);
+            const canCancel = ['pending', 'confirmed', 'rescheduled'].includes(ins.status);
+            const canAcceptProposed = ins.status === 'rescheduled' && ins.proposed_date;
             const canFeedback = ins.status === 'completed' && !ins.feedback_rating;
 
             return (
@@ -71,6 +81,26 @@ export default function InspectionBookings({ inspections, userId, onRefresh }) {
                       {ins.sales_representative_name && <span className="flex items-center gap-1"><User className="h-3 w-3" /> {ins.sales_representative_name}</span>}
                       {ins.number_of_attendees > 1 && <span>{ins.number_of_attendees} attendees</span>}
                     </div>
+
+                    {/* Proposed alternative time */}
+                    {canAcceptProposed && (
+                      <div className="mt-2 rounded-lg border border-flame/20 bg-flame/5 p-2.5">
+                        <p className="text-xs font-medium text-flame-700">
+                          Agent proposed: {new Date(ins.proposed_date).toLocaleDateString('en-NG', { weekday: 'short', month: 'short', day: 'numeric' })} {ins.proposed_time || ''}
+                        </p>
+                        <div className="mt-2 flex gap-2">
+                          <Button size="sm" className="h-7 bg-success hover:bg-success/90 text-xs" disabled={actionLoading === ins.id + 'accept_proposed_time'}
+                            onClick={() => handleAction(ins.id, 'accept_proposed_time')}>
+                            {actionLoading === ins.id + 'accept_proposed_time' ? <Loader2 className="h-3 w-3 animate-spin" /> : <CheckCircle2 className="mr-1 h-3 w-3" />} Accept
+                          </Button>
+                          <Button size="sm" variant="outline" className="h-7 border-error/30 text-error hover:bg-error/5 text-xs" disabled={actionLoading === ins.id + 'cancel_decline'}
+                            onClick={() => handleAction(ins.id, 'cancel_inspection', { reason: 'Declined proposed time' })}>
+                            <XCircle className="mr-1 h-3 w-3" /> Decline
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+
                     {ins.inspection_notes && <p className="mt-2 text-sm text-muted-foreground">{ins.inspection_notes}</p>}
                     {ins.feedback_rating && (
                       <div className="mt-2 flex items-center gap-1">
@@ -84,8 +114,11 @@ export default function InspectionBookings({ inspections, userId, onRefresh }) {
                   <div className="flex flex-col items-end gap-2">
                     <Badge variant="outline" className={status.badge}>{status.label}</Badge>
                     <div className="flex gap-2">
-                      {canCancel && (
-                        <button onClick={() => handleCancel(ins.id)} className="text-xs font-medium text-error hover:underline">Cancel</button>
+                      {canCancel && !canAcceptProposed && (
+                        <button onClick={() => handleAction(ins.id, 'cancel_inspection')} disabled={actionLoading === ins.id + 'cancel_inspection'}
+                          className="text-xs font-medium text-error hover:underline">
+                          {actionLoading === ins.id + 'cancel_inspection' ? 'Cancelling...' : 'Cancel'}
+                        </button>
                       )}
                       {canFeedback && (
                         <button onClick={() => setFeedbackFor(ins.id)} className="text-xs font-medium text-flame-600 hover:underline">Leave Feedback</button>
@@ -107,7 +140,7 @@ export default function InspectionBookings({ inspections, userId, onRefresh }) {
                     <Textarea value={feedback.notes} onChange={(e) => setFeedback({ ...feedback, notes: e.target.value })}
                       placeholder="Share your inspection experience..." rows={2} className="bg-white" />
                     <div className="mt-2 flex gap-2">
-                      <Button size="sm" onClick={submitFeedback} disabled={submitting} className="bg-flame-500 hover:bg-flame-600">
+                      <Button size="sm" onClick={() => submitFeedback(ins.id)} disabled={submitting} className="bg-flame-500 hover:bg-flame-600">
                         {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Submit Feedback'}
                       </Button>
                       <Button size="sm" variant="outline" onClick={() => setFeedbackFor(null)}>Cancel</Button>

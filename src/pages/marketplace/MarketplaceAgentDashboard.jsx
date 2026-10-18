@@ -10,6 +10,7 @@ import { Image } from '@/components/ui/image';
 import MarketplaceHeader from '@/components/marketplace/MarketplaceHeader';
 import MarketplaceFooter from '@/components/marketplace/MarketplaceFooter';
 import AgentListingCard from '@/components/marketplace/AgentListingCard';
+import AgentEnquiryInbox from '@/components/marketplace/AgentEnquiryInbox';
 
 const STATUS_TABS = [
   { key: 'all', label: 'All' },
@@ -27,6 +28,7 @@ export default function MarketplaceAgentDashboard() {
   const [error, setError] = useState('');
   const [tab, setTab] = useState('all');
   const [actionLoading, setActionLoading] = useState(null);
+  const [section, setSection] = useState('listings');
 
   const load = useCallback(async () => {
     try {
@@ -115,6 +117,32 @@ export default function MarketplaceAgentDashboard() {
           </div>
         </div>
 
+        {/* Section toggle */}
+        <div className="mb-6 flex gap-1 rounded-xl border border-border bg-white p-1 shadow-sm">
+          <button
+            onClick={() => setSection('listings')}
+            className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${section === 'listings' ? 'bg-brand-900 text-white' : 'text-muted-foreground hover:bg-brand-50'}`}
+          >
+            My Listings
+          </button>
+          <button
+            onClick={() => setSection('enquiries')}
+            className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${section === 'enquiries' ? 'bg-brand-900 text-white' : 'text-muted-foreground hover:bg-brand-50'}`}
+          >
+            Enquiries
+          </button>
+        </div>
+
+        {/* Enquiries section */}
+        {section === 'enquiries' && (
+          <div className="rounded-2xl border border-border bg-white p-4 shadow-card sm:p-6">
+            <h2 className="mb-4 font-heading text-base font-bold text-brand-900">Enquiry Inbox</h2>
+            <AgentEnquiryInbox />
+          </div>
+        )}
+
+        {section === 'listings' && (
+        <>
         {/* Tier banner */}
         <div className="mb-6 flex items-center justify-between rounded-2xl border border-border bg-white p-4 shadow-card">
           <div className="flex items-center gap-3">
@@ -207,6 +235,8 @@ export default function MarketplaceAgentDashboard() {
             )}
           </div>
         </div>
+        </>
+        )}
 
         <div className="mt-6 flex gap-3">
           <Button asChild variant="outline" className="border-brand-200 hover:bg-brand-50">

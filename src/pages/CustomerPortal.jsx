@@ -30,7 +30,7 @@ export default function CustomerPortal() {
     if (!u) return;
     const [saved, enqs, insps, notifs, tkts, cust] = await Promise.all([
       base44.entities.SavedProperty.filter({ user_id: u.id }, '-saved_date', 50).catch(() => []),
-      base44.entities.PropertyEnquiry.filter({ $or: [{ customer_id: u.id }, { created_by_id: u.id }] }, '-created_date', 50).catch(() => []),
+      base44.functions.invoke('getBuyerEnquiries', {}).then((res) => res.data?.enquiries || []).catch(() => []),
       base44.entities.InspectionRequest.filter({ $or: [{ customer_id: u.id }, { created_by_id: u.id }] }, '-created_date', 50).catch(() => []),
       base44.entities.Notification.filter({ recipient_id: u.id }, '-created_date', 50).catch(() => []),
       base44.entities.SupportTicket.filter({ customer_id: u.id }, '-created_date', 50).catch(() => []),

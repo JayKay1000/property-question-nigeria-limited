@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Bed, Bath, Maximize, Heart } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Heart, MessageSquare } from 'lucide-react';
+import { useState } from 'react';
 import { Image } from '@/components/ui/image';
 import { formatPrice, buildShortLocation, getPrimaryImage, PURPOSE_CONFIG } from '@/lib/property-utils';
+import EnquiryDialog from '@/components/properties/EnquiryDialog';
 
 export default function PropertyAdCard({ property, onSave, isSaved }) {
+  const [showEnquiry, setShowEnquiry] = useState(false);
   const image = getPrimaryImage(property);
   const location = buildShortLocation(property);
   const purpose = PURPOSE_CONFIG[property.listing_purpose] || 'For Sale';
@@ -40,17 +43,28 @@ export default function PropertyAdCard({ property, onSave, isSaved }) {
 
         <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
           <span className="truncate text-xs text-muted-foreground">{property.listing_agent_name || 'PQNL Listed'}</span>
-          {onSave && (
+          <div className="flex items-center gap-1">
             <button
-              onClick={() => onSave(property)}
-              aria-label={isSaved ? `Unsave ${property.title}` : `Save ${property.title}`}
+              onClick={() => setShowEnquiry(true)}
+              aria-label={`Enquire about ${property.title}`}
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-brand-500 transition-colors hover:bg-brand-50 hover:text-flame-500"
             >
-              <Heart className={`h-4 w-4 ${isSaved ? 'fill-flame-500 text-flame-500' : ''}`} />
+              <MessageSquare className="h-4 w-4" />
             </button>
-          )}
+            {onSave && (
+              <button
+                onClick={() => onSave(property)}
+                aria-label={isSaved ? `Unsave ${property.title}` : `Save ${property.title}`}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-brand-500 transition-colors hover:bg-brand-50 hover:text-flame-500"
+              >
+                <Heart className={`h-4 w-4 ${isSaved ? 'fill-flame-500 text-flame-500' : ''}`} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
+      <EnquiryDialog property={property} open={showEnquiry} onClose={() => setShowEnquiry(false)} />
     </div>
   );
 }
