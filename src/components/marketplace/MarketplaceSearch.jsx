@@ -2,14 +2,44 @@ import { useState, useEffect } from 'react';
 import { Search, MapPin, Building2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { PURPOSE_CONFIG } from '@/lib/property-utils';
+import { PURPOSE_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
 import { NIGERIA_STATES, getLGAsForState } from '@/lib/nigeria-locations';
+import { base44 } from '@/api/base44Client';
+
+const BASE_QUERY = { visibility: 'public', status: { $in: ACTIVE_STATUSES } };
+const normalizeLga = (lga) => (lga || '').replace(/\s*LGA\s*$/i, '').replace(/[-/]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
 
 export default function MarketplaceSearch({ filters, setFilters, propertyTypes }) {
   const [keywordInput, setKeywordInput] = useState(filters.keyword || '');
   const lgaOptions = getLGAsForState(filters.state);
+  const [stateCounts, setStateCounts] = useState({});
+  const [lgaCounts, setLgaCounts] = useState({});
+  const [totalAds, setTotalAds] = useState(0);
 
   useEffect(() => { setKeywordInput(filters.keyword || ''); }, [filters.keyword]);
+
+  useEffect(() => {
+    base44.entities.Property.aggregate({ query: BASE_QUERY, groupBy: 'state' })
+      .then((res) => {
+        const map = {};
+        let total = 0;
+        (res.rows || []).forEach((r) => { if (r.state) { map[r.state] = r.count; total += r.count; } });
+        setStateCounts(map);
+        setTotalAds(total);
+      })
+      .catch(() => setStateCounts({}));
+  }, []);
+
+  useEffect(() => {
+    if (!filters.state) { setLgaCounts({}); return; }
+    base44.entities.Property.aggregate({ query: { ...BASE_QUERY, state: filters.state }, groupBy: 'lga' })
+      .then((res) => {
+        const map = {};
+        (res.rows || []).forEach((r) => { if (r.lga) map[normalizeLga(r.lga)] = r.count; });
+        setLgaCounts(map);
+      })
+      .catch(() => setLgaCounts({}));
+  }, [filters.state]);
 
   const submitKeyword = () => setFilters({ ...filters, keyword: keywordInput });
 
@@ -59,8 +89,12 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
             <SelectValue placeholder="All States" />
           </SelectTrigger>
           <SelectContent className="max-h-72">
-            <SelectItem value="__all__">All States</SelectItem>
-            {NIGERIA_STATES.map((s) => <SelectItem key={s.name} value={s.name}>{s.name}</SelectItem>)}
+            <SelectItem value="__all__">All States ({totalAds})</SelectItem>
+            {NIGERIA_STATES.map((s) => (
+              <SelectItem key={s.name} value={s.name}>
+                {s.name}{stateCounts[s.name] ? ` (${stateCounts[s.name]})` : ''}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -69,8 +103,12 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
             <SelectValue placeholder={filters.state ? 'All LGAs' : 'Select state'} />
           </SelectTrigger>
           <SelectContent className="max-h-72">
-            <SelectItem value="__all__">All LGAs</SelectItem>
-            {lgaOptions.map((lga) => <SelectItem key={lga} value={lga}>{lga}</SelectItem>)}
+            <SelectItem value="__all__">All LGAs ({stateCounts[filters.state] || 0})</SelectItem>
+            {lgaOptions.map((lga) => (
+              <SelectItem key={lga} value={lga}>
+                {lga}{lgaCounts[normalizeLga(lga)] ? ` (${lgaCounts[normalizeLga(lga)]})` : ''}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 

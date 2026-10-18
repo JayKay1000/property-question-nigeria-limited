@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Image } from '@/components/ui/image';
 import Reveal from '@/components/ui/Reveal';
+import { ACTIVE_STATUSES } from '@/lib/property-utils';
 
 const formatPrice = (price) => {
   if (!price) return 'Price on request';
@@ -73,6 +74,7 @@ function ResultCard({ property }) {
 
 export default function StatePropertySearch() {
   const [states, setStates] = useState([]);
+  const [stateCounts, setStateCounts] = useState({});
   const [selectedState, setSelectedState] = useState('');
   const [properties, setProperties] = useState([]);
   const [loadingStates, setLoadingStates] = useState(true);
@@ -84,6 +86,13 @@ export default function StatePropertySearch() {
     then(setStates).
     catch(() => setStates([])).
     finally(() => setLoadingStates(false));
+    base44.entities.Property.aggregate({ query: { visibility: 'public', status: { $in: ACTIVE_STATUSES } }, groupBy: 'state' }).
+    then((res) => {
+      const map = {};
+      (res.rows || []).forEach((r) => { if (r.state) map[r.state] = r.count; });
+      setStateCounts(map);
+    }).
+    catch(() => setStateCounts({}));
   }, []);
 
   const handleSearch = () => {
@@ -123,7 +132,7 @@ export default function StatePropertySearch() {
                 <SelectContent className="max-h-72">
                   {states.map((s) =>
                   <SelectItem key={s.id} value={s.name}>
-                      {s.name}
+                      {s.name}{stateCounts[s.name] ? ` (${stateCounts[s.name]})` : ''}
                     </SelectItem>
                   )}
                 </SelectContent>
