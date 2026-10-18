@@ -9,6 +9,20 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import PropertyAdCard from './PropertyAdCard';
 import MarketplaceFilters from './MarketplaceFilters';
+import MarketplaceViewToggle from './MarketplaceViewToggle';
+import MarketplaceMapView from './MarketplaceMapView';
+
+const VIEW_STORAGE_KEY = 'pq_marketplace_view';
+const VALID_VIEWS = ['grid', 'list', 'map', 'split'];
+const DEFAULT_VIEW = 'grid';
+
+function loadStoredView() {
+  try {
+    const stored = localStorage.getItem(VIEW_STORAGE_KEY);
+    if (stored && VALID_VIEWS.includes(stored)) return stored;
+  } catch { /* ignore */ }
+  return DEFAULT_VIEW;
+}
 
 const SAVE_KEY = 'pq_saved_properties';
 const MARKETPLACE_SORTS = SORT_OPTIONS.filter((s) =>
@@ -26,7 +40,21 @@ export default function PropertyDiscovery({ filters, setFilters, sort, setSort, 
   const [savedIds, setSavedIds] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [view, setView] = useState(loadStoredView);
+  const [selectedPropertyId, setSelectedPropertyId] = useState(null);
   const reqIdRef = useRef(0);
+
+  // Persist view preference — but never override the user's explicit selection.
+  // The stored value is only read on initial mount (loadStoredView), so a user
+  // switching to "map" and back to "grid" in the same session keeps their choice.
+  const handleViewChange = useCallback((nextView) => {
+    setView(nextView);
+    try { localStorage.setItem(VIEW_STORAGE_KEY, nextView); } catch { /* ignore */ }
+  }, []);
+
+  const handleSelectProperty = useCallback((property) => {
+    setSelectedPropertyId(property.id);
+  }, []);
 
   // Check auth and load saved property IDs.
   // Authenticated users: load from SavedProperty entity (server), and migrate
@@ -211,8 +239,8 @@ export default function PropertyDiscovery({ filters, setFilters, sort, setSort, 
 
         {/* Results */}
         <div className="flex-1">
-          {/* Sort bar */}
-          <div className="mb-4 flex items-center justify-between gap-3">
+          {/* Sort bar + view toggle */}
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <Button variant="outline" size="sm" onClick={() => setShowFilters(true)} className="border-border lg:hidden" aria-label="Open filter panel">
               <SlidersHorizontal className="mr-1.5 h-4 w-4" /> Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
             </Button>
@@ -221,18 +249,21 @@ export default function PropertyDiscovery({ filters, setFilters, sort, setSort, 
                 Clear {activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''}
               </button>
             )}
-            <label className="sr-only" htmlFor="marketplace-sort">Sort order</label>
-            <Select value={sort} onValueChange={setSort}>
-              <SelectTrigger id="marketplace-sort" className="ml-auto h-9 w-44 border-border bg-white text-sm" aria-label="Sort properties">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {MARKETPLACE_SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-3 sm:ml-auto">
+              <MarketplaceViewToggle view={view} onChange={handleViewChange} />
+              <label className="sr-only" htmlFor="marketplace-sort">Sort order</label>
+              <Select value={sort} onValueChange={setSort}>
+                <SelectTrigger id="marketplace-sort" className="h-9 w-36 border-border bg-white text-sm sm:w-44" aria-label="Sort properties">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {MARKETPLACE_SORTS.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          {/* Grid */}
+          {/* Results — loading */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20" role="status" aria-live="polite">
               <Loader2 className="h-8 w-8 animate-spin text-flame-500" />
@@ -249,23 +280,7 @@ export default function PropertyDiscovery({ filters, setFilters, sort, setSort, 
                 <RotateCcw className="mr-1.5 h-4 w-4" /> Retry Search
               </Button>
             </div>
-          ) : items.length > 0 ? (
-            <>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-                {items.map((p) => (
-                  <PropertyAdCard key={p.id} property={p} onSave={handleSave} isSaved={savedIds.includes(p.id)} />
-                ))}
-              </div>
-              {hasMore && (
-                <div className="mt-8 flex justify-center">
-                  <Button onClick={loadMore} variant="outline" disabled={loadingMore}
-                    className="border-brand-200 px-8 hover:bg-brand-50">
-                    {loadingMore ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading…</> : 'Load More Properties'}
-                  </Button>
-                </div>
-              )}
-            </>
-          ) : (
+          ) : items.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-white py-16 text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-50">
                 <Inbox className="h-7 w-7 text-brand-300" />
@@ -286,6 +301,57 @@ export default function PropertyDiscovery({ filters, setFilters, sort, setSort, 
                 </Button>
               )}
             </div>
+          ) : view === 'map' ? (
+            <div className="h-[60vh] min-h-[400px] lg:h-[700px]">
+              <MarketplaceMapView
+                items={items}
+                selectedPropertyId={selectedPropertyId}
+                onSelectProperty={handleSelectProperty}
+              />
+            </div>
+          ) : view === 'split' ? (
+            <div className="flex flex-col gap-4 lg:flex-row">
+              <div className="lg:w-1/2">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {items.map((p) => (
+                    <PropertyAdCard key={p.id} property={p} onSave={handleSave} isSaved={savedIds.includes(p.id)} />
+                  ))}
+                </div>
+                {hasMore && (
+                  <div className="mt-6 flex justify-center">
+                    <Button onClick={loadMore} variant="outline" disabled={loadingMore} className="border-brand-200 px-6 hover:bg-brand-50">
+                      {loadingMore ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading…</> : 'Load More'}
+                    </Button>
+                  </div>
+                )}
+              </div>
+              <div className="h-[50vh] min-h-[400px] lg:sticky lg:top-20 lg:h-[calc(100vh-120px)] lg:w-1/2">
+                <MarketplaceMapView
+                  items={items}
+                  selectedPropertyId={selectedPropertyId}
+                  onSelectProperty={handleSelectProperty}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className={view === 'list'
+                ? 'mx-auto grid max-w-2xl grid-cols-1 gap-3 sm:gap-4'
+                : 'grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4'
+              }>
+                {items.map((p) => (
+                  <PropertyAdCard key={p.id} property={p} onSave={handleSave} isSaved={savedIds.includes(p.id)} />
+                ))}
+              </div>
+              {hasMore && (
+                <div className="mt-8 flex justify-center">
+                  <Button onClick={loadMore} variant="outline" disabled={loadingMore}
+                    className="border-brand-200 px-8 hover:bg-brand-50">
+                    {loadingMore ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Loading…</> : 'Load More Properties'}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
