@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import MarketplaceSearch from '@/components/marketplace/MarketplaceSearch';
 import CategoryShortcuts from '@/components/marketplace/CategoryShortcuts';
 import PropertyDiscovery from '@/components/marketplace/PropertyDiscovery';
@@ -8,7 +9,15 @@ import { base44 } from '@/api/base44Client';
 import { defaultFilters } from '@/lib/marketplace-search';
 
 export default function Marketplace() {
-  const [filters, setFilters] = useState({ ...defaultFilters });
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState(() => {
+    const next = { ...defaultFilters };
+    const pt = searchParams.get('propertyType');
+    const st = searchParams.get('state');
+    if (pt) next.propertyType = pt;
+    if (st) next.state = st;
+    return next;
+  });
   const [sort, setSort] = useState('newest');
   const [propertyTypes, setPropertyTypes] = useState([]);
 
