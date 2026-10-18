@@ -9,6 +9,32 @@
     "property_title": {
       "type": "string"
     },
+    "reference": {
+      "type": "string",
+      "description": "Human-readable enquiry reference (ENQ-XXXXXXXX), generated server-side"
+    },
+    "inquiry_category": {
+      "type": "string",
+      "enum": [
+        "general_info",
+        "pricing",
+        "inspection_request",
+        "financing",
+        "documentation",
+        "availability",
+        "joint_venture",
+        "other"
+      ],
+      "default": "general_info",
+      "description": "Buyer-selected inquiry category"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Structured questions selected by the buyer from property attributes"
+    },
     "customer_id": {
       "type": "string",
       "description": "Platform User ID if registered"
@@ -74,9 +100,28 @@
         "negotiating",
         "closed_won",
         "closed_lost",
-        "nurturing"
+        "nurturing",
+        "resolved"
       ],
       "default": "new"
+    },
+    "inspection_requested": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the buyer requested a site inspection with this enquiry"
+    },
+    "preferred_inspection_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Buyer's preferred inspection date"
+    },
+    "preferred_inspection_time": {
+      "type": "string",
+      "description": "Buyer's preferred inspection time slot"
+    },
+    "inspection_request_id": {
+      "type": "string",
+      "description": "Reference to InspectionRequest entity if inspection was requested"
     },
     "follow_up_history": {
       "type": "array",
@@ -88,6 +133,15 @@
     "next_follow_up_date": {
       "type": "string",
       "format": "date"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the enquiry was marked resolved"
+    },
+    "resolved_by": {
+      "type": "string",
+      "description": "User ID who marked the enquiry resolved"
     },
     "converted_to_lead_id": {
       "type": "string",
@@ -123,9 +177,6 @@
       "$or": [
         {
           "data.assigned_to_id": "{{user.id}}"
-        },
-        {
-          "created_by_id": "{{user.id}}"
         },
         {
           "user_condition": {
