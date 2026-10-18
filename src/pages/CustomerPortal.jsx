@@ -85,7 +85,7 @@ export default function CustomerPortal() {
         <main className="container-wide section-pad py-6">
           {active === 'overview' && <PortalOverview customer={customer} savedProps={savedProps} enquiries={enquiries} inspections={inspections} notifications={notifications} timeline={timeline} />}
           {active === 'saved' && <SavedProperties savedProps={savedProps} onRemove={(id) => setSavedProps(savedProps.filter((s) => s.id !== id))} />}
-          {active === 'enquiries' && <EnquiryHistory enquiries={enquiries} userId={user?.id} userName={customer?.full_name} userEmail={customer?.email} userPhone={customer?.phone} />}
+          {active === 'enquiries' && <EnquiryHistory enquiries={enquiries} userId={user?.id} userName={customer?.full_name} userEmail={customer?.email} userPhone={customer?.phone} onRefresh={() => loadData(user)} />}
           {active === 'inspections' && <InspectionBookings inspections={inspections} userId={user?.id} onRefresh={() => loadData(user)} />}
           {active === 'notifications' && <NotificationCentre notifications={notifications} onRefresh={() => loadData(user)} />}
           {active === 'support' && <SupportCentre tickets={tickets} userId={user?.id} userName={customer?.full_name} userEmail={customer?.email} userPhone={customer?.phone} onRefresh={() => loadData(user)} />}
