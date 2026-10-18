@@ -13,6 +13,7 @@ import ListingCard from '@/components/properties/ListingCard';
 import BuyerSafetyNotice from '@/components/properties/BuyerSafetyNotice';
 import ReportListingForm from '@/components/properties/ReportListingForm';
 import { setPropertySEO, clearPropertySEO } from '@/lib/property-seo';
+import { logPropertyView } from '@/lib/marketplace-instrumentation';
 
 const SAVE_KEY = 'pq_saved_properties';
 
@@ -54,6 +55,13 @@ export default function PropertyDetail() {
   useEffect(() => {
     if (property) setPropertySEO(property);
     return () => clearPropertySEO();
+  }, [property]);
+
+  // Record a property view for analytics (best-effort, never blocks UI)
+  useEffect(() => {
+    if (property) {
+      logPropertyView({ propertyId: property.id, propertyTitle: property.title, source: 'website' }).catch(() => {});
+    }
   }, [property]);
 
   // Check saved status

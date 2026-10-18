@@ -4,14 +4,7 @@ import CategoryShortcuts from '@/components/marketplace/CategoryShortcuts';
 import PropertyDiscovery from '@/components/marketplace/PropertyDiscovery';
 import AgentParticipation from '@/components/marketplace/AgentParticipation';
 import { base44 } from '@/api/base44Client';
-
-export const defaultFilters = {
-  keyword: '', state: '', lga: '', propertyType: '', purpose: '',
-  priceRange: '', priceMin: undefined, priceMax: undefined,
-  bedrooms: undefined, bathrooms: undefined,
-  classification: undefined, amenities: [],
-  featured: false, jointVenture: false,
-};
+import { defaultFilters } from '@/lib/marketplace-search';
 
 export default function Marketplace() {
   const [filters, setFilters] = useState({ ...defaultFilters });

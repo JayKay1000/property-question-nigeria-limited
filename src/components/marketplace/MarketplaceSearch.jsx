@@ -42,6 +42,7 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
             onChange={(e) => setKeywordInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && submitKeyword()}
             placeholder="Search by title, estate, or keyword…"
+            aria-label="Search by keyword"
             className="h-11 w-full rounded-lg border border-input bg-transparent pl-10 pr-9 text-sm outline-none transition-colors focus:border-flame-500 focus:ring-1 focus:ring-flame-500"
           />
           {keywordInput && (
@@ -53,7 +54,7 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
         </div>
 
         <Select value={filters.state || '__all__'} onValueChange={(v) => setFilters({ ...filters, state: v === '__all__' ? '' : v, lga: '' })}>
-          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44">
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44" aria-label="Filter by state">
             <MapPin className="mr-1.5 h-4 w-4 text-muted-foreground" />
             <SelectValue placeholder="All States" />
           </SelectTrigger>
@@ -64,7 +65,7 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
         </Select>
 
         <Select value={filters.lga || '__all__'} onValueChange={(v) => setFilters({ ...filters, lga: v === '__all__' ? '' : v })} disabled={!filters.state}>
-          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-40 disabled:opacity-50">
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-40 disabled:opacity-50" aria-label="Filter by local government area">
             <SelectValue placeholder={filters.state ? 'All LGAs' : 'Select state'} />
           </SelectTrigger>
           <SelectContent className="max-h-72">
@@ -74,7 +75,7 @@ export default function MarketplaceSearch({ filters, setFilters, propertyTypes }
         </Select>
 
         <Select value={filters.propertyType || '__all__'} onValueChange={(v) => setFilters({ ...filters, propertyType: v === '__all__' ? '' : v })}>
-          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44">
+          <SelectTrigger className="h-11 w-full border-input bg-transparent lg:w-44" aria-label="Filter by property type">
             <Building2 className="mr-1.5 h-4 w-4 text-muted-foreground" />
             <SelectValue placeholder="All Types" />
           </SelectTrigger>

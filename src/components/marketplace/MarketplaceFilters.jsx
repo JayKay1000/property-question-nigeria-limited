@@ -21,13 +21,13 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
         <h3 className="flex items-center gap-2 text-sm font-heading font-bold text-brand-900">
           <SlidersHorizontal className="h-4 w-4 text-flame-500" /> Filters
         </h3>
-        <Button variant="ghost" size="sm" onClick={onClear} className="h-7 text-xs text-muted-foreground hover:text-flame-600">
+        <Button variant="ghost" size="sm" onClick={onClear} className="h-7 text-xs text-muted-foreground hover:text-flame-600" aria-label="Clear all filters">
           <RotateCcw className="mr-1 h-3 w-3" /> Clear
         </Button>
       </div>
 
       {/* Price Range */}
-      <div className="mb-4">
+      <div className="mb-4" role="group" aria-label="Price range filter">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Price Range</label>
         <Select value={filters.priceRange || 'Any Price'} onValueChange={(v) => {
           const range = PRICE_RANGES.find((r) => r.label === v);
@@ -45,7 +45,7 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
       </div>
 
       {/* Bedrooms */}
-      <div className="mb-4">
+      <div className="mb-4" role="group" aria-label="Minimum bedrooms filter">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Bedrooms</label>
         <div className="flex flex-wrap gap-1.5">
           {BEDROOM_OPTIONS.map((n) => (
@@ -60,7 +60,7 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
       </div>
 
       {/* Bathrooms */}
-      <div className="mb-4">
+      <div className="mb-4" role="group" aria-label="Minimum bathrooms filter">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Bathrooms</label>
         <div className="flex flex-wrap gap-1.5">
           {BATHROOM_OPTIONS.map((n) => (
@@ -75,7 +75,7 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
       </div>
 
       {/* Property Type */}
-      <div className="mb-4">
+      <div className="mb-4" role="group" aria-label="Property type filter">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Property Type</label>
         <div className="space-y-1.5">
           {propertyTypes.slice(0, 8).map((t) => (
@@ -104,7 +104,7 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
       </div>
 
       {/* Amenities */}
-      <div className="mb-4">
+      <div className="mb-4" role="group" aria-label="Amenities filter">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Amenities</label>
         <div className="space-y-1.5">
           {COMMON_AMENITIES.map((a) => (
@@ -117,7 +117,7 @@ export default function MarketplaceFilters({ filters, setFilters, propertyTypes,
       </div>
 
       {/* Special Flags */}
-      <div>
+      <div role="group" aria-label="Special filters">
         <label className="mb-1.5 block text-xs font-semibold text-brand-800">Special</label>
         <div className="space-y-1.5">
           {[

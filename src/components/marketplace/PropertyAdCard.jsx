@@ -43,7 +43,7 @@ export default function PropertyAdCard({ property, onSave, isSaved }) {
           {onSave && (
             <button
               onClick={() => onSave(property)}
-              aria-label="Save property"
+              aria-label={isSaved ? `Unsave ${property.title}` : `Save ${property.title}`}
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-brand-500 transition-colors hover:bg-brand-50 hover:text-flame-500"
             >
               <Heart className={`h-4 w-4 ${isSaved ? 'fill-flame-500 text-flame-500' : ''}`} />
