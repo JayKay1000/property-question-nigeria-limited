@@ -1,0 +1,119 @@
+{
+  "name": "SearchAlertLog",
+  "type": "object",
+  "title": "Saved Search Alert Delivery Log",
+  "description": "Records each alert delivered for a saved search. Used for duplicate suppression, preventing the same property event from being alerted twice. Private to the saved search owner.",
+  "properties": {
+    "saved_search_id": {
+      "type": "string",
+      "description": "Reference to SavedSearch entity"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Owner of the saved search (denormalized for RLS)"
+    },
+    "property_id": {
+      "type": "string",
+      "description": "Reference to Property entity that triggered the alert"
+    },
+    "alert_type": {
+      "type": "string",
+      "enum": [
+        "new_listing",
+        "price_reduction",
+        "availability_change",
+        "material_update",
+        "listing_unavailable",
+        "status_change"
+      ],
+      "description": "The type of property event that triggered this alert"
+    },
+    "event_reference": {
+      "type": "string",
+      "description": "ID of the source event record (PropertyPricing id, PropertyStatusHistory id, or property id for new_listing/material_update). Used with alert_type for precise dedup."
+    },
+    "property_snapshot": {
+      "type": "object",
+      "description": "Minimal property snapshot at alert time (title, price, state, city, listing_purpose, etc.)"
+    },
+    "delivery_status": {
+      "type": "string",
+      "enum": [
+        "sent",
+        "failed",
+        "suppressed"
+      ],
+      "default": "sent",
+      "description": "Whether the alert was delivered, failed, or suppressed (user opted out)"
+    },
+    "notification_id": {
+      "type": "string",
+      "description": "Reference to Notification entity (in-app notification)"
+    },
+    "email_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error details if delivery failed"
+    },
+    "alerted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the alert was processed"
+    }
+  },
+  "required": [
+    "saved_search_id",
+    "user_id",
+    "property_id",
+    "alert_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

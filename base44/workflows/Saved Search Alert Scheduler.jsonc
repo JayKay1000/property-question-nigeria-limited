@@ -1,0 +1,44 @@
+{
+  "description": "Evaluates all active saved searches every 6 hours and sends alerts for new matching listings, price reductions, availability changes, and status updates.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 */6 * * *",
+      "one_time_date": null,
+      "timezone": "Africa/Lagos",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Saved Search Alert Scheduler",
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "saved_search_alerts",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "evaluate_alerts": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "evaluateSavedSearchAlerts"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Evaluate saved search alerts",
+            "description": "Match and deliver property alerts"
+          }
+        }
+      }
+    ]
+  }
+}

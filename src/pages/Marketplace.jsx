@@ -5,6 +5,10 @@ import CategoryShortcuts from '@/components/marketplace/CategoryShortcuts';
 import PropertyDiscovery from '@/components/marketplace/PropertyDiscovery';
 import AgentParticipation from '@/components/marketplace/AgentParticipation';
 import RecommendationFeed from '@/components/taste/RecommendationFeed';
+import SaveSearchDialog from '@/components/marketplace/SaveSearchDialog';
+import SavedSearchPanel from '@/components/marketplace/SavedSearchPanel';
+import { Button } from '@/components/ui/button';
+import { Bell } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { defaultFilters } from '@/lib/marketplace-search';
 
@@ -20,6 +24,12 @@ export default function Marketplace() {
   });
   const [sort, setSort] = useState('newest');
   const [propertyTypes, setPropertyTypes] = useState([]);
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
+
+  useEffect(() => {
+    base44.auth.isAuthenticated().then(setIsAuthed).catch(() => setIsAuthed(false));
+  }, []);
 
   useEffect(() => {
     base44.entities.LookupPropertyType.list('sort_order', 50)
@@ -52,10 +62,22 @@ export default function Marketplace() {
             </p>
           </div>
           <MarketplaceSearch filters={filters} setFilters={setFilters} propertyTypes={propertyTypes} />
+          {isAuthed && (
+            <div className="mt-4 flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => setSaveDialogOpen(true)}
+                className="border-white/20 bg-white/10 text-white hover:bg-white/20 hover:text-white"
+              >
+                <Bell className="mr-2 h-4 w-4" /> Save this Search
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
       <CategoryShortcuts />
+      <SavedSearchPanel />
       <RecommendationFeed onShowSimilar={handleShowSimilar} />
       <div id="marketplace-discovery">
         <PropertyDiscovery
@@ -67,6 +89,7 @@ export default function Marketplace() {
         />
       </div>
       <AgentParticipation />
+      <SaveSearchDialog open={saveDialogOpen} onClose={() => setSaveDialogOpen(false)} filters={filters} sort={sort} />
     </>
   );
 }

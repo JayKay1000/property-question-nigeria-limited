@@ -16,7 +16,7 @@
     },
     "filters": {
       "type": "object",
-      "description": "Applied filter object"
+      "description": "Applied filter object (marketplace search criteria)"
     },
     "result_type": {
       "type": "string",
@@ -27,16 +27,76 @@
         "agents",
         "locations"
       ],
-      "default": "all"
+      "default": "properties"
+    },
+    "sort_preference": {
+      "type": "string",
+      "description": "Sort key from SORT_MAP (newest, price_low, price_high, featured, most_viewed, most_saved)"
     },
     "alerts_enabled": {
       "type": "boolean",
       "default": false,
-      "description": "Whether email alerts are active for new matching results"
+      "description": "Master toggle for alerts on this saved search"
+    },
+    "alert_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "new_listing",
+          "price_reduction",
+          "availability_change",
+          "material_update",
+          "listing_unavailable",
+          "status_change"
+        ]
+      },
+      "default": [
+        "new_listing"
+      ],
+      "description": "Which types of property events trigger alerts"
+    },
+    "alert_frequency": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "daily_digest",
+        "weekly_digest"
+      ],
+      "default": "immediate"
+    },
+    "alert_channels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "in_app",
+          "email"
+        ]
+      },
+      "default": [
+        "in_app"
+      ],
+      "description": "Delivery channels for alerts"
     },
     "last_match_count": {
       "type": "number",
       "default": 0
+    },
+    "last_evaluated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the alert scheduler last evaluated this search"
+    },
+    "last_alerted_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the last alert was sent for this search"
+    },
+    "last_digest_sent_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the last digest was sent (for digest frequency searches)"
     }
   },
   "required": [
