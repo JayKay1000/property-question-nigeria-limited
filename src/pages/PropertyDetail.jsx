@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Home, Loader2, Building2, ArrowLeft, Flag } from 'lucide-react';
+import { ChevronRight, Home, Loader2, Building2, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { base44 } from '@/api/base44Client';
 import { formatPrice, buildLocation, buildShortLocation, AVAILABILITY_CONFIG, PURPOSE_CONFIG, ACTIVE_STATUSES } from '@/lib/property-utils';
@@ -10,10 +10,7 @@ import { isYoutubeUrl } from '@/components/media/youtubeUtils';
 import DetailSidebar from '@/components/properties/DetailSidebar';
 import PropertyTabs from '@/components/properties/PropertyTabs';
 import ListingCard from '@/components/properties/ListingCard';
-import BuyerSafetyNotice from '@/components/properties/BuyerSafetyNotice';
-import ReportListingForm from '@/components/properties/ReportListingForm';
 import { setPropertySEO, clearPropertySEO } from '@/lib/property-seo';
-import { logPropertyView } from '@/lib/marketplace-instrumentation';
 
 const SAVE_KEY = 'pq_saved_properties';
 
@@ -27,7 +24,6 @@ export default function PropertyDetail() {
   const [isSaved, setIsSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showReportForm, setShowReportForm] = useState(false);
 
   // Check auth status on mount
   useEffect(() => {
@@ -55,13 +51,6 @@ export default function PropertyDetail() {
   useEffect(() => {
     if (property) setPropertySEO(property);
     return () => clearPropertySEO();
-  }, [property]);
-
-  // Record a property view for analytics (best-effort, never blocks UI)
-  useEffect(() => {
-    if (property) {
-      logPropertyView({ propertyId: property.id, propertyTitle: property.title, source: 'website' }).catch(() => {});
-    }
   }, [property]);
 
   // Check saved status
@@ -140,7 +129,7 @@ export default function PropertyDetail() {
         <h1 className="mt-4 font-heading text-2xl font-bold text-brand-900">Property Not Available</h1>
         <p className="mt-2 text-sm text-muted-foreground">This property may have been removed, sold, or is no longer available.</p>
         <Button asChild className="mt-6 bg-flame-500 hover:bg-flame-600">
-          <Link to="/marketplace"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Marketplace</Link>
+          <Link to="/properties"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Properties</Link>
         </Button>
       </div>
     );
@@ -158,7 +147,7 @@ export default function PropertyDetail() {
         <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
           <Link to="/" className="hover:text-flame-600"><Home className="h-4 w-4" /></Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <Link to="/marketplace" className="hover:text-flame-600">Marketplace</Link>
+          <Link to="/properties" className="hover:text-flame-600">Properties</Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <span className="line-clamp-1 text-brand-900 font-medium">{property.title}</span>
         </nav>
@@ -209,24 +198,6 @@ export default function PropertyDetail() {
           <div className="flex-1 lg:max-w-2xl xl:max-w-3xl">
             <div className="rounded-2xl border border-border bg-white p-5 shadow-card sm:p-8">
               <PropertyTabs property={property} />
-            </div>
-            {/* Buyer safety notice */}
-            <div className="mt-6">
-              <BuyerSafetyNotice />
-            </div>
-
-            {/* Report this listing */}
-            <div className="mt-4">
-              {showReportForm ? (
-                <ReportListingForm property={property} onClose={() => setShowReportForm(false)} />
-              ) : (
-                <button
-                  onClick={() => setShowReportForm(true)}
-                  className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition hover:text-error"
-                >
-                  <Flag className="h-3.5 w-3.5" /> Report this listing
-                </button>
-              )}
             </div>
           </div>
 

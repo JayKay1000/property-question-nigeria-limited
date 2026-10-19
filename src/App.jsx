@@ -32,12 +32,6 @@ import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import AccessDenied from '@/pages/AccessDenied';
-import Marketplace from '@/pages/Marketplace';
-import MarketplaceLayout from '@/components/marketplace/MarketplaceLayout';
-import MarketplaceAgentRegister from '@/pages/marketplace/MarketplaceAgentRegister';
-import MarketplaceAgentProfile from '@/pages/marketplace/MarketplaceAgentProfile';
-import MarketplaceAgentDashboard from '@/pages/marketplace/MarketplaceAgentDashboard';
-import MarketplacePropertyForm from '@/pages/marketplace/MarketplacePropertyForm';
 import RBACDashboard from '@/pages/admin/RBACDashboard';
 import AuditLogs from '@/pages/admin/AuditLogs';
 import FeatureFlags from '@/pages/admin/FeatureFlags';
@@ -143,14 +137,6 @@ element={<AdminProjects />}
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-      <Route element={<MarketplaceLayout />}>
-        <Route path="/marketplace" element={<Marketplace />} />
-      </Route>
-      <Route path="/marketplace/agent/register" element={<MarketplaceAgentRegister />} />
-      <Route path="/marketplace/agent/profile" element={<MarketplaceAgentProfile />} />
-      <Route path="/marketplace/agent/dashboard" element={<MarketplaceAgentDashboard />} />
-      <Route path="/marketplace/agent/properties/new" element={<MarketplacePropertyForm />} />
-      <Route path="/marketplace/agent/properties/:id/edit" element={<MarketplacePropertyForm />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/buy2flip" element={<Buy2Flip />} />
