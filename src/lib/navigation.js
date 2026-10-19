@@ -1,6 +1,5 @@
 export const navItems = [
   { label: 'Home', key: 'home', href: '/' },
-  { label: 'Marketplace', key: 'marketplace', href: '/marketplace' },
   {
     label: 'Listings',
     key: 'properties',

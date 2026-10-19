@@ -4,7 +4,6 @@ import { SlidersHorizontal, Map, List, ArrowRight, Search as SearchIcon, Sparkle
 import SearchBar from '@/components/search/SearchBar';
 import SearchFilterPanel from '@/components/search/SearchFilterPanel';
 import ResultCard from '@/components/search/ResultCard';
-import SavedSearches from '@/components/search/SavedSearches';
 import SearchHistory from '@/components/search/SearchHistory';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -129,7 +128,6 @@ export default function Search() {
               </div>
             )}
             <SearchFilterPanel filters={filters} setFilters={setFilters} onClear={handleClearFilters} resultCount={results.total} />
-            <SavedSearches currentQuery={query} currentFilters={filters} userId={user?.id} />
             <SearchHistory onSearch={handleSearch} />
           </aside>
 
