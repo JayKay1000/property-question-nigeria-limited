@@ -1,0 +1,115 @@
+{
+  "name": "PropertyLocation",
+  "type": "object",
+  "title": "Property Location, Access Point & Boundary",
+  "description": "The authoritative verification record for where a property actually is on the map. Holds the verified map position, the separate road access point, an optional land boundary, and the verification audit trail. Additive and backward-compatible: it never replaces the discovery coordinates already stored on the Property record, and properties without a record here are simply shown as unverified.",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "Reference to the Property entity this location record describes"
+    },
+    "property_title": {
+      "type": "string",
+      "description": "Denormalized property title at time of verification"
+    },
+    "latitude": {
+      "type": "number",
+      "description": "Verified map position latitude (WGS84)"
+    },
+    "longitude": {
+      "type": "number",
+      "description": "Verified map position longitude (WGS84)"
+    },
+    "access_point_latitude": {
+      "type": "number",
+      "description": "Verified road entrance or access point latitude \u2014 may differ from the plot centroid, especially for land"
+    },
+    "access_point_longitude": {
+      "type": "number",
+      "description": "Verified road entrance or access point longitude"
+    },
+    "access_instructions": {
+      "type": "string",
+      "description": "Directions for the final approach: gate name, landmark turn-off, or walking note"
+    },
+    "boundary_points": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Ordered boundary vertices as {lat, lng} objects (minimum 3 to form a polygon)"
+    },
+    "boundary_geojson": {
+      "type": "object",
+      "description": "GeoJSON Polygon geometry for the property boundary"
+    },
+    "boundary_area_sqm": {
+      "type": "number",
+      "description": "Boundary area in square metres, when the boundary is mapped"
+    },
+    "coordinate_source": {
+      "type": "string",
+      "enum": [
+        "manual_map_pick",
+        "address_geocode",
+        "survey_document",
+        "gps_field_capture",
+        "legacy_import"
+      ],
+      "description": "How the coordinates were obtained \u2014 recorded so an approximation is never presented as a survey"
+    },
+    "location_verification_status": {
+      "type": "string",
+      "enum": [
+        "unverified",
+        "approximate",
+        "verified"
+      ],
+      "default": "unverified",
+      "description": "Verification state. Only staff may set this; a location is never auto-marked verified just because coordinates exist"
+    },
+    "location_verified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When staff last verified this location"
+    },
+    "location_verified_by": {
+      "type": "string",
+      "description": "User ID of the staff member who verified the location"
+    },
+    "location_verified_by_name": {
+      "type": "string",
+      "description": "Display name of the verifying staff member"
+    },
+    "location_notes": {
+      "type": "string",
+      "description": "Reviewer notes on what was checked and any caveats"
+    },
+    "map_precision_note": {
+      "type": "string",
+      "description": "Plain-language precision caveat shown to visitors, e.g. 'Plot position checked on site; boundary is indicative only'"
+    }
+  },
+  "required": [
+    "property_id",
+    "location_verification_status"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

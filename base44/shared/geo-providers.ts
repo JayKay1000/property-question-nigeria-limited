@@ -375,22 +375,24 @@ export async function findNearby(params: { lat: number; lng: number; radiusM?: n
   if (!isValidLatLng(lat, lng)) {
     return { ok: false as const, code: 'INVALID_COORDINATES', message: 'Nearby places need a valid property location.' };
   }
-  const radiusM = Math.min(Math.max(Math.round(params.radiusM ?? 3000), 300), 10000);
-  const limit = Math.min(Math.max(params.limit ?? 60, 10), 120);
+  const radiusM = Math.min(Math.max(Math.round(params.radiusM ?? 1500), 300), 5000);
+  const limit = Math.min(Math.max(params.limit ?? 40, 10), 80);
   const key = `n:${lat.toFixed(4)},${lng.toFixed(4)}:${radiusM}:${limit}`;
   const cached = cacheGet(nearbyCache, key, NEARBY_TTL);
   if (cached) return { ok: true as const, places: cached as any[], cached: true };
 
-  // Single-pass, category-limited query — one key/value union instead of seven
-  // separate statements, which keeps the Overpass response fast and bounded.
-  // Never an unbounded area dump.
-  const q = `[out:json][timeout:25];nwr(around:${radiusM},${lat},${lng})` +
-    `[~"^(amenity|shop|leisure|tourism|railway|aeroway|highway)$"` +
-    `~"^(hospital|clinic|doctors|pharmacy|school|college|university|kindergarten|bank|atm|restaurant|cafe|fast_food|marketplace|police|fire_station|townhall|courthouse|post_office|fuel|place_of_worship|bus_station|ferry_terminal|cinema|theatre|community_centre|supermarket|mall|department_store|convenience|park|stadium|sports_centre|garden|hotel|museum|attraction|viewpoint|station|halt|aerodrome|motorway_junction)$"];` +
-    `out center ${limit};`;
+  // Category-limited query — three focused statements, never an unbounded area
+  // dump. Kept deliberately narrow because the public Overpass instances are
+  // frequently saturated; a failed call must return fast so the UI can fall
+  // back to PQNL's own verified landmark records.
+  const q = `[out:json][timeout:12];(` +
+    `nwr(around:${radiusM},${lat},${lng})[amenity~"^(hospital|clinic|doctors|pharmacy|school|college|university|bank|atm|restaurant|cafe|marketplace|police|fire_station|townhall|fuel|place_of_worship|bus_station|cinema)$"];` +
+    `nwr(around:${radiusM},${lat},${lng})[shop~"^(supermarket|mall|department_store|convenience)$"];` +
+    `nwr(around:${radiusM},${lat},${lng})[railway~"^(station|halt)$"];` +
+    `nwr(around:${radiusM},${lat},${lng})[aeroway=aerodrome];` +
+    `);out center ${limit};`;
 
-  // Two independent Overpass instances — the public service is occasionally
-  // overloaded and returns 5xx; the mirror keeps the feature usable.
+  // Try the primary instance, then one independent mirror.
   let json: any = null;
   let lastStatus = 0;
   for (const endpoint of OVERPASS_ENDPOINTS) {
@@ -398,7 +400,7 @@ export async function findNearby(params: { lat: number; lng: number; radiusM?: n
     try {
       res = await fetch(`${endpoint}?data=${encodeURIComponent(q)}`, {
         headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(15000),
       });
     } catch (error) {
       lastStatus = 0;

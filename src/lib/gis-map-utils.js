@@ -68,8 +68,26 @@ export const LANDMARK_TYPE_CONFIG = {
   stadium: { label: 'Stadium', icon: 'Trophy', color: '#ea580c' },
   tourist_attraction: { label: 'Tourist Attraction', icon: 'Camera', color: '#d97706' },
   government_office: { label: 'Government Office', icon: 'Landmark', color: '#475569' },
+  // Categories returned by the live nearby-places provider (OpenStreetMap tags)
+  pharmacy: { label: 'Pharmacy', icon: 'Plus', color: '#14b8a6' },
+  atm: { label: 'ATM', icon: 'Building2', color: '#0f766e' },
+  fuel_station: { label: 'Fuel Station', icon: 'Fuel', color: '#b45309' },
+  place_of_worship: { label: 'Place of Worship', icon: 'Compass', color: '#16a34a' },
+  junction: { label: 'Major Junction', icon: 'Milestone', color: '#475569' },
   other: { label: 'Landmark', icon: 'MapPin', color: '#64748b' },
 };
+
+/** Nearby-place categories offered as filters in the intelligence panel, grouped for readability. */
+export const NEARBY_CATEGORY_GROUPS = [
+  { id: 'transport', label: 'Transport', categories: ['bus_stop', 'rail_station', 'airport', 'junction'] },
+  { id: 'education', label: 'Education', categories: ['school', 'university'] },
+  { id: 'health', label: 'Health', categories: ['hospital', 'pharmacy'] },
+  { id: 'shopping', label: 'Shopping', categories: ['market', 'shopping_mall'] },
+  { id: 'finance', label: 'Banking', categories: ['bank', 'atm'] },
+  { id: 'civic', label: 'Civic & Safety', categories: ['government_office', 'police_station', 'fire_station'] },
+  { id: 'leisure', label: 'Leisure', categories: ['park', 'stadium', 'tourist_attraction', 'hotel', 'restaurant'] },
+  { id: 'utilities', label: 'Utilities', categories: ['fuel_station', 'place_of_worship'] },
+];
 
 export const RADIUS_OPTIONS = [
   { value: 1, label: '1 km' },
@@ -153,6 +171,111 @@ export function calculateDistance(lat1, lng1, lat2, lng2) {
 
 export function isWithinRadius(lat1, lng1, lat2, lng2, radiusKm) {
   return calculateDistance(lat1, lng1, lat2, lng2) <= radiusKm;
+}
+
+/** Large pin marking the selected property as the route destination. */
+export function createDestinationIcon() {
+  const size = 42;
+  return L.divIcon({
+    className: 'pq-destination-marker',
+    html: `<div style="
+      width: ${size}px; height: ${size}px;
+      background: #FF7A00;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0,26,61,0.45);
+      display: flex; align-items: center; justify-content: center;
+    "><span style="transform: rotate(45deg); font-size: 17px; line-height: 1;">🏁</span></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
+  });
+}
+
+/** Start marker for the route origin (distinct from property markers). */
+export function createOriginIcon() {
+  const size = 30;
+  return L.divIcon({
+    className: 'pq-origin-marker',
+    html: `<div style="
+      width: ${size}px; height: ${size}px;
+      background: #001A3D;
+      border-radius: 50%;
+      border: 3px solid #EAF4FF;
+      box-shadow: 0 2px 8px rgba(0,26,61,0.45);
+      display: flex; align-items: center; justify-content: center;
+      color: #ffffff; font-size: 13px; font-weight: 700;
+    ">A</div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
+}
+
+/** Pulsing blue dot for the visitor's own device location. */
+export function createUserLocationIcon() {
+  return L.divIcon({
+    className: 'pq-user-marker',
+    html: `<div style="position: relative; width: 22px; height: 22px;">
+      <span style="position: absolute; inset: 0; border-radius: 50%; background: rgba(59,130,246,0.25);"></span>
+      <span style="position: absolute; inset: 5px; border-radius: 50%; background: #3b82f6; border: 2px solid #ffffff; box-shadow: 0 1px 4px rgba(0,0,0,0.35);"></span>
+    </div>`,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+  });
+}
+
+/**
+ * Road-entrance marker. Kept visually separate from the property position
+ * because the plot centroid and the gate are often not the same place.
+ */
+export function createAccessPointIcon() {
+  const size = 26;
+  return L.divIcon({
+    className: 'pq-access-marker',
+    html: `<div style="
+      width: ${size}px; height: ${size}px;
+      background: #16a34a;
+      border: 2px solid #ffffff;
+      border-radius: 6px;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      display: flex; align-items: center; justify-content: center;
+    "><span style="transform: rotate(-45deg); font-size: 12px; color: #ffffff; font-weight: 700;">⤴</span></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+  });
+}
+
+/** Small dot markers for nearby places returned by the places provider. */
+export function createNearbyPlaceIcon(category) {
+  const cfg = LANDMARK_TYPE_CONFIG[category] || LANDMARK_TYPE_CONFIG.other;
+  return L.divIcon({
+    className: 'pq-place-marker',
+    html: `<div style="
+      width: 16px; height: 16px;
+      background: ${cfg.color};
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+}
+
+/** Route line styling — main route and muted alternatives. */
+export const ROUTE_LINE_STYLE = { color: '#FF7A00', weight: 6, opacity: 0.9, lineCap: 'round' };
+export const ALTERNATIVE_ROUTE_STYLE = { color: '#001A3D', weight: 4, opacity: 0.45, dashArray: '8 8' };
+export const BOUNDARY_STYLE = { color: '#16a34a', weight: 2, fillColor: '#16a34a', fillOpacity: 0.12, dashArray: '6 4' };
+
+/** Converts a "lat,lng" query string into a coordinate pair, or null. */
+export function parseLatLngParam(value) {
+  if (typeof value !== 'string') return null;
+  const [lat, lng] = value.split(',').map((n) => Number(n.trim()));
+  if (!Number.isFinite(lat) || !Number.isFinite(lng) || lat === 0 || lng === 0) return null;
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+  return { lat, lng };
 }
 
 export function buildGoogleMapsLink(property) {
