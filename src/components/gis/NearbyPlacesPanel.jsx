@@ -81,10 +81,11 @@ export default function NearbyPlacesPanel({
         seen.add(key);
         return true;
       })
+      .filter((place) => place.distanceKm <= radiusM / 1000)
       .filter((place) => !allowedCategories || allowedCategories.has(place.category))
       .sort((a, b) => a.distanceKm - b.distanceKm)
       .slice(0, 40);
-  }, [landmarks, livePlaces, hasCoordinates, property?.latitude, property?.longitude, allowedCategories]);
+  }, [landmarks, livePlaces, hasCoordinates, property?.latitude, property?.longitude, allowedCategories, radiusM]);
 
   const toggleGroup = (id) => setActiveGroups((prev) => (prev.includes(id) ? prev.filter((g) => g !== id) : [...prev, id]));
 

@@ -10,6 +10,7 @@ import { isYoutubeUrl } from '@/components/media/youtubeUtils';
 import DetailSidebar from '@/components/properties/DetailSidebar';
 import PropertyTabs from '@/components/properties/PropertyTabs';
 import ListingCard from '@/components/properties/ListingCard';
+import LocationDirections from '@/components/properties/LocationDirections';
 import { setPropertySEO, clearPropertySEO } from '@/lib/property-seo';
 
 const SAVE_KEY = 'pq_saved_properties';
@@ -208,6 +209,11 @@ export default function PropertyDetail() {
             </div>
           </aside>
         </div>
+      </div>
+
+      {/* Location, directions & nearby places */}
+      <div className="container-wide section-pad mt-12">
+        <LocationDirections property={property} />
       </div>
 
       {/* Similar properties */}

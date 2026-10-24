@@ -2,7 +2,7 @@
   "name": "PropertyLocation",
   "type": "object",
   "title": "Property Location, Access Point & Boundary",
-  "description": "The authoritative verification record for where a property actually is on the map. Holds the verified map position, the separate road access point, an optional land boundary, and the verification audit trail. Additive and backward-compatible: it never replaces the discovery coordinates already stored on the Property record, and properties without a record here are simply shown as unverified.",
+  "description": "The authoritative verification record for where a property actually is on the map. Holds the verified map position, the separate road access point, an optional land boundary, the verification state and the full verification audit trail. Additive and backward-compatible: it never replaces the discovery coordinates already stored on the Property record, and properties without a record here are simply shown as unverified.",
   "properties": {
     "property_id": {
       "type": "string",
@@ -22,7 +22,7 @@
     },
     "access_point_latitude": {
       "type": "number",
-      "description": "Verified road entrance or access point latitude \u2014 may differ from the plot centroid, especially for land"
+      "description": "Verified road entrance or access point latitude - may differ from the plot centroid, especially for land"
     },
     "access_point_longitude": {
       "type": "number",
@@ -56,7 +56,7 @@
         "gps_field_capture",
         "legacy_import"
       ],
-      "description": "How the coordinates were obtained \u2014 recorded so an approximation is never presented as a survey"
+      "description": "How the coordinates were obtained - recorded so an approximation is never presented as a survey"
     },
     "location_verification_status": {
       "type": "string",
@@ -83,11 +83,18 @@
     },
     "location_notes": {
       "type": "string",
-      "description": "Reviewer notes on what was checked and any caveats"
+      "description": "Internal reviewer notes on what was checked and any caveats (staff-only, not shown to visitors)"
     },
     "map_precision_note": {
       "type": "string",
       "description": "Plain-language precision caveat shown to visitors, e.g. 'Plot position checked on site; boundary is indicative only'"
+    },
+    "verification_history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Append-only audit trail of location decisions: {at, by, by_name, from_status, to_status, note}. Staff-only review record."
     }
   },
   "required": [
