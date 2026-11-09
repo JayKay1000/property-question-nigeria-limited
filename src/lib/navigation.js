@@ -43,5 +43,5 @@ export const navItems = [
       ],
     },
   },
-  { label: 'Landbanking', key: 'buy2flip', href: '/buy2flip' },
+  { label: 'Partnership Opportunity', key: 'buy2flip', href: '/buy2flip' },
 ];
