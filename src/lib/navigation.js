@@ -43,5 +43,5 @@ export const navItems = [
       ],
     },
   },
-  { label: 'Partnership Opportunity', key: 'buy2flip', href: '/buy2flip' },
+  { label: 'Partnership Opportunities', key: 'buy2flip', href: '/buy2flip' },
 ];
