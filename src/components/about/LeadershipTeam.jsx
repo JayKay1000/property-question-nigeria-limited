@@ -8,7 +8,7 @@ const leaders = [
   { name: 'Mojisola Olamilekan', title: 'Accountant', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/b2e0c09f8_MJEdit.png' },
   { name: 'Korede Adeigbe', title: 'Web & Multimedia', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/b6af01226_KoredeEdit.png' },
   { name: 'Nancy Oremichen', title: 'Social Media', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/fdc257d52_NancyEdit.jpg' },
-  { name: 'Yinusa Sunmola', title: 'Photography', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/386b921f7_YinusaEdit.jpg' },
+  { name: 'Yinusa Sunmola', title: 'Photography', photo: 'https://base44.app/api/apps/6a6f7e5cd57da090e5283ea3/files/mp/public/6a6f7e5cd57da090e5283ea3/4bfea799c_yinusa-sunmola.png' },
   { name: 'Onyeka Onyekemeihia', title: 'Graphics Design', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/6e367b5f0_OnyekaEdit.jpg' },
 ];
 
