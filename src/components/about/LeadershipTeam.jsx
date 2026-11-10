@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Image } from '@/components/ui/image';
 
 const leaders = [
-  { name: 'Mrs Adewumi Adepeju', title: 'Founder & CEO', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/6aa919429_MD.png' },
+  { name: 'Mrs Adewumi Adepeju', title: 'Founder & CEO', photo: 'https://base44.app/api/apps/6a6f7e5cd57da090e5283ea3/files/mp/public/6a6f7e5cd57da090e5283ea3/6fa2b1f2b_mrs-adewumi-adepeju.png' },
   { name: 'Adenola O. Adebayo', title: 'Head of Compliance', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/c81437054_EngineerFemi.png' },
   { name: 'Mojisola Olamilekan', title: 'Accountant', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/b2e0c09f8_MJEdit.png' },
   { name: 'Korede Adeigbe', title: 'Web & Multimedia', photo: 'https://media.base44.com/images/public/6a6f7e5cd57da090e5283ea3/b6af01226_KoredeEdit.png' },
